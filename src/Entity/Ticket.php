@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Ticket
  *
  * @ORM\Table(name="ticket", indexes={@ORM\Index(name="ftevene", columns={"id_evenement"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\TicketRepository")
  */
 class Ticket
 {
@@ -44,6 +44,47 @@ class Ticket
      * })
      */
     private $idEvenement;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getPrix(): ?int
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(int $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getIdEvenement(): ?Evenement
+    {
+        return $this->idEvenement;
+    }
+
+    public function setIdEvenement(?Evenement $idEvenement): self
+    {
+        $this->idEvenement = $idEvenement;
+
+        return $this;
+    }
 
 
 }

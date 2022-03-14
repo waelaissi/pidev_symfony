@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Likee
  *
  * @ORM\Table(name="likee", indexes={@ORM\Index(name="fk_com", columns={"id_commentaire"}), @ORM\Index(name="fk_user", columns={"id_user"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\LikeeRepository")
  */
 class Likee
 {
@@ -40,6 +40,35 @@ class Likee
      * })
      */
     private $idCommentaire;
+
+    public function getIdLike(): ?int
+    {
+        return $this->idLike;
+    }
+
+    public function getIdUser(): ?Utilisateur
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(?Utilisateur $idUser): self
+    {
+        $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    public function getIdCommentaire(): ?Commentaire
+    {
+        return $this->idCommentaire;
+    }
+
+    public function setIdCommentaire(?Commentaire $idCommentaire): self
+    {
+        $this->idCommentaire = $idCommentaire;
+
+        return $this;
+    }
 
 
 }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Commentaire
  *
  * @ORM\Table(name="commentaire", indexes={@ORM\Index(name="fk_idsujet", columns={"idsujet"}), @ORM\Index(name="fk_idusercom", columns={"iduser"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\CommentaireRepository")
  */
 class Commentaire
 {
@@ -68,6 +68,83 @@ class Commentaire
      * })
      */
     private $iduser;
+
+    public function getIdcom(): ?int
+    {
+        return $this->idcom;
+    }
+
+    public function getContenu(): ?string
+    {
+        return $this->contenu;
+    }
+
+    public function setContenu(string $contenu): self
+    {
+        $this->contenu = $contenu;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getNblike(): ?int
+    {
+        return $this->nblike;
+    }
+
+    public function setNblike(int $nblike): self
+    {
+        $this->nblike = $nblike;
+
+        return $this;
+    }
+
+    public function getNbdislike(): ?int
+    {
+        return $this->nbdislike;
+    }
+
+    public function setNbdislike(int $nbdislike): self
+    {
+        $this->nbdislike = $nbdislike;
+
+        return $this;
+    }
+
+    public function getIdsujet(): ?Sujet
+    {
+        return $this->idsujet;
+    }
+
+    public function setIdsujet(?Sujet $idsujet): self
+    {
+        $this->idsujet = $idsujet;
+
+        return $this;
+    }
+
+    public function getIduser(): ?Utilisateur
+    {
+        return $this->iduser;
+    }
+
+    public function setIduser(?Utilisateur $iduser): self
+    {
+        $this->iduser = $iduser;
+
+        return $this;
+    }
 
 
 }

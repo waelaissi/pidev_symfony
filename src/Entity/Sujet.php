@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Sujet
  *
  * @ORM\Table(name="sujet", indexes={@ORM\Index(name="fk_idtopic", columns={"idtopic"}), @ORM\Index(name="fk_iduser", columns={"iduser"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\SujetRepository")
  */
 class Sujet
 {
@@ -75,6 +75,95 @@ class Sujet
      * })
      */
     private $idtopic;
+
+    public function getIdsujet(): ?int
+    {
+        return $this->idsujet;
+    }
+
+    public function getTitresujet(): ?string
+    {
+        return $this->titresujet;
+    }
+
+    public function setTitresujet(string $titresujet): self
+    {
+        $this->titresujet = $titresujet;
+
+        return $this;
+    }
+
+    public function getContenu(): ?string
+    {
+        return $this->contenu;
+    }
+
+    public function setContenu(string $contenu): self
+    {
+        $this->contenu = $contenu;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getAccepter(): ?int
+    {
+        return $this->accepter;
+    }
+
+    public function setAccepter(int $accepter): self
+    {
+        $this->accepter = $accepter;
+
+        return $this;
+    }
+
+    public function getNbcom(): ?int
+    {
+        return $this->nbcom;
+    }
+
+    public function setNbcom(int $nbcom): self
+    {
+        $this->nbcom = $nbcom;
+
+        return $this;
+    }
+
+    public function getIduser(): ?Utilisateur
+    {
+        return $this->iduser;
+    }
+
+    public function setIduser(?Utilisateur $iduser): self
+    {
+        $this->iduser = $iduser;
+
+        return $this;
+    }
+
+    public function getIdtopic(): ?Topic
+    {
+        return $this->idtopic;
+    }
+
+    public function setIdtopic(?Topic $idtopic): self
+    {
+        $this->idtopic = $idtopic;
+
+        return $this;
+    }
 
 
 }

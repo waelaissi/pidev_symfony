@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Avis
  *
  * @ORM\Table(name="avis", indexes={@ORM\Index(name="id_voiture", columns={"id_voiture"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\AvisRepository")
  */
 class Avis
 {
@@ -37,6 +37,35 @@ class Avis
      * })
      */
     private $idVoiture;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getValeur(): ?float
+    {
+        return $this->valeur;
+    }
+
+    public function setValeur(?float $valeur): self
+    {
+        $this->valeur = $valeur;
+
+        return $this;
+    }
+
+    public function getIdVoiture(): ?Voiture
+    {
+        return $this->idVoiture;
+    }
+
+    public function setIdVoiture(?Voiture $idVoiture): self
+    {
+        $this->idVoiture = $idVoiture;
+
+        return $this;
+    }
 
 
 }
