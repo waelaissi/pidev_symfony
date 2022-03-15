@@ -49,8 +49,8 @@ class HotelController extends AbstractController
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Image (JPG or PNG)',
                 'required' => true,
+                'allow_delete' => true,
                 'download_uri' => false,
-
             ])
             ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
             ->getForm();
@@ -98,7 +98,12 @@ class HotelController extends AbstractController
             ->add('description', TextareaType::class)
             ->add('libelle')
             ->add('nbEtoiles', IntegerType::class)
-
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Image (JPG or PNG)',
+                'required' => true,
+                'allow_delete' => true,
+                'download_uri' => false,
+            ])
             ->add('Modifier',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
             ->getForm();
         $form->handleRequest($request);
