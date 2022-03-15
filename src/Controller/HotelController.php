@@ -98,7 +98,7 @@ class HotelController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $hotelRepository->add($hotel);
-            $this->addFlash('success', 'Hotel modifier avec succées !');
+            $this->addFlash('info', 'Hotel modifier avec succées !');
             return $this->redirectToRoute('app_hotel_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -115,7 +115,7 @@ class HotelController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$hotel->getId(), $request->request->get('_token'))) {
             $hotelRepository->remove($hotel);
-            $this->addFlash('info', 'Hotel supprimer avec succées !');
+            $this->addFlash('error', 'Hotel supprimer avec succées !');
         }
 
         return $this->redirectToRoute('app_hotel_index', [], Response::HTTP_SEE_OTHER);
