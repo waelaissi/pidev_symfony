@@ -1,0 +1,26 @@
+{% block stylesheets %}
+    <style>
+        .alert
+        {
+            padding: 5px;
+            color: white;
+            text-align:center;
+        }
+        .alert-success{
+            background-color: green;
+        }
+        .alert-error{
+            background-color: red;
+        }
+        .alert-info{
+            background-color: #0085cd;
+        }
+    </style>
+{% endblock %}
+{% for type, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type }}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}

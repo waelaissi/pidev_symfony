@@ -38,12 +38,12 @@ class HotelController extends AbstractController
 
 
         $form = $this->createFormBuilder($hotel)
-            ->add('Adresse', TextareaType::class)
-            ->add('Ville')
-            ->add('Region')
-            ->add('Telephone', IntegerType::class)
-            ->add('Description', TextareaType::class)
-            ->add('Libelle')
+            ->add('adresse', TextareaType::class)
+            ->add('ville')
+            ->add('region')
+            ->add('numTel', IntegerType::class)
+            ->add('description', TextareaType::class)
+            ->add('libelle')
             ->add('nbEtoiles', IntegerType::class)
             ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
             ->getForm();
@@ -57,7 +57,7 @@ class HotelController extends AbstractController
             $em->persist($hotel);
             $em->flush();
 
-            //$this->addFlash('success', 'Hotel successfully added !');
+            $this->addFlash('success', 'Hotel ajouter avec succées !');
 
             return $this->redirectToRoute('app_hotel_index');
         }
@@ -98,6 +98,7 @@ class HotelController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $hotelRepository->add($hotel);
+            $this->addFlash('success', 'Hotel modifier avec succées !');
             return $this->redirectToRoute('app_hotel_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -114,6 +115,7 @@ class HotelController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$hotel->getId(), $request->request->get('_token'))) {
             $hotelRepository->remove($hotel);
+            $this->addFlash('info', 'Hotel supprimer avec succées !');
         }
 
         return $this->redirectToRoute('app_hotel_index', [], Response::HTTP_SEE_OTHER);
