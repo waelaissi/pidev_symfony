@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 /**
  * @Route("/hotel")
@@ -45,6 +46,12 @@ class HotelController extends AbstractController
             ->add('description', TextareaType::class)
             ->add('libelle')
             ->add('nbEtoiles', IntegerType::class)
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Image (JPG or PNG)',
+                'required' => true,
+                'download_uri' => false,
+
+            ])
             ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
             ->getForm();
 

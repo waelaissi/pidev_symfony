@@ -77,7 +77,7 @@ class Hotel
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @Vich\UploadableField(mapping="hotel_image", fileNameProperty="image", size="imageSize")
+     * @Vich\UploadableField(mapping="hotel_image", fileNameProperty="image")
      *
      * @var File|null
      */
