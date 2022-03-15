@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Hotel
@@ -78,6 +79,8 @@ class Hotel
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Vich\UploadableField(mapping="hotel_image", fileNameProperty="image")
+     * @Assert\NotNull
+     * @Assert\Image(maxSize="8M")
      *
      * @var File|null
      */
