@@ -25,7 +25,7 @@ class HotelController extends AbstractController
      */
     public function index(HotelRepository $hotelRepository): Response
     {
-        return $this->render('hotel/index.html.twig', [
+        return $this->render('hotel/clientHotel.html.twig', [
             'hotels' => $hotelRepository->findAll(),
         ]);
     }
@@ -51,6 +51,7 @@ class HotelController extends AbstractController
                 'required' => true,
                 'allow_delete' => true,
                 'download_uri' => false,
+                'imagine_pattern' => 'squared_thumbnail_small',
             ])
             ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
             ->getForm();
@@ -103,6 +104,7 @@ class HotelController extends AbstractController
                 'required' => true,
                 'allow_delete' => true,
                 'download_uri' => false,
+                'imagine_pattern' => 'squared_thumbnail_small',
             ])
             ->add('Modifier',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
             ->getForm();
