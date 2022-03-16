@@ -7,6 +7,7 @@ use App\Form\ChambreType;
 use App\Repository\ChambreRepository;
 use App\Repository\HotelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +22,7 @@ class ChambreController extends AbstractController
      */
     public function index(ChambreRepository $chambreRepository): Response
     {
-        return $this->render('chambre/index.html.twig', [
+        return $this->render('chambre/chambreAdmin.html.twig', [
             'chambres' => $chambreRepository->findAll(),
         ]);
     }
@@ -55,22 +56,18 @@ class ChambreController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="app_chambre_show", methods={"GET"})
-     */
-    public function show(Chambre $chambre): Response
-    {
-        return $this->render('chambre/show.html.twig', [
-            'chambre' => $chambre,
-        ]);
-    }
 
     /**
      * @Route("/{id}/edit", name="app_chambre_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Chambre $chambre, ChambreRepository $chambreRepository): Response
     {
-        $form = $this->createForm(ChambreType::class, $chambre);
+        $form = $this->createFormBuilder($chambre)
+
+            ->add('type')
+            ->add('prix')
+            ->add('Modifier',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
+            ->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

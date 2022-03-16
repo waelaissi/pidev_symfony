@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Hotel</th>
                 <th>Type</th>
                 <th>Prix</th>
                 <th>Disponnibiliter</th>
@@ -18,12 +18,11 @@
         <tbody>
         {% for chambre in chambres %}
             <tr>
-                <td>{{ chambre.id }}</td>
+                <td>{{ chambre.idHotel.libelle }}</td>
                 <td>{{ chambre.type }}</td>
                 <td>{{ chambre.prix }}</td>
                 <td>{{ chambre.disponnibiliter }}</td>
                 <td>
-                    <a href="{{ path('app_chambre_show', {'id': chambre.id}) }}">show</a>
                     <a href="{{ path('app_chambre_edit', {'id': chambre.id}) }}">edit</a>
                 </td>
             </tr>
