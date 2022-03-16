@@ -81,7 +81,7 @@ class HotelController extends AbstractController
      */
     public function show(Hotel $hotel): Response
     {
-        return $this->render('hotel/show.html.twig', [
+        return $this->render('hotel/hotelDetails.html.twig', [
             'hotel' => $hotel,
         ]);
     }
