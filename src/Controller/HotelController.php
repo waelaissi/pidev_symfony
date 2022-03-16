@@ -134,4 +134,16 @@ class HotelController extends AbstractController
 
         return $this->redirectToRoute('app_hotel_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+     * @Route("/admin/hotels", name="app_admin_hotel", methods={"GET"})
+     */
+    public function adminHotel(HotelRepository $hotelRepository): Response
+    {
+        return $this->render('hotel/adminHotel.html.twig', [
+            'hotels' => $hotelRepository->findAll(),
+        ]);
+    }
+
+
 }
