@@ -6,6 +6,7 @@ use App\Entity\Hotel;
 use App\Form\HotelType;
 use App\Repository\HotelRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -23,10 +24,22 @@ class HotelController extends AbstractController
     /**
      * @Route("/", name="app_hotel_index", methods={"GET"})
      */
-    public function index(HotelRepository $hotelRepository): Response
+    public function index(HotelRepository $hotelRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $données = $hotelRepository->findAll();
+        $hotels = $paginator->paginate(
+            $données,
+            $request->query->getInt('page', 1), /*page number*/
+            4 /*limit per page*/
+        );
+        $hotels->setCustomParameters([
+        'align' => 'center', # center|right (for template: twitter_bootstrap_v4_pagination and foundation_v6_pagination)
+        'size' => 'large', # small|large (for template: twitter_bootstrap_v4_pagination)
+        'style' => 'bottom',
+        'span_class' => 'whatever',
+    ]);
         return $this->render('hotel/clientHotel.html.twig', [
-            'hotels' => $hotelRepository->findAll(),
+            'hotels' =>  $hotels
         ]);
     }
 

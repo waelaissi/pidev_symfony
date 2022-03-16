@@ -12,7 +12,7 @@
                         <div class="col-md-4">
                             <article class="bg-white rounded shadow hotel">
                                 <div class="mw-100 rounded-top overflow-hidden">
-                                    <a href="{{ path('app_hotel_show', {id: hotel.id}) }}">
+                                    <a href="{{ path('app_hotel_index', {id: hotel.id}) }}">
                                         <img src="{{ vich_uploader_asset(hotel) | imagine_filter('squared_thumbnail_medium') }}" alt="{{ hotel.libelle }}" class="w-100"/>
                                     </a>
                                 </div>
@@ -31,5 +31,7 @@
             {% endfor %}
         </div>
     </main>
+
+    {{ knp_pagination_render(hotels) }}
 
 {% endblock %}
