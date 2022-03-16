@@ -7,6 +7,7 @@ use App\Form\ChambreType;
 use App\Repository\ChambreRepository;
 use App\Repository\HotelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,12 +36,19 @@ class ChambreController extends AbstractController
         $chambre = new Chambre();
 
         $chambre->setIdHotel($hotelrepo->find($id));
-
+        $chambre->getDisponnibiliter(1);
         $form = $this->createFormBuilder($chambre)
 
-            ->add('type')
+            ->add('type', ChoiceType::class, [
+                'choices'  => [
+                    'Single' => "Single",
+                    'Double' => "Double",
+                    'Triple' => "Triple",
+                    'Quadruple' => "Quadruple",
+                ],
+            ])
             ->add('prix')
-
+            ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
             ->getForm();
 
         $form->handleRequest($request);
@@ -64,7 +72,14 @@ class ChambreController extends AbstractController
     {
         $form = $this->createFormBuilder($chambre)
 
-            ->add('type')
+            ->add('type', ChoiceType::class, [
+                'choices'  => [
+                    'Single' => "Single",
+                    'Double' => "Double",
+                    'Triple' => "Triple",
+                    'Quadruple' => "Quadruple",
+                ],
+            ])
             ->add('prix')
             ->add('Modifier',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
             ->getForm();
