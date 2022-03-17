@@ -6,13 +6,13 @@
     <main role="main" class="container">
         <h1 class="mt-5 mb-3 text-center" style="color: #45ccb8">All hotels</h1>
         <div class="container">
-            {% for row in hotels|batch(3) %}
+            {% for row in hotels|batch(5) %}
                 <div class="row mb-5">
                     {% for hotel in hotels %}
                         <div class="col-md-4">
                             <article class="bg-white rounded shadow hotel">
                                 <div class="mw-100 rounded-top overflow-hidden">
-                                    <a href="{{ path('app_hotel_index', {id: hotel.id}) }}">
+                                    <a href="{{ path('app_hotel_show', {id: hotel.id}) }}">
                                         <img src="{{ vich_uploader_asset(hotel) | imagine_filter('squared_thumbnail_medium') }}" alt="{{ hotel.libelle }}" class="w-100"/>
                                     </a>
                                 </div>
