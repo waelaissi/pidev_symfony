@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Maison index{% endblock %}
+
+{% block body %}
+    <h1>Maison index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Adresse</th>
+                <th>Region</th>
+                <th>NumTel</th>
+                <th>Description</th>
+                <th>Capacite</th>
+                <th>NbChambres</th>
+                <th>Prix</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for maison in maisons %}
+            <tr>
+                <td>{{ maison.id }}</td>
+                <td>{{ maison.adresse }}</td>
+                <td>{{ maison.region }}</td>
+                <td>{{ maison.numTel }}</td>
+                <td>{{ maison.description }}</td>
+                <td>{{ maison.capacite }}</td>
+                <td>{{ maison.nbChambres }}</td>
+                <td>{{ maison.prix }}</td>
+                <td>{{ maison.image }}</td>
+                <td>
+                    <a href="{{ path('app_maison_show', {'id': maison.id}) }}">show</a>
+                    <a href="{{ path('app_maison_edit', {'id': maison.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_maison_new') }}">Create new</a>
+{% endblock %}
