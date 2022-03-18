@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 
 /**
@@ -43,6 +44,13 @@ class MaisonController extends AbstractController
                 ->add('capacite', IntegerType::class)
                 ->add('nbChambres', IntegerType::class)
                 ->add('prix', MoneyType::class)
+                ->add('imageFile', VichImageType::class, [
+                    'label' => 'Image (JPG or PNG)',
+                    'required' => true,
+                    'allow_delete' => true,
+                    'download_uri' => false,
+                    'imagine_pattern' => 'squared_thumbnail_small',
+                ])
                 ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
         ->getForm();
         $form->handleRequest($request);
@@ -81,7 +89,14 @@ class MaisonController extends AbstractController
             ->add('capacite', IntegerType::class)
             ->add('nbChambres', IntegerType::class)
             ->add('prix', MoneyType::class)
-            ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Image (JPG or PNG)',
+                'required' => true,
+                'allow_delete' => true,
+                'download_uri' => false,
+                'imagine_pattern' => 'squared_thumbnail_small',
+            ])
+            ->add('Modifier',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
             ->getForm();
         $form->handleRequest($request);
 
@@ -106,5 +121,15 @@ class MaisonController extends AbstractController
         }
 
         return $this->redirectToRoute('app_maison_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/all/maisons", name="app_maison_client", methods={"GET"})
+     */
+    public function clientMaison(MaisonRepository $maisonRepository): Response
+    {
+        return $this->render('maison/clientMaison.html.twig', [
+            'maisons' => $maisonRepository->findAll(),
+        ]);
     }
 }
