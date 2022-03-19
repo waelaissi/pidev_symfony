@@ -15,7 +15,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Sunset</h5>
                                     <p class="card-text">{{ maison.description }}</p>
-                                    <a href="" class="btn btn-outline-success btn-sm">Read More</a>
+                                    <a href="{{ path('app_maison_show', {id: maison.id}) }}" class="btn btn-outline-success btn-sm">voir</a>
                                     <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
                                 </div>
                             </div>
