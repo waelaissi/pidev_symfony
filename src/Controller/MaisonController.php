@@ -133,7 +133,7 @@ class MaisonController extends AbstractController
         $maison = $paginator->paginate(
             $données,
             $request->query->getInt('page', 1), /*page number*/
-            4 /*limit per page*/
+            6 /*limit per page*/
         );
         $maison->setCustomParameters([
             'align' => 'center', # center|right (for template: twitter_bootstrap_v4_pagination and foundation_v6_pagination)
