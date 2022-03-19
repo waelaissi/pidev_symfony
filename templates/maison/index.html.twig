@@ -5,6 +5,7 @@
 {% block body %}
     <h1>Mes maisons</h1>
 
+    <a href="{{ path('app_maison_new') }}">Create new</a>
     <table class="table">
         <thead>
             <tr>
@@ -33,7 +34,7 @@
                 <td>{{ maison.prix }}</td>
                 <td>{{ maison.image }}</td>
                 <td>
-                    <a href="{{ path('app_maison_show', {'id': maison.id}) }}">show</a>
+                    <a href="{{ path('app_maison_show', {'id': maison.id}) }}">voir</a>
                     <a href="{{ path('app_maison_edit', {'id': maison.id}) }}">edit</a>
                 </td>
             </tr>
@@ -45,5 +46,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_maison_new') }}">Create new</a>
+
 {% endblock %}

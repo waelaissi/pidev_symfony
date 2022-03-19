@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Maison;
 use App\Form\MaisonType;
 use App\Repository\MaisonRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -126,10 +127,22 @@ class MaisonController extends AbstractController
     /**
      * @Route("/all/maisons", name="app_maison_client", methods={"GET"})
      */
-    public function clientMaison(MaisonRepository $maisonRepository): Response
+    public function clientMaison(MaisonRepository $maisonRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $données = $maisonRepository->findAll();
+        $maison = $paginator->paginate(
+            $données,
+            $request->query->getInt('page', 1), /*page number*/
+            4 /*limit per page*/
+        );
+        $maison->setCustomParameters([
+            'align' => 'center', # center|right (for template: twitter_bootstrap_v4_pagination and foundation_v6_pagination)
+            'size' => 'large', # small|large (for template: twitter_bootstrap_v4_pagination)
+            'style' => 'bottom',
+            'span_class' => 'whatever',
+        ]);
         return $this->render('maison/clientMaison.html.twig', [
-            'maisons' => $maisonRepository->findAll(),
+            'maisons' => $maison,
         ]);
     }
 }
