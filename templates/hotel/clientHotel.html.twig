@@ -1,37 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title "Hotels"%}
+{% block title "Maisons"%}
 
 {% block body %}
-    <main role="main" class="container">
+    <section id="gallery">
         <h1 class="mt-5 mb-3 text-center" style="color: #45ccb8">All hotels</h1>
         <div class="container">
-            {% for row in hotels|batch(5) %}
+            {% for row in hotels|batch(6) %}
                 <div class="row mb-5">
                     {% for hotel in hotels %}
-                        <div class="col-md-4">
-                            <article class="bg-white rounded shadow hotel">
-                                <div class="mw-100 rounded-top overflow-hidden">
-                                    <a href="{{ path('app_hotel_show', {id: hotel.id}) }}">
-                                        <img src="{{ vich_uploader_asset(hotel) | imagine_filter('squared_thumbnail_medium') }}" alt="{{ hotel.libelle }}" class="w-100"/>
-                                    </a>
+                        <div class="col-lg-4 mb-4">
+                            <div class="card">
+                                <img src="{{ vich_uploader_asset(hotel) | imagine_filter('squared_thumbnail_medium') }}" alt="{{ hotel.libelle }}" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">Sunset</h5>
+                                    <p class="card-text">{{ hotel.description }}</p>
+                                    <a href="" class="btn btn-outline-success btn-sm">Read More</a>
+                                    <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
                                 </div>
-                                <h2 class="h5 pl-3 pt-3">
-                                    <a href="{{ path('app_hotel_show', {id: hotel.id}) }}" class="text-secondary text-decoration-none">{{ hotel.libelle }}</a>
-                                </h2>
-                                <p class="pl-3 pb-2 text-muted">
-                                    <small>
-
-                                    </small>
-                                </p>
-                            </article>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
             {% endfor %}
         </div>
-    </main>
-
+    </section>
     {{ knp_pagination_render(hotels) }}
+
 
 {% endblock %}
