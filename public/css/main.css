@@ -1,4 +1,4 @@
 .card img:hover{
-    transform: scale(1.075);
+    transform: scale(1);
     transition: transform 0.3s ease-out;
 }

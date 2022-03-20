@@ -11,7 +11,7 @@
                     {% for hotel in hotels %}
                         <div class="col-lg-4 mb-4">
                             <div class="card">
-                                <img src="{{ vich_uploader_asset(hotel) | imagine_filter('squared_thumbnail_medium') }}" alt="{{ hotel.libelle }}" class="card-img-top">
+                                <img src="{{ vich_uploader_asset(hotel) }}" alt="{{ hotel.libelle }}" class="card-img-top" width="307" height="240">
                                 <div class="card-body">
                                     <h5 class="card-title">Sunset</h5>
                                     <p class="card-text">{{ hotel.description }}</p>
