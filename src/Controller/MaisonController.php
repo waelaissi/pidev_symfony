@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
@@ -34,7 +36,7 @@ class MaisonController extends AbstractController
     /**
      * @Route("/new", name="app_maison_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, MaisonRepository $maisonRepository): Response
+    public function new(Request $request, MaisonRepository $maisonRepository, MailerInterface $mailer): Response
     {
         $maison = new Maison();
         $form = $this->createFormBuilder($maison)
@@ -57,7 +59,20 @@ class MaisonController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //$maison->getIdUser($this->getUser());
             $maisonRepository->add($maison);
+
+            //sending email confirmation
+            $email = (new Email())
+                ->from('Tfarhida@tfarhida.tn')
+                //->to($maison->getIdUser()->getEmail())
+                ->to('you@example.com')
+                ->subject('Time for Symfony Mailer!')
+                ->text('Sending emails is fun again!')
+                ->html('<p>Merci d ajouter votre maison dans notre application!</p>');
+
+            $mailer->send($email);
+
             return $this->redirectToRoute('app_maison_index', [], Response::HTTP_SEE_OTHER);
         }
 

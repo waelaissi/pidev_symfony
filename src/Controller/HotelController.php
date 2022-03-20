@@ -74,7 +74,7 @@ class HotelController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            //$hotel->setUser($this->getUser());
+            //$hotel->getIdUser($this->getUser());
             $em->persist($hotel);
             $em->flush();
 
