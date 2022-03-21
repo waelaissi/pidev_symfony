@@ -1,0 +1,8 @@
+<div class="card">
+    <img src="{{ vich_uploader_asset(maison) }}" alt="{{ maison.adresse }}" class="card-img-top">
+    <div class="card-body">
+        <div class="card-title text-primary" style="font-weight: bold; font-size: 1.5rem;">{{ maison.prix|number_format(0, ',', '') }} Dt</div>
+        <div class="text text-warning"></div>
+        <p class="text text-muted">{{ maison.description }}</p>
+    </div>
+</div>

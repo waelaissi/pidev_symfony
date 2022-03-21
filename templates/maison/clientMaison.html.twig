@@ -3,29 +3,26 @@
 {% block title "Maisons"%}
 
 {% block body %}
-    <section id="gallery">
-        <h1 class="mt-5 mb-3 text-center" style="color: #45ccb8">All maisons</h1>
-        <div class="container">
-            {% for row in maisons|batch(6) %}
-                <div class="row mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                {{ include('maison/_filter.html.twig') }}
+            </div>
+            <div class="col-md-9">
+                <div class="grid">
                     {% for maison in maisons %}
-                        <div class="col-lg-4 mb-4">
-                            <div class="card">
-                                <img src="{{ vich_uploader_asset(maison) }}" alt="{{ maison.adresse }}" class="card-img-top" width="307" height="240">
-                                <div class="card-body">
-                                    <h5 class="card-title">Sunset</h5>
-                                    <p class="card-text">{{ maison.description }}</p>
-                                    <a href="{{ path('app_maison_show', {id: maison.id}) }}" class="btn btn-outline-success btn-sm">voir</a>
-                                    <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
-                                </div>
-                            </div>
-                        </div>
+                        {{ include('maison/_maison_card.html.twig') }}
                     {% endfor %}
+                    <div class="mt-4">
+                        {{ knp_pagination_render(maisons) }}
+                    </div>
                 </div>
-            {% endfor %}
+            </div>
         </div>
-    </section>
-    {{ knp_pagination_render(maisons) }}
+    </div>
 
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') | replace({'src=':'defer src='}) | raw }}
+    {% endblock %}
 
 {% endblock %}

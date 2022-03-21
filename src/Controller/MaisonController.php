@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
 use App\Entity\Maison;
 use App\Form\MaisonType;
+use App\Form\SearchForm;
 use App\Repository\MaisonRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -142,22 +144,17 @@ class MaisonController extends AbstractController
     /**
      * @Route("/all/maisons", name="app_maison_client", methods={"GET"})
      */
-    public function clientMaison(MaisonRepository $maisonRepository, PaginatorInterface $paginator, Request $request): Response
+    public function clientMaison(MaisonRepository $maisonRepository, Request $request): Response
     {
-        $données = $maisonRepository->findAll();
-        $maison = $paginator->paginate(
-            $données,
-            $request->query->getInt('page', 1), /*page number*/
-            6 /*limit per page*/
-        );
-        $maison->setCustomParameters([
-            'align' => 'center', # center|right (for template: twitter_bootstrap_v4_pagination and foundation_v6_pagination)
-            'size' => 'large', # small|large (for template: twitter_bootstrap_v4_pagination)
-            'style' => 'bottom',
-            'span_class' => 'whatever',
-        ]);
+
+        $data = new SearchData();
+        $data->page = $request->get('page', 1);
+        $form = $this->createForm(SearchForm::class, $data);
+        $form->handleRequest($request);
+        $maison = $maisonRepository->findSearch($data);
         return $this->render('maison/clientMaison.html.twig', [
             'maisons' => $maison,
+            'form' => $form->createView()
         ]);
     }
 }
