@@ -117,6 +117,12 @@ class MaisonRepository extends ServiceEntityRepository
                 ->andWhere('m.prix <= :max')
                 ->setParameter('max', $search->max);
         }
+
+        if (!empty($search->capacite)) {
+            $query = $query
+                ->andWhere('m.capacite = :capacite')
+                ->setParameter('capacite', $search->capacite);
+        }
         return $query;
 
     }

@@ -33,6 +33,11 @@ class SearchData
      */
     public $min;
 
+    /**
+     * @var null|integer
+     */
+    public $capacite;
+
 
 
 }
