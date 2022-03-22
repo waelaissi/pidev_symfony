@@ -38,6 +38,11 @@ class SearchData
      */
     public $capacite;
 
+    /**
+     * @var null|integer
+     */
+    public $nbChambre;
+
 
 
 }

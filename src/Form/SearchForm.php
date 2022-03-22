@@ -6,6 +6,7 @@ use App\Data\SearchData;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -62,11 +63,18 @@ class SearchForm extends AbstractType
                     'placeholder' => 'max'
                 ]
             ])
-            ->add('capacite', NumberType::class, [
+            ->add('capacite', IntegerType::class, [
                 'label' => false,
                 'required' => false,
                 'attr' => [
                     'placeholder' => 'Capacité'
+                ]
+            ])
+            ->add('nbChambre', IntegerType::class, [
+                'label' => false,
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Nombre de chambre'
                 ]
             ])
         ;

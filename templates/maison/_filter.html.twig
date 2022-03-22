@@ -17,13 +17,21 @@
         {{ form_row(form.max) }}
     </div>
 </div>
+
+<div id="prix-slider" data-min="{{ min }}" data-max="{{ max }}" class="mt-4 mb-4 ml-2"></div>
+
 <h4>Capacite</h4>
 <div class="row">
     {{ form_row(form.capacite) }}
 </div>
 
+<h4>Nombre de chambre</h4>
+<div class="row mb-4">
+    {{ form_row(form.nbChambre) }}
+</div>
 
-<div id="prix-slider" data-min="{{ min }}" data-max="{{ max }}" class="mt-4 mb-4 ml-2"></div>
+
+
 
 
 <button type="submit" class="btn btn-primary w-100">Filtrer</button>
