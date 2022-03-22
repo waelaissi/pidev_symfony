@@ -151,10 +151,13 @@ class MaisonController extends AbstractController
         $data->page = $request->get('page', 1);
         $form = $this->createForm(SearchForm::class, $data);
         $form->handleRequest($request);
+        [$min, $max] = $maisonRepository->findMinMax($data);
         $maison = $maisonRepository->findSearch($data);
         return $this->render('maison/clientMaison.html.twig', [
             'maisons' => $maison,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'min' => $min,
+            'max' => $max
         ]);
     }
 }

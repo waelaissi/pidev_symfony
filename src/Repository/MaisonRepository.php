@@ -7,6 +7,7 @@ use App\Entity\Maison;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -62,11 +63,36 @@ class MaisonRepository extends ServiceEntityRepository
     public function findSearch(SearchData $search): PaginationInterface
     {
 
+
+        $query = $this->getSearchQuery($search)->getQuery();
+        return $this->paginator->paginate(
+            $query,
+            $search->page,
+            6
+        );
+    }
+
+
+    /**
+     * Récupère le prix minimum et maximum correspondant à une recherche
+     * @return integer[]
+     */
+    public function findMinMax(SearchData $search): array
+    {
+        $results = $this->getSearchQuery($search, true)
+            ->select('MIN(m.prix) as min', 'MAX(m.prix) as max')
+            ->getQuery()
+            ->getScalarResult();
+        return [(int)$results[0]['min'], (int)$results[0]['max']];
+    }
+
+    private function getSearchQuery(SearchData $search, $ignorePrice = false): QueryBuilder
+    {
         $query = $this
             ->createQueryBuilder('m')
             ->select('m');
 
-            ;
+        ;
 
         if (!empty($search->q)) {
             $query = $query
@@ -74,23 +100,25 @@ class MaisonRepository extends ServiceEntityRepository
                 ->setParameter('q', "%{$search->q}%");
         }
 
-        if (!empty($search->min)) {
+        if (!empty($search->reg)) {
+            $query = $query
+                ->andWhere('m.region = :reg')
+                ->setParameter('reg', "%{$search->reg}%");
+        }
+
+        if (!empty($search->min) && ($ignorePrice === false)) {
             $query = $query
                 ->andWhere('m.prix >= :min')
                 ->setParameter('min', $search->min);
         }
 
-        if (!empty($search->max)) {
+        if (!empty($search->max) && ($ignorePrice === false)) {
             $query = $query
                 ->andWhere('m.prix <= :max')
                 ->setParameter('max', $search->max);
         }
-        $query = $query->getQuery();
-        return $this->paginator->paginate(
-            $query,
-            $search->page,
-            6
-        );
+        return $query;
+
     }
 
     // /**

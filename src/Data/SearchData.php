@@ -16,6 +16,12 @@ class SearchData
     public $q = '';
 
 
+    /**
+     * @var string
+     */
+    public $reg = '';
+
+
 
     /**
      * @var null|integer

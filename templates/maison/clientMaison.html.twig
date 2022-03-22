@@ -6,9 +6,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                {{ include('maison/_filter.html.twig') }}
+                {%  include('maison/_filter.html.twig') with {form: form, min: min, max: max} only%}
             </div>
             <div class="col-md-9">
+                <div class="d-flex justify-content-end mb-2">
+                    {{ knp_pagination_sortable(maisons, 'Prix', 'm.prix') }}
+                </div>
                 <div class="grid">
                     {% for maison in maisons %}
                         {{ include('maison/_maison_card.html.twig') }}

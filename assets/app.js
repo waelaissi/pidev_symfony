@@ -17,15 +17,17 @@ import 'nouislider/dist/nouislider.css';
 const slider = document.getElementById('prix-slider');
 
 if (slider){
-    const min = document.getElementById('min')
-    const max = document.getElementById('max')
+    const min = document.getElementById('min');
+    const max = document.getElementById('max');
+    const minValue = Math.floor(parseInt(slider.dataset.min, 10) / 10) * 10;
+    const maxValue = Math.ceil(parseInt(slider.dataset.max, 10) / 10) * 10;
     const range = noUiSlider.create(slider, {
-        start: [min.value || 0, max.value || 10000],
+        start: [min.value || minValue, max.value || maxValue],
         connect: true,
         step: 10,
         range: {
-            'min': 0,
-            'max': 10000
+            'min': minValue,
+            'max': maxValue
         }
     });
     range.on('slide', (values, handle) => {
