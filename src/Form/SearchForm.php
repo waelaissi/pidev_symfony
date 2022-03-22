@@ -47,16 +47,17 @@ class SearchForm extends AbstractType
                     'Tunis' => 'Tunis',
                 ],
                 'required' => false,
+                'label' => false,
             ])
 
-            ->add('min', NumberType::class, [
+            ->add('min', IntegerType::class, [
                 'label' => false,
                 'required' => false,
                 'attr' => [
                     'placeholder' => 'min'
                 ]
             ])
-            ->add('max', NumberType::class, [
+            ->add('max', IntegerType::class, [
                 'label' => false,
                 'required' => false,
                 'attr' => [

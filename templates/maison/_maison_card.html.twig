@@ -4,5 +4,7 @@
         <div class="card-title text-primary" style="font-weight: bold; font-size: 1.5rem;">{{ maison.prix|number_format(0, ',', '') }} Dt</div>
         <div class="text text-warning"></div>
         <p class="text text-muted">{{ maison.description }}</p>
+        <a href="{{ path('app_maison_show', {id: maison.id}) }}" class="btn btn-outline-success btn-sm">voir</a>
+        <a href="" class="btn btn-outline-danger btn-sm"><i class="fa fa-heart"></i></a>
     </div>
 </div>
