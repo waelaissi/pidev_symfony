@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Data\SearchHotelData;
 use App\Entity\Hotel;
 use App\Form\HotelType;
+use App\Form\SearchHotelForm;
 use App\Repository\HotelRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -26,20 +28,14 @@ class HotelController extends AbstractController
      */
     public function index(HotelRepository $hotelRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $données = $hotelRepository->findAll();
-        $hotels = $paginator->paginate(
-            $données,
-            $request->query->getInt('page', 1), /*page number*/
-            6 /*limit per page*/
-        );
-        $hotels->setCustomParameters([
-        'align' => 'center', # center|right (for template: twitter_bootstrap_v4_pagination and foundation_v6_pagination)
-        'size' => 'large', # small|large (for template: twitter_bootstrap_v4_pagination)
-        'style' => 'bottom',
-        'span_class' => 'whatever',
-    ]);
+        $data = new SearchHotelData();
+        $data->page = $request->get('page', 1);
+        $form = $this->createForm(SearchHotelForm::class, $data);
+        $form->handleRequest($request);
+        $hotels = $hotelRepository->findSearch($data);
         return $this->render('hotel/clientHotel.html.twig', [
-            'hotels' =>  $hotels
+            'hotels' =>  $hotels,
+            'form' => $form->createView(),
         ]);
     }
 

@@ -3,29 +3,30 @@
 {% block title "Hotels"%}
 
 {% block body %}
-    <section id="gallery">
-        <h1 class="mt-5 mb-3 text-center" style="color: #45ccb8">All hotels</h1>
-        <div class="container">
-            {% for row in hotels|batch(6) %}
-                <div class="row mb-5">
-                    {% for hotel in hotels %}
-                        <div class="col-lg-4 mb-4">
-                            <div class="card">
-                                <img src="{{ vich_uploader_asset(hotel) }}" alt="{{ hotel.libelle }}" class="card-img-top" width="307" height="240">
-                                <div class="card-body">
-                                    <h5 class="card-title">Sunset</h5>
-                                    <p class="card-text">{{ hotel.description }}</p>
-                                    <a href="{{ path('app_hotel_show', {id: hotel.id}) }}" class="btn btn-outline-success btn-sm">Voir</a>
-                                    <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                {%  include('hotel/_filter.html.twig') %}
+            </div>
+            <div class="col-md-9">
+                <div class="d-flex justify-content-end mb-2">
+                    {{ knp_pagination_sortable(hotels, 'Etoile', 'h.nbEtoiles') }}
                 </div>
-            {% endfor %}
+                <div class="grid">
+                    {% for hotel in hotels %}
+                        {{ include('hotel/_hotel_card.html.twig') }}
+                    {% endfor %}
+                    <div class="mt-4">
+                        {{ knp_pagination_render(hotels) }}
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
-    {{ knp_pagination_render(hotels) }}
+    </div>
 
+    {% block javascripts %}
+
+
+    {% endblock %}
 
 {% endblock %}

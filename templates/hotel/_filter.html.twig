@@ -1,0 +1,31 @@
+{{ form_start(form, {attr: {class: 'filter js-filter-form'}}) }}
+
+<div class="spinner-border js-loading" role="status" aria-hidden="true" style="display: none">
+    <span class="sr-only">Loading...</span>
+</div>
+
+{{ form_row(form.libelle) }}
+
+<h4>Region</h4>
+<div class="row">
+    {{ form_row(form.region) }}
+</div>
+
+
+<h4>ville</h4>
+<div class="row">
+    {{ form_row(form.ville) }}
+</div>
+
+<h4>Nombre d'etoile</h4>
+<div class="row mb-4">
+    {{ form_row(form.nbEtoile) }}
+</div>
+
+
+
+
+
+<button type="submit" class="btn btn-primary w-100">Filtrer</button>
+
+{{ form_end(form) }}

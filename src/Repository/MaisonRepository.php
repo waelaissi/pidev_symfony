@@ -56,7 +56,7 @@ class MaisonRepository extends ServiceEntityRepository
     }
 
     /**
-     * Récupère les produits en lien avec une recherche
+     * Récupère les maisons en lien avec une recherche
      * @return PaginationInterface
      */
 
@@ -102,7 +102,7 @@ class MaisonRepository extends ServiceEntityRepository
 
         if (!empty($search->reg)) {
             $query = $query
-                ->andWhere('m.region = :reg')
+                ->andWhere('m.region LIKE :reg')
                 ->setParameter('reg', "%{$search->reg}%");
         }
 
