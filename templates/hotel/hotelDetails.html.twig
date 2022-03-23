@@ -2,9 +2,6 @@
 
 {% block title hotel.libelle %}
 
-{% block stylesheets %}
-{% endblock %}
-
 {% block body %}
 
 
@@ -50,11 +47,40 @@
         </div>
     </main>
 
+    <div id="map" data-lat="{{ hotel.lat }}" data-lng="{{ hotel.lon }}">
 
+    </div>
 
 
     {% block javascripts %}
+        <script>
+            function initMap(){
+                var m = document.getElementById("map");
+                var lt = parseFloat(m.dataset.lat);
+                var lg = parseFloat(m.dataset.lng);
+                console.log(typeof lt , typeof lg);
+                var options = {
+                    zoom:6,
+                    center: { lat:35.65132289184805, lng:9.781743652402692}
+                }
+                var map = new google.maps.Map(m, options);
+
+                var marker = new google.maps.Marker({
+                    position: {lat: lt, lng: lg},
+                    map: map
+                })
+
+            }
+
+
+        </script>
+
+
+
 
     {% endblock %}
-
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA66hmcT-ywu6EbCUhCJ7QYMDU-F3-441w&callback=initMap&v=weekly"
+            async
+    ></script>
 {% endblock %}

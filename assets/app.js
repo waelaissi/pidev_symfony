@@ -42,4 +42,7 @@ if (slider){
 }
 
 
+
+console.log("map")
+
 console.log("wael JS")
