@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,15 +49,24 @@ class HotelController extends AbstractController
 
 
         $form = $this->createFormBuilder($hotel)
-            ->add('adresse', TextareaType::class)
-            ->add('ville')
-            ->add('region')
-            ->add('numTel', IntegerType::class)
-            ->add('description', TextareaType::class)
-            ->add('libelle')
-            ->add('nbEtoiles', IntegerType::class)
-            ->add('lat', IntegerType::class)
-            ->add('lon', IntegerType::class)
+            ->add('adresse', TextareaType::class, [
+                'label' => false])
+            ->add('ville',TextType::class, [
+                'label' => false])
+            ->add('region', TextType::class,[
+                'label' => false])
+            ->add('numTel', IntegerType::class, [
+                'label' => false])
+            ->add('description', TextareaType::class, [
+                'label' => false])
+            ->add('libelle', TextType::class,[
+                'label' => false])
+            ->add('nbEtoiles', IntegerType::class, [
+                'label' => false])
+            ->add('lat', IntegerType::class, [
+                'label' => false])
+            ->add('lon', IntegerType::class, [
+                'label' => false])
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Image (JPG or PNG)',
                 'required' => true,
@@ -64,7 +74,7 @@ class HotelController extends AbstractController
                 'download_uri' => false,
                 'imagine_pattern' => 'squared_thumbnail_small',
             ])
-            ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
+            ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info']])
             ->getForm();
 
 
@@ -103,13 +113,24 @@ class HotelController extends AbstractController
     public function edit(Request $request, Hotel $hotel, HotelRepository $hotelRepository): Response
     {
         $form = $this->createFormBuilder($hotel)
-            ->add('adresse', TextareaType::class)
-            ->add('ville')
-            ->add('region')
-            ->add('numTel', IntegerType::class)
-            ->add('description', TextareaType::class)
-            ->add('libelle')
-            ->add('nbEtoiles', IntegerType::class)
+            ->add('adresse', TextareaType::class, [
+                'label' => false])
+            ->add('ville', TextType::class, [
+                'label' => false])
+            ->add('region', TextType::class, [
+                'label' => false])
+            ->add('numTel', IntegerType::class, [
+                'label' => false])
+            ->add('description', TextareaType::class, [
+                'label' => false])
+            ->add('libelle', TextType::class, [
+                'label' => false])
+            ->add('nbEtoiles', IntegerType::class, [
+                'label' => false])
+            ->add('lat', IntegerType::class, [
+                'label' => false])
+            ->add('lon', IntegerType::class, [
+                'label' => false])
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Image (JPG or PNG)',
                 'required' => true,

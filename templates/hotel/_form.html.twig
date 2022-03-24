@@ -1,3 +1,53 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-{{ form_end(form) }}
+<div>
+    {{ form_start(form) }}
+        <div class="row">
+            <label for="adresse">Adresse</label>
+            {{ form_row(form.adresse) }}
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="ville">Ville</label>
+                {{ form_row(form.ville) }}
+            </div>
+            <div class="form-group col-md-6">
+                <label for="region">Region</label>
+                {{ form_row(form.region) }}
+            </div>
+        </div>
+
+
+        <div class="row">
+            <label for="region">Telephone</label>
+            {{ form_row(form.numTel) }}
+        </div>
+
+        <div class="row">
+            <label for="region">Description</label>
+            {{ form_row(form.description) }}
+        </div>
+
+        <div class="row">
+            <label for="libelle">Libelle</label>
+                {{ form_row(form.libelle) }}
+        </div>
+
+        <div class="row">
+            <label for="nbEtoiles">Etoile(s)</label>
+            {{ form_row(form.nbEtoiles) }}
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="latitude">Latitude</label>
+                {{ form_row(form.lat) }}
+            </div>
+            <div class="form-group col-md-6">
+                <label for="longitude">Longitude</label>
+                {{ form_row(form.lon) }}
+            </div>
+        </div>
+
+
+    {{ form_end(form) }}
+</div>
+
