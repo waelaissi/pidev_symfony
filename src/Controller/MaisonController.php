@@ -89,7 +89,7 @@ class MaisonController extends AbstractController
      */
     public function show(Maison $maison): Response
     {
-        return $this->render('maison/show.html.twig', [
+        return $this->render('maison/maisonDetails.html.twig', [
             'maison' => $maison,
         ]);
     }
