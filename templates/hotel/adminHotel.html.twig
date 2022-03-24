@@ -4,44 +4,47 @@
 
 {% block body %}
     <h1>Hotel index</h1>
-    <a href="{{ path('app_hotel_new') }}">Create new</a>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Adresse</th>
-            <th>Ville</th>
-            <th>Region</th>
-            <th>NumTel</th>
-            <th>Description</th>
-            <th>Libelle</th>
-            <th>NbEtoiles</th>
-            <th>Image</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for hotel in hotels %}
+    <div class="container">
+        <a href="{{ path('app_hotel_new') }}">Create new</a>
+        <table class="table">
+            <thead class="thead-light">
             <tr>
-                <td>{{ hotel.adresse }}</td>
-                <td>{{ hotel.ville }}</td>
-                <td>{{ hotel.region }}</td>
-                <td>{{ hotel.numTel }}</td>
-                <td>{{ hotel.description }}</td>
-                <td>{{ hotel.libelle }}</td>
-                <td>{{ hotel.nbEtoiles }}</td>
-                <td>{{ hotel.image }}</td>
-                <td>
-                    <a href="{{ path('app_hotel_edit', {'id': hotel.id}) }}">edit</a>
-                    <a href="{{ path('app_chambre_new', {'id': hotel.id}) }}">ajouter chambre</a>
-                </td>
+                <th scope="col">Adresse</th>
+                <th scope="col">Ville</th>
+                <th scope="col">Region</th>
+                <th scope="col">NumTel</th>
+                <th scope="col">Description</th>
+                <th scope="col">Libelle</th>
+                <th scope="col">NbEtoiles</th>
+                <th scope="col">Image</th>
+                <th scope="col">actions</th>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no hotels found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for hotel in hotels %}
+                <tr scope="row">
+                    <td>{{ hotel.adresse }}</td>
+                    <td>{{ hotel.ville }}</td>
+                    <td>{{ hotel.region }}</td>
+                    <td>{{ hotel.numTel }}</td>
+                    <td>{{ hotel.description }}</td>
+                    <td>{{ hotel.libelle }}</td>
+                    <td>{{ hotel.nbEtoiles }}</td>
+                    <td>{{ hotel.image }}</td>
+                    <td>
+                        <a href="{{ path('app_hotel_edit', {'id': hotel.id}) }}">edit</a>
+                        <a href="{{ path('app_chambre_new', {'id': hotel.id}) }}">ajouter chambre</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr scope="row">
+                    <td colspan="10">no hotels found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 
 
 {% endblock %}

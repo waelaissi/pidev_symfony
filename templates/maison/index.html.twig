@@ -4,27 +4,25 @@
 
 {% block body %}
     <h1>Mes maisons</h1>
-
+<div class="container">
     <a href="{{ path('app_maison_new') }}">Create new</a>
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Adresse</th>
-                <th>Region</th>
-                <th>NumTel</th>
-                <th>Description</th>
-                <th>Capacite</th>
-                <th>NbChambres</th>
-                <th>Prix</th>
-                <th>Image</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th scope="col">Adresse</th>
+            <th scope="col">Region</th>
+            <th scope="col">NumTel</th>
+            <th scope="col">Description</th>
+            <th scope="col">Capacite</th>
+            <th scope="col">NbChambres</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Image</th>
+            <th scope="col">actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for maison in maisons %}
-            <tr>
-                <td>{{ maison.id }}</td>
+            <tr scope="row">
                 <td>{{ maison.adresse }}</td>
                 <td>{{ maison.region }}</td>
                 <td>{{ maison.numTel }}</td>
@@ -39,12 +37,14 @@
                 </td>
             </tr>
         {% else %}
-            <tr>
+            <tr scope="row">
                 <td colspan="10">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+</div>
+
 
 
 {% endblock %}
