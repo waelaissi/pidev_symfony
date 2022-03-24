@@ -63,6 +63,7 @@ class MaisonController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //$maison->getIdUser($this->getUser());
             $maisonRepository->add($maison);
+            $this->addFlash('success', 'Maison ajouter avec succées !');
 
             //sending email confirmation
             $email = (new Email())
@@ -120,6 +121,7 @@ class MaisonController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $maisonRepository->add($maison);
+            $this->addFlash('info', 'Maison modifier avec succées !');
             return $this->redirectToRoute('app_maison_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -136,6 +138,7 @@ class MaisonController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$maison->getId(), $request->request->get('_token'))) {
             $maisonRepository->remove($maison);
+            $this->addFlash('error', 'Maison supprimer avec succées !');
         }
 
         return $this->redirectToRoute('app_maison_index', [], Response::HTTP_SEE_OTHER);
