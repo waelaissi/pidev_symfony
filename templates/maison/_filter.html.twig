@@ -34,10 +34,16 @@
     {{ form_row(form.nbChambre) }}
 </div>
 
+<div class="row">
+    <div class="col">
+        <h4>Maison d'accueil : </h4>
+    </div>
+    <div class="col-md-4">
+        {{ form_row(form.maisonAc) }}
+    </div>
+</div>
 
 
-
-
-<button type="submit" class="btn btn-primary w-100">Filtrer</button>
+<button type="submit" class="btn btn-primary w-100 mt-2">Filtrer</button>
 
 {{ form_end(form) }}

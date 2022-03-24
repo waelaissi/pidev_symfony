@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Data\SearchData;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -77,6 +78,10 @@ class SearchForm extends AbstractType
                 'attr' => [
                     'placeholder' => 'Nombre de chambre'
                 ]
+            ])
+            ->add('maisonAc', CheckboxType::class, [
+                'label' => false,
+                'required' => false,
             ])
         ;
     }

@@ -129,6 +129,11 @@ class MaisonRepository extends ServiceEntityRepository
                 ->andWhere('m.nbChambres = :nbChambre')
                 ->setParameter('nbChambre', $search->nbChambre);
         }
+
+        if (!empty($search->maisonAc)) {
+            $query = $query
+                ->andWhere('m.prix = 0');
+        }
         return $query;
 
     }

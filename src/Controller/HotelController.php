@@ -55,6 +55,8 @@ class HotelController extends AbstractController
             ->add('description', TextareaType::class)
             ->add('libelle')
             ->add('nbEtoiles', IntegerType::class)
+            ->add('lat', IntegerType::class)
+            ->add('lon', IntegerType::class)
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Image (JPG or PNG)',
                 'required' => true,
@@ -76,7 +78,7 @@ class HotelController extends AbstractController
 
             $this->addFlash('success', 'Hotel ajouter avec succées !');
 
-            return $this->redirectToRoute('app_hotel_index');
+            return $this->redirectToRoute('app_admin_hotel');
         }
 
         return $this->render('hotel/new.html.twig', [

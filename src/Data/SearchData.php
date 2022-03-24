@@ -43,6 +43,11 @@ class SearchData
      */
     public $nbChambre;
 
+    /**
+     * @var boolean
+     */
+    public $maisonAc = false;
+
 
 
 }
