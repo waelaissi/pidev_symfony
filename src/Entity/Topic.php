@@ -101,7 +101,7 @@ class Topic
 
         return $this;
     }
-       
+
     public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
