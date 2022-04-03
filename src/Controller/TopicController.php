@@ -95,16 +95,20 @@ class TopicController extends AbstractController
 
 
     /**
-     * @Route("/{idtopic}", name="app_topic_delete", methods={"POST"})
+     * @Route("/{idtopic}/{user}", name="app_topic_delete", methods={"POST"})
      */
-    public function delete(Request $request, Topic $topic, TopicRepository $topicRepository): Response
+    public function delete(Request $request, Topic $topic, TopicRepository $topicRepository,Utilisateur $user): Response
     {  // dump($this->getUser());
+        if ($user->getId() == $topic->getIduser()->getId()) {
+
 
             if ($this->isCsrfTokenValid('delete' . $topic->getIdtopic(), $request->request->get('_token'))) {
                 $topicRepository->remove($topic);
             }
 
 
+            return $this->redirectToRoute('app_topic_index', [], Response::HTTP_SEE_OTHER);
+        }
         return $this->redirectToRoute('app_topic_index', [], Response::HTTP_SEE_OTHER);
     }
 }

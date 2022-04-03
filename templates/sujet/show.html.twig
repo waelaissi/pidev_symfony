@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sujet{% endblock %}
+
+{% block body %}
+    <h1>Sujet</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Idsujet</th>
+                <td>{{ sujet.idsujet }}</td>
+            </tr>
+            <tr>
+                <th>Titresujet</th>
+                <td>{{ sujet.titresujet }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ sujet.contenu }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ sujet.date ? sujet.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Accepter</th>
+                <td>{{ sujet.accepter }}</td>
+            </tr>
+            <tr>
+                <th>Nbcom</th>
+                <td>{{ sujet.nbcom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_sujet_index') }}">back to list</a>
+
+    <a href="{{ path('app_sujet_edit', {'idsujet': sujet.idsujet}) }}">edit</a>
+
+    {{ include('sujet/_delete_form.html.twig') }}
+{% endblock %}
