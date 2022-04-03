@@ -116,7 +116,12 @@ class Utilisateur
     {
         return $this->id;
     }
+    public function setId(int $id): self
+    {
+        $this->id = $id;
 
+        return $this;
+    }
     public function getLogin(): ?string
     {
         return $this->login;
@@ -272,6 +277,9 @@ class Utilisateur
 
         return $this;
     }
-
+    public function __toString()
+    {
+        return (string) $this->getNom();
+    }
 
 }

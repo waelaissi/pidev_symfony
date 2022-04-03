@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Topic{% endblock %}
+
+{% block body %}
+    <h1>Topic</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Idtopic</th>
+                <td>{{ topic.idtopic }}</td>
+            </tr>
+            <tr>
+                <th>Titretopic</th>
+                <td>{{ topic.titretopic }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ topic.description }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ topic.date ? topic.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Accepter</th>
+                <td>{{ topic.accepter ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Nbsujet</th>
+                <td>{{ topic.nbsujet }}</td>
+            </tr>
+            <tr>
+                <th>Hide</th>
+                <td>{{ topic.hide }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_topic_index') }}">back to list</a>
+
+    <a href="{{ path('app_topic_edit', {'idtopic': topic.idtopic,'user':33}) }}">edit</a>
+
+    {{ include('topic/_delete_form.html.twig') }}
+{% endblock %}
