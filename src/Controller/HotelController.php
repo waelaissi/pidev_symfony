@@ -50,7 +50,9 @@ class HotelController extends AbstractController
 
         $form = $this->createFormBuilder($hotel)
             ->add('adresse', TextareaType::class, [
-                'label' => false])
+                'label' => false,
+                'required' => false,
+                ])
             ->add('ville',TextType::class, [
                 'label' => false])
             ->add('region', TextType::class,[
@@ -74,7 +76,8 @@ class HotelController extends AbstractController
                 'download_uri' => false,
                 'imagine_pattern' => 'squared_thumbnail_small',
             ])
-            ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info']])
+            ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info',
+                'formnovalidate' => "formnovalidate"],])
             ->getForm();
 
 
