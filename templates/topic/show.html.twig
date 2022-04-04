@@ -3,7 +3,7 @@
 {% block title %}Topic{% endblock %}
 
 {% block body %}
-    <a href="{{ path('app_topic_index') }}">back to list</a>
+    <a class="btn btn-outline-secondary" href="{{ path('app_topic_index') }}">back to list Topic</a>
     <h1>Detail Topic : </h1>
 
     <table class="table">
@@ -27,7 +27,44 @@
         </tbody>
     </table>
 
+    <h1>Sujet index</h1>
+    <a class="btn btn-outline-primary" href="{{ path('app_sujet_new',{'idtopic': topic.idtopic}) }}">Ajouter Sujet</a>
 
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th bgcolor="#fff8dc" >Titre De Sujet</th>
+            <th bgcolor="#fff8dc">Description</th>
+            <th bgcolor="#fff8dc">Date</th>
+            <th bgcolor="#fff8dc">Nombre de Commentaires</th>
+            <th bgcolor="#fff8dc" colspan="2">actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sujet in sujets %}
+            <tr>
+
+                <td><a href="{{ path('app_sujet_show', {'idtopic': topic.idtopic,'idsujet': sujet.idsujet}) }}">{{ sujet.titresujet }}</a></td>
+                <td>{{ sujet.contenu }}</td>
+                <td>{{ sujet.date ? sujet.date|date('Y-m-d') : '' }}</td>
+
+                <td>{{ sujet.nbcom }}</td>
+                {% if(sujet.iduser.getId==33) %}
+                <td style="display:flex" >
+                    <a class="btn btn-primary" href="{{ path('app_sujet_edit', {'idsujet': sujet.idsujet,'user': 33}) }}">edit</a>
+                    {{ include('sujet/_delete_form.html.twig',{'idtopic': topic.idtopic}) }}
+
+                </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 
 

@@ -3,20 +3,21 @@
 {% block title %}Topic index{% endblock %}
 
 {% block body %}
-    <a href="{{ path('app_topic_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('app_topic_new') }}">Ajouter Topic</a>
     <h1>Liste de Topics</h1>
 
     <table class="table">
         <thead>
             <tr>
 
-                <th>Titretopic</th>
-                <th>Description</th>
-                <th>Date</th>
+                <th bgcolor="#fff8dc">Titre De Topic</th>
+                <th bgcolor="#fff8dc">Description</th>
+                <th bgcolor="#fff8dc">Date</th>
 
-                <th>Nbsujet</th>
+                <th bgcolor="#fff8dc">Nombre de Sujet</th>
 
-                <th>actions</th>
+                <th bgcolor="#fff8dc" colspan="2">actions</th>
+
             </tr>
         </thead>
         <tbody>
@@ -29,14 +30,12 @@
 
                 <td>{{ topic.nbsujet }}</td>
 
-                <td>
+                <td style="display:flex">
 
-                    <a href="{{ path('app_topic_edit', {'idtopic': topic.idtopic,'user': 33}) }}">edit</a>
-
-                </td>
-                <td>
+                    <a class="btn btn-primary" href="{{ path('app_topic_edit', {'idtopic': topic.idtopic,'user': 33}) }}">edit</a>
                     {{ include('topic/_delete_form.html.twig') }}
                 </td>
+
             </tr>
         {% else %}
             <tr>

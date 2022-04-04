@@ -13,6 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Sujet|null findOneBy(array $criteria, array $orderBy = null)
  * @method Sujet[]    findAll()
  * @method Sujet[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+
  */
 class SujetRepository extends ServiceEntityRepository
 {
@@ -45,22 +46,26 @@ class SujetRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Sujet[] Returns an array of Sujet objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByidtopic(int $value) : array
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+            ->andWhere('s.idtopic = :val')
             ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    public function setnbtopic(int $value,int $id) : void
+    {
+        $entityManager=$this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder
+            ->update('App\Entity\Topic', 'u')
+            ->set('u.nbsujet',$value+1)
+            ->where($queryBuilder->expr()->eq('u.idtopic', $id));
+
+    }
+
 
     /*
     public function findOneBySomeField($value): ?Sujet

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Topic;
 use App\Entity\Utilisateur;
 use App\Form\TopicType;
+use App\Repository\SujetRepository;
 use App\Repository\TopicRepository;
 use App\Repository\UtilisateurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,6 +37,7 @@ class TopicController extends AbstractController
         $user=$userRepository->find(33);
         dump($user);
         $topic->setIduser($user);
+        $topic->setDate(new \DateTime('now'));
         $form = $this->createForm(TopicType::class, $topic);
         $form->handleRequest($request);
 
@@ -53,12 +55,13 @@ class TopicController extends AbstractController
     /**
      * @Route("/{idtopic}", name="app_topic_show", methods={"GET"})
      */
-    public function show(Topic $topic): Response
+    public function show(Topic $topic,SujetRepository $sujetRepository): Response
     {
 
         return $this->render('topic/show.html.twig', [
-            'topic' => $topic,
+            'topic' => $topic, 'sujets' => $sujetRepository->findByidtopic($topic->getIdtopic())
         ]);
+
     }
 
     /**

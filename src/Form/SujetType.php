@@ -14,11 +14,6 @@ class SujetType extends AbstractType
         $builder
             ->add('titresujet')
             ->add('contenu')
-            ->add('date')
-            ->add('accepter')
-            ->add('nbcom')
-            ->add('iduser')
-            ->add('idtopic')
         ;
     }
 

@@ -1,4 +1,15 @@
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div class="form-group">
+    {{ form_label(form.titretopic,'Titre Topic :') }}
+    {{ form_widget(form.titretopic) }}
+    {{ form_errors(form.titretopic) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.description,'Description Topic :') }}
+    {{ form_widget(form.description) }}
+    {{ form_errors(form.description) }}
+</div>
+    <button class="btn btn-outline-primary">{{ button_label|default('Ajouter Topic') }}</button>
 {{ form_end(form) }}
