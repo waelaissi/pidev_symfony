@@ -30,7 +30,7 @@
                     <td>{{ hotel.description }}</td>
                     <td>{{ hotel.libelle }}</td>
                     <td>{{ hotel.nbEtoiles }}</td>
-                    <td>{{ hotel.image }}</td>
+                    <td><img src="{{ vich_uploader_asset(hotel) | imagine_filter('squared_thumbnail_small')}}" alt="{{ hotel.libelle }}" class="card-img-top"></td>
                     <td>
                         <a href="{{ path('app_hotel_edit', {'id': hotel.id}) }}">edit</a>
                         <a href="{{ path('app_chambre_new', {'id': hotel.id}) }}">ajouter chambre</a>
