@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Voiture
  *
- * @ORM\Table(name="voiture", indexes={@ORM\Index(name="id_categorie", columns={"id_categorie"}), @ORM\Index(name="id_user", columns={"id_user"})})
- * @ORM\Entity(repositoryClass="App\Repository\VoitureRepository")
+ * @ORM\Table(name="voiture", indexes={@ORM\Index(name="id_user", columns={"id_user"}), @ORM\Index(name="id_categorie", columns={"id_categorie"})})
+ * @ORM\Entity
  */
 class Voiture
 {
@@ -71,16 +71,6 @@ class Voiture
     private $prix;
 
     /**
-     * @var \Categorie
-     *
-     * @ORM\ManyToOne(targetEntity="Categorie")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_categorie", referencedColumnName="id")
-     * })
-     */
-    private $idCategorie;
-
-    /**
      * @var \Utilisateur
      *
      * @ORM\ManyToOne(targetEntity="Utilisateur")
@@ -89,6 +79,16 @@ class Voiture
      * })
      */
     private $idUser;
+
+    /**
+     * @var \Categorie
+     *
+     * @ORM\ManyToOne(targetEntity="Categorie")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_categorie", referencedColumnName="id")
+     * })
+     */
+    private $idCategorie;
 
     public function getId(): ?int
     {
@@ -179,18 +179,6 @@ class Voiture
         return $this;
     }
 
-    public function getIdCategorie(): ?Categorie
-    {
-        return $this->idCategorie;
-    }
-
-    public function setIdCategorie(?Categorie $idCategorie): self
-    {
-        $this->idCategorie = $idCategorie;
-
-        return $this;
-    }
-
     public function getIdUser(): ?Utilisateur
     {
         return $this->idUser;
@@ -199,6 +187,18 @@ class Voiture
     public function setIdUser(?Utilisateur $idUser): self
     {
         $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    public function getIdCategorie(): ?Categorie
+    {
+        return $this->idCategorie;
+    }
+
+    public function setIdCategorie(?Categorie $idCategorie): self
+    {
+        $this->idCategorie = $idCategorie;
 
         return $this;
     }

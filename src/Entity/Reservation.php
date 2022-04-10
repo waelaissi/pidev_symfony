@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Reservation
  *
- * @ORM\Table(name="reservation", indexes={@ORM\Index(name="fk_resvoiture", columns={"id_voiture"}), @ORM\Index(name="id_maison", columns={"id_maison"}), @ORM\Index(name="fkchambre", columns={"id_chambre"}), @ORM\Index(name="id_ticket", columns={"id_ticket"}), @ORM\Index(name="id_transaction", columns={"id_transaction"}), @ORM\Index(name="id_user", columns={"id_user"})})
- * @ORM\Entity(repositoryClass="App\Repository\ReservationRepository")
+ * @ORM\Table(name="reservation", indexes={@ORM\Index(name="fk_resvoiture", columns={"id_voiture"}), @ORM\Index(name="id_ticket", columns={"id_ticket"}), @ORM\Index(name="fkchambre", columns={"id_chambre"}), @ORM\Index(name="id_user", columns={"id_user"}), @ORM\Index(name="id_transaction", columns={"id_transaction"}), @ORM\Index(name="id_maison", columns={"id_maison"})})
+ * @ORM\Entity
  */
 class Reservation
 {
@@ -92,16 +92,6 @@ class Reservation
     private $type;
 
     /**
-     * @var \Chambre
-     *
-     * @ORM\ManyToOne(targetEntity="Chambre")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_chambre", referencedColumnName="id")
-     * })
-     */
-    private $idChambre;
-
-    /**
      * @var \Voiture
      *
      * @ORM\ManyToOne(targetEntity="Voiture")
@@ -110,6 +100,16 @@ class Reservation
      * })
      */
     private $idVoiture;
+
+    /**
+     * @var \Chambre
+     *
+     * @ORM\ManyToOne(targetEntity="Chambre")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_chambre", referencedColumnName="id")
+     * })
+     */
+    private $idChambre;
 
     public function getId(): ?int
     {
@@ -236,18 +236,6 @@ class Reservation
         return $this;
     }
 
-    public function getIdChambre(): ?Chambre
-    {
-        return $this->idChambre;
-    }
-
-    public function setIdChambre(?Chambre $idChambre): self
-    {
-        $this->idChambre = $idChambre;
-
-        return $this;
-    }
-
     public function getIdVoiture(): ?Voiture
     {
         return $this->idVoiture;
@@ -256,6 +244,18 @@ class Reservation
     public function setIdVoiture(?Voiture $idVoiture): self
     {
         $this->idVoiture = $idVoiture;
+
+        return $this;
+    }
+
+    public function getIdChambre(): ?Chambre
+    {
+        return $this->idChambre;
+    }
+
+    public function setIdChambre(?Chambre $idChambre): self
+    {
+        $this->idChambre = $idChambre;
 
         return $this;
     }

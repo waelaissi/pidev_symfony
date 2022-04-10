@@ -6,6 +6,7 @@ use App\Entity\Topic;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class TopicType extends AbstractType
 {
@@ -14,6 +15,13 @@ class TopicType extends AbstractType
         $builder
             ->add('titretopic')
             ->add('description')
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Image (JPG or PNG)',
+                'required' => true,
+                'allow_delete' => true,
+                'download_uri' => false,
+
+            ])
         ;
     }
 

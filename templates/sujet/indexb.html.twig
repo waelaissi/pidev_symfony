@@ -1,0 +1,80 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Topic{% endblock %}
+
+{% block body %}
+
+
+
+<div class="db-info-wrap">
+    <div class="product-outer-wrap">
+        <a class="fa fa-arrow-left fa-4x" href="{{ path('app_topic_indexadmin') }}"></a>
+    <h1>Detail Topic : </h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Titre De Topic :</th>
+            <td>{{ topic.titretopic }}</td>
+        </tr>
+        <tr>
+            <th>Description :</th>
+            <td>{{ topic.description }}</td>
+        </tr>
+        <tr>
+            <th>Date :</th>
+            <td>{{ topic.date ? topic.date|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Utilisateur :</th>
+            <td>{{ topic.iduser.login }} </td>
+        </tr>
+        <tr>
+            <th>Nombre De Sujets :</th>
+            <td>{{ topic.nbsujet }} </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h1>Liste des Sujets</h1>
+
+
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th bgcolor="#fff8dc" >Titre De Sujet</th>
+            <th bgcolor="#fff8dc">Description</th>
+            <th bgcolor="#fff8dc">Date</th>
+            <th bgcolor="#fff8dc">Nombre de Commentaires</th>
+            <th bgcolor="#fff8dc" colspan="2">actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sujet in sujets %}
+            <tr>
+
+                <td><a href="{{ path('app_sujet_showb', {'idtopic': topic.idtopic,'idsujet': sujet.idsujet}) }}">{{ sujet.titresujet }}</a></td>
+                <td>{{ sujet.contenu }}</td>
+                <td>{{ sujet.date ? sujet.date|date('Y-m-d') : '' }}</td>
+
+                <td>{{ sujet.nbcom }}</td>
+
+                    <td style="display:flex" >
+                        {{ include('sujet/_delete_form.html.twig',{'idtopic': topic.idtopic}) }}
+
+                    </td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+
+
+{% endblock %}

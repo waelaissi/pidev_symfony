@@ -9,11 +9,11 @@
         <thead>
             <tr>
                 <th>Idsujet</th>
-                <th>Titresujet</th>
-                <th>Contenu</th>
+                <th>Titre du sujet</th>
+                <th>Description</th>
                 <th>Date</th>
                 <th>Accepter</th>
-                <th>Nbcom</th>
+                <th>Nombre Commentaires</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -24,6 +24,7 @@
                 <td>{{ sujet.titresujet }}</td>
                 <td>{{ sujet.contenu }}</td>
                 <td>{{ sujet.date ? sujet.date|date('Y-m-d') : '' }}</td>
+
                 <td>{{ sujet.accepter }}</td>
                 <td>{{ sujet.nbcom }}</td>
                 <td>

@@ -27,7 +27,15 @@ class SujetController extends AbstractController
             'topic' => $topic, 'sujets' => $sujetRepository->findByidtopic($topic->getIdtopic()),
         ]);
     }
-
+    /**
+     * @Route("/admin/{idtopic}", name="app_sujet_indexb", methods={"GET"})
+     */
+    public function indexb(SujetRepository $sujetRepository,Topic $topic): Response
+    {
+        return $this->render('sujet/indexb.html.twig', [
+            'topic' => $topic, 'sujets' => $sujetRepository->findByidtopic($topic->getIdtopic()),
+        ]);
+    }
     /**
      * @Route("/{idtopic}/new", name="app_sujet_new", methods={"GET", "POST"})
      */
@@ -66,6 +74,15 @@ class SujetController extends AbstractController
             'sujet' => $sujet,'topic'=>$topic
         ]);
     }
+    /**
+     * @Route("/admin/{idtopic}/{idsujet}", name="app_sujet_showb", methods={"GET"})
+     */
+    public function showb(Sujet $sujet,Topic $topic): Response
+    {
+        return $this->render('sujet/showb.html.twig', [
+            'sujet' => $sujet,'topic'=>$topic
+        ]);
+    }
 
     /**
      * @Route("/{idsujet}/{user}/edit/", name="app_sujet_edit", methods={"GET", "POST"})
@@ -87,7 +104,7 @@ class SujetController extends AbstractController
     }
 
     /**
-     * @Route("/{idtopic}/{idsujet}", name="app_sujet_delete", methods={"POST"})
+     * @Route("/admin/{idtopic}/{idsujet}", name="app_sujet_delete", methods={"POST"})
      */
     public function delete(Request $request, Sujet $sujet, SujetRepository $sujetRepository,Topic $topic): Response
     {
@@ -97,6 +114,20 @@ class SujetController extends AbstractController
 
         }
 
-        return $this->redirectToRoute('app_sujet_index', ['idtopic'=> $topic->getIdtopic()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_sujet_indexb', ['idtopic'=> $topic->getIdtopic()], Response::HTTP_SEE_OTHER);
     }
+    /**
+     * @Route("/{idtopic}/{idsujet}/delete", name="app_sujet_deletef", methods={"GET"})
+     */
+    public function deletef(Request $request, Sujet $sujet, SujetRepository $sujetRepository,Topic $topic): Response
+    {
+
+            $topic->setNbsujet($topic->getNbsujet()-1);
+            $sujetRepository->remove($sujet);
+
+
+
+        return $this->redirectToRoute('app_topic_show', ['idtopic'=> $topic->getIdtopic()], Response::HTTP_SEE_OTHER);
+    }
+
 }

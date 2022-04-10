@@ -3,7 +3,42 @@
 {% block title %}Sujet{% endblock %}
 
 {% block body %}
-    <a class="btn btn-outline-secondary" href="{{ path('app_sujet_index', {'idtopic': topic.idtopic,'idsujet': sujet.idsujet}) }}">back to list</a>
+
+
+    <section class="inner-banner-wrap">
+        <div class="inner-baner-container" >
+            <div class="container">
+                <div class="inner-banner-content">
+                    <h1 class="inner-title">{{ sujet.titresujet }}</h1>
+                    <div class="entry-meta">
+                           <span class="byline">
+                               <i class="fa fa-user" aria-hidden="true">  {{ sujet.iduser.login }}</i>
+                           </span>
+                        <span class="posted-on">
+                             <i class="fa fa-calendar" aria-hidden="true">  {{ sujet.date ? topic.date|date('Y-m-d') : '' }}</i>
+                           </span>
+                        {% if( sujet.nbcom>1) %}
+                            <span class="comments-link">
+                                                <i class="fa fa-comments" aria-hidden="true">  {{ sujet.nbcom }} Commentaires</i>
+                                             <label href="#"></label>
+                                          </span>
+                        {% elseif( sujet.nbcom<2) %}
+                            <span class="comments-link">
+                                                <i class="fa fa-comment" aria-hidden="true">  {{ sujet.nbcom}} Commentaire</i>
+                                             <label href="#"></label>
+                                          </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="inner-shape"></div>
+        <a class="fa fa-arrow-left fa-5x" href="{{ path('app_topic_show',{'idtopic':topic.idtopic}) }}"></a>
+
+    </section>
+
+
+
     <h1>Sujet</h1>
 
     <table class="table">

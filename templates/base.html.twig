@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            <link rel="icon" type="image/png" href={{ asset('front/assets/images/favicon.png')}}>
-            <!-- Bootstrap CSS -->
-            <link rel="stylesheet" href={{ asset('front/assets/vendors/bootstrap/css/bootstrap.min.css') }} media="all">
-            <!-- Fonts Awesome CSS -->
-            <link rel="stylesheet" type="text/css" href={{ asset('front/assets/vendors/fontawesome/css/all.min.css') }}>
-            <!-- jquery-ui css -->
-            <link rel="stylesheet" type="text/css" href={{ asset('front/assets/vendors/jquery-ui/jquery-ui.min.css') }}>
-            <!-- modal video css -->
-            <link rel="stylesheet" type="text/css" href={{ asset('front/assets/vendors/modal-video/modal-video.min.css') }}>
-            <!-- light box css -->
-            <link rel="stylesheet" type="text/css" href={{ asset('front/assets/vendors/lightbox/dist/css/lightbox.min.css') }}>
-            <!-- slick slider css -->
-            <link rel="stylesheet" type="text/css" href={{ asset('front/assets/vendors/slick/slick.css')}}>
-            <link rel="stylesheet" type="text/css" href={{ asset('front/assets/vendors/slick/slick-theme.css')}}>
-            <!-- google fonts -->
-            <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
-            <!-- Custom CSS -->
-            <link rel="stylesheet" type="text/css" href={{ asset('front/style.css') }}>
-        {% endblock %}
+    {% block stylesheets %}
+        <link rel="icon" type="image/png" href={{ asset('front/assets/images/favicon.png')}}>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href={{ asset('front/assets/vendors/bootstrap/css/bootstrap.min.css') }} media="all">
+        <!-- Fonts Awesome CSS -->
+        <link rel="stylesheet" type="text/css" href={{ asset('front/assets/vendors/fontawesome/css/all.min.css') }}>
+        <!-- jquery-ui css -->
+        <link rel="stylesheet" type="text/css" href={{ asset('front/assets/vendors/jquery-ui/jquery-ui.min.css') }}>
+        <!-- modal video css -->
+        <link rel="stylesheet" type="text/css" href={{ asset('front/assets/vendors/modal-video/modal-video.min.css') }}>
+        <!-- light box css -->
+        <link rel="stylesheet" type="text/css" href={{ asset('front/assets/vendors/lightbox/dist/css/lightbox.min.css') }}>
+        <!-- slick slider css -->
+        <link rel="stylesheet" type="text/css" href={{ asset('front/assets/vendors/slick/slick.css')}}>
+        <link rel="stylesheet" type="text/css" href={{ asset('front/assets/vendors/slick/slick-theme.css')}}>
+        <!-- google fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link rel="stylesheet" type="text/css" href={{ asset('front/style.css') }}>
+    {% endblock %}
 
-        {% block javascripts %}
-            <script src={{ asset('front/assets/js/jquery.js') }}></script>
-            <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
-            <script src={{ asset('front/assets/vendors/bootstrap/js/bootstrap.min.js') }}></script>
-            <script src={{ asset('fornt/assets/vendors/jquery-ui/jquery-ui.min.js') }}></script>
-            <script src={{ asset('front/assets/vendors/countdown-date-loop-counter/loopcounter.js')}}></script>
-            <script src={{ asset('front/assets/js/jquery.counterup.js')}}></script>
-            <script src={{ asset('front/assets/vendors/modal-video/jquery-modal-video.min.js')}}></script>
-            <script src={{ asset('front/assets/vendors/masonry/masonry.pkgd.min.js')}}></script>
-            <script src={{ asset('front/assets/vendors/lightbox/dist/js/lightbox.min.js')}}></script>
-            <script src={{ asset('front/assets/vendors/slick/slick.min.js')}}></script>
-            <script src={{ asset('front/assets/js/jquery.slicknav.js')}}></script>
-            <script src={{ asset('front/assets/js/custom.min.js')}}></script>
-        {% endblock %}
-    </head>
-    <div id="siteLoader" class="site-loader">
-        <div class="preloader-content">
-            <img src={{ asset('front/assets/images/loader1.gif')}} alt="">
-        </div>
+    {% block javascripts %}
+        <script src={{ asset('front/assets/js/jquery.js') }}></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+        <script src={{ asset('front/assets/vendors/bootstrap/js/bootstrap.min.js') }}></script>
+        <script src={{ asset('fornt/assets/vendors/jquery-ui/jquery-ui.min.js') }}></script>
+        <script src={{ asset('front/assets/vendors/countdown-date-loop-counter/loopcounter.js')}}></script>
+        <script src={{ asset('front/assets/js/jquery.counterup.js')}}></script>
+        <script src={{ asset('front/assets/vendors/modal-video/jquery-modal-video.min.js')}}></script>
+        <script src={{ asset('front/assets/vendors/masonry/masonry.pkgd.min.js')}}></script>
+        <script src={{ asset('front/assets/vendors/lightbox/dist/js/lightbox.min.js')}}></script>
+        <script src={{ asset('front/assets/vendors/slick/slick.min.js')}}></script>
+        <script src={{ asset('front/assets/js/jquery.slicknav.js')}}></script>
+        <script src={{ asset('front/assets/js/custom.min.js')}}></script>
+    {% endblock %}
+</head>
+<div id="siteLoader" class="site-loader">
+    <div class="preloader-content">
+        <img src={{ asset('front/assets/images/loader1.gif')}} alt="">
     </div>
+</div>
 
-    <header class="site-header header-primary">
+<header class="site-header header-primary">
     {% block header %}
 
         <div class="top-header">
@@ -91,7 +91,7 @@
                 <div class="site-identity">
                     <h1 class="site-title">
                         <a href="index.html">
-                            <img src={{ asset('front/assets/images/travele-logo.png')}} alt="logo">
+                            <img src={{ asset('assets/images/logo.png')}} alt="logo">
                         </a>
                     </h1>
                 </div>
@@ -191,18 +191,17 @@
                                     <li>
                                         <a href="product-cart.html">Shop Cart</a>
                                     </li>
-                                    <li>
-                                        <a href="product-checkout.html">Shop Checkout</a>
-                                    </li>
+
                                 </ul>
                             </li>
                             <li class="menu-item-has-children">
                                 <a href="#">Blog</a>
                                 <ul>
-                                    <li><a href="blog-archive.html">Blog List</a></li>
-                                    <li><a href="blog-archive-left.html">Blog Left Sidebar</a></li>
-                                    <li><a href="blog-archive-both.html">Blog Both Sidebar</a></li>
-                                    <li><a href="blog-single.html">Blog Single</a></li>
+                                    <li>
+                                        <a href="{{ path('app_topic_new') }}">Ajouter Topic</a>
+                                    </li>
+                                    <li><a href="{{ path('app_topic_index') }}">Topics List</a></li>
+
                                 </ul>
                             </li>
 
@@ -216,34 +215,14 @@
         </div>
         <div class="mobile-menu-container"></div>
 
-            {% endblock %}
-        </header>
-    <main id="content" class="site-main">
-        <!-- Home slider html start -->
-        <section class="home-slider-section">
-            <div class="home-slider">
-                <div class="home-banner-items">
-                    <div class="banner-inner-wrap" style="background-image: url({{ asset('front/assets/images/slider-banner-1.jpg')}});"></div>
-                    <div class="banner-content-wrap">
+    {% endblock %}
+</header>
 
-                    </div>
-                    <div class="overlay"></div>
-                </div>
-
-                </div>
-            </div>
-        </section>
-        <div class="trip-search-section shape-search-section">
-            <div class="slider-shape"></div>
-
-            </div>
-        </div>
-    </main>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
-    <footer id="colophon" class="site-footer footer-primary">
-        {% block footer %}
+<body>
+{% block body %}{% endblock %}
+</body>
+<footer id="colophon" class="site-footer footer-primary">
+    {% block footer %}
         <div class="top-footer">
             <div class="container">
                 <div class="row">
@@ -328,7 +307,7 @@
                             </div>
                             <form class="newslatter-form">
                                 <input type="email" name="s" placeholder="Your Email..">
-                                <input type="submit" name="s" value="SUBSCRIBE NOW">
+                                <input  type="submit" name="s" value="SUBSCRIBE NOW">
                             </form>
                         </aside>
                     </div>
@@ -355,7 +334,7 @@
                     </div>
                     <div class="col-md-2 text-center">
                         <div class="footer-logo">
-                            <a href="#"><img src={{ asset('front/assets/images/travele-logo.png')}} alt=""></a>
+                            <a href="#"><img src={{ asset('assets/images/logo.png')}} alt=""></a>
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -364,6 +343,6 @@
                 </div>
             </div>
         </div>
-        {% endblock %}
-    </footer>
+    {% endblock %}
+</footer>
 </html>

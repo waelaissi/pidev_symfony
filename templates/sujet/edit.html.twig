@@ -3,12 +3,23 @@
 {% block title %}Edit Sujet{% endblock %}
 
 {% block body %}
-    <h1>Edit Sujet</h1>
-    <a class="btn btn-outline-secondary" href="{{ path('app_sujet_index',{'idtopic': topic.idtopic,'idsujet': sujet.idsujet}) }}">back to list</a>
+    <div class="inner-baner-container" >
+        <div class="container">
+            <div class="inner-banner-content">
+                <h1 class="inner-title">Modifier sujet</h1>
+            </div>
+        </div>
+    </div>
+    <div class="trip-search-section shape-search-section">
+        <div class="slider-shape"></div>
+        <a class="fa fa-arrow-left fa-5x" href="{{ path('app_topic_show',{'idtopic': topic.idtopic}) }}"></a>
+
+
 <div class="container">
     {{ include('sujet/_form.html.twig', {'button_label': 'Update'}) }}
 </div>
 
-
+    </div>
+    </div>
 
 {% endblock %}

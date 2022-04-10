@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Utilisateur
  *
- * @ORM\Table(name="utilisateur", uniqueConstraints={@ORM\UniqueConstraint(name="num_tel", columns={"num_tel"}), @ORM\UniqueConstraint(name="email", columns={"email"})})
- * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
+ * @ORM\Table(name="utilisateur", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"}), @ORM\UniqueConstraint(name="num_tel", columns={"num_tel"})})
+ * @ORM\Entity
  */
 class Utilisateur
 {
@@ -116,12 +116,7 @@ class Utilisateur
     {
         return $this->id;
     }
-    public function setId(int $id): self
-    {
-        $this->id = $id;
 
-        return $this;
-    }
     public function getLogin(): ?string
     {
         return $this->login;
@@ -277,9 +272,6 @@ class Utilisateur
 
         return $this;
     }
-    public function __toString()
-    {
-        return (string) $this->getNom();
-    }
+
 
 }

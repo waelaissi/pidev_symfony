@@ -1,0 +1,50 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Topic index{% endblock %}
+
+{% block body %}
+<div class="db-info-wrap">
+    <div class="product-outer-wrap">
+
+    <h1>Liste de Topics</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th bgcolor="#fff8dc">Titre De Topic</th>
+            <th bgcolor="#fff8dc">Description</th>
+            <th bgcolor="#fff8dc">Date</th>
+
+            <th bgcolor="#fff8dc">Nombre de Sujet</th>
+
+            <th bgcolor="#fff8dc" colspan="2">actions</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for topic in topics %}
+            <tr>
+
+                <td> <a href="{{ path('app_sujet_indexb', {'idtopic': topic.idtopic}) }}">{{ topic.titretopic }}</a></td>
+                <td>{{ topic.description }}</td>
+                <td>{{ topic.date ? topic.date|date('Y-m-d') : '' }}</td>
+
+                <td>{{ topic.nbsujet }}</td>
+
+                <td style="display:flex">
+
+                    {{ include('topic/_delete_form.html.twig') }}
+                </td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

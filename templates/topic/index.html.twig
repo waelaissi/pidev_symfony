@@ -3,47 +3,144 @@
 {% block title %}Topic index{% endblock %}
 
 {% block body %}
-    <a class="btn btn-primary" href="{{ path('app_topic_new') }}">Ajouter Topic</a>
-    <h1>Liste de Topics</h1>
+    <div class="inner-baner-container" >
+        <div class="container">
+            <div class="inner-banner-content">
+                <h1 class="inner-title">Topic</h1>
+            </div>
+        </div>
+    </div>
+    <div class="trip-search-section shape-search-section">
+        <div class="slider-shape"></div>
 
-    <table class="table">
-        <thead>
-            <tr>
+    </div>
+    </div>
+    <!-- Inner Banner html start-->
 
-                <th bgcolor="#fff8dc">Titre De Topic</th>
-                <th bgcolor="#fff8dc">Description</th>
-                <th bgcolor="#fff8dc">Date</th>
+    <!-- Inner Banner html end-->
 
-                <th bgcolor="#fff8dc">Nombre de Sujet</th>
+        <div class="archive-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 primary">
+                        <!-- blog post item html start -->
+                        <div class="grid row">
+    {% for topic in topics %}
+                            <div class="grid-item col-md-6">
+                                <article class="post">
+                                    <figure class="feature-image">
+                                        <a href="#">
+                                            <img src="{{ vich_uploader_asset(topic) }}" alt="">
+                                        </a>
+                                    </figure>
+                                    <div class="entry-content">
+                                        <h3>
+                                            <a href="{{ path('app_topic_show', {'idtopic': topic.idtopic}) }}">  {{ topic.titretopic }}</a>
+                                        </h3>
+                                        <div class="entry-meta">
+                                          <span class="byline">
+                                              <i class="fa fa-user" aria-hidden="true">  {{ topic.iduser.login }}</i>
 
-                <th bgcolor="#fff8dc" colspan="2">actions</th>
+                                          </span>
+                                            <span class="posted-on">
+                                                <i class="fa fa-calendar" aria-hidden="true">  {{ topic.date ? topic.date|date('Y-m-d') : '' }}</i>
+                                          </span>
+                                            {% if(topic.nbsujet>1) %}
+                                            <span class="comments-link">
+                                                <i class="fa fa-comments" aria-hidden="true">  {{ topic.nbsujet }} Sujets</i>
+                                             <label href="#"></label>
+                                          </span>
+                                            {% elseif(topic.nbsujet<2) %}
+                                                <span class="comments-link">
+                                                <i class="fa fa-comment" aria-hidden="true">  {{ topic.nbsujet }} Sujet</i>
+                                             <label href="#"></label>
+                                          </span>
+                                            {% endif %}
+                                            {% if(topic.iduser.id==33) %}
+                                            <span class="posted-on">
 
-            </tr>
-        </thead>
-        <tbody>
-        {% for topic in topics %}
-            <tr>
-
-                <td> <a href="{{ path('app_topic_show', {'idtopic': topic.idtopic}) }}">{{ topic.titretopic }}</a></td>
-                <td>{{ topic.description }}</td>
-                <td>{{ topic.date ? topic.date|date('Y-m-d') : '' }}</td>
-
-                <td>{{ topic.nbsujet }}</td>
-
-                <td style="display:flex">
-
-                    <a class="btn btn-primary" href="{{ path('app_topic_edit', {'idtopic': topic.idtopic,'user': 33}) }}">edit</a>
-                    {{ include('topic/_delete_form.html.twig') }}
-                </td>
-
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                                         <a class="fa fa-edit text-success"  href="{{ path('app_topic_edit', {'idtopic': topic.idtopic}) }}" ></a>
+                                            </span>
+                                            {% elseif(topic.iduser.id!=33)  %}
+                                            <span class="posted-on">
 
 
+                                         <a class="fa fa-edit "  href="{{ path('app_topic_edit', {'idtopic': topic.idtopic}) }}" style="pointer-events: none"></a>
+
+                                                {% endif %}
+                                             </span>
+                                            {% if(topic.iduser.id==33) %}
+                                            <a class="fa fa-remove-format text-danger"  href="{{ path('app_topic_delete', {'idtopic': topic.idtopic}) }}" onclick="return confirm('Etes vous sûr de supprimer cette topic?');"></a>
+                                            {% elseif(topic.iduser.id!=33)  %}
+                                            <span class="posted-on">
+
+
+                  <a class="fa fa-remove-format"  method="post" href="{{ path('app_topic_delete', {'idtopic': topic.idtopic}) }}" style="pointer-events: none"></a>
+
+                                                {% endif %}
+                                             </span>
+                                        </div>
+
+                                        <p>{{ topic.description }}</p>
+                                        <a href="{{ path('app_topic_show', {'idtopic': topic.idtopic}) }}" class="button-text">CONTINUE READING..</a>
+                                    </div>
+                                </article>
+                            </div>
+    {% endfor %}
+                        </div>
+
+
+
+
+                    </div>
+                    <div class="col-lg-4 secondary">
+                        <div class="sidebar">
+
+                            <aside class="widget widget_latest_post widget-post-thumb">
+                                <h3 class="widget-title">Populaire Topic</h3>
+                                <ul>
+                                    {% for topic in topics %}
+                                    <li>
+                                        <figure class="post-thumb">
+                                            <a href="#"><img src="{{ vich_uploader_asset(topic) }}" alt=""></a>
+                                        </figure>
+                                        <div class="post-content">
+                                            <h5>
+                                                <a href="{{ path('app_topic_show', {'idtopic': topic.idtopic}) }}">  {{ topic.titretopic }}</a>
+                                            </h5>
+                                            <div class="entry-meta">
+                                                 <span class="byline">
+                                              <i class="fa fa-user" aria-hidden="true">  {{ topic.iduser.login }}</i>
+
+                                          </span>
+                                             <span class="posted-on">
+                                                <i class="fa fa-calendar" aria-hidden="true">  {{ topic.date ? topic.date|date('Y-m-d') : '' }}</i>
+                                             </span>
+                                                {% if(topic.nbsujet>1) %}
+                                                    <span class="comments-link">
+                                                <i class="fa fa-comments" aria-hidden="true">  {{ topic.nbsujet }} Sujets</i>
+                                             <label href="#"></label>
+                                          </span>
+                                                {% elseif(topic.nbsujet<2) %}
+                                                    <span class="comments-link">
+                                                <i class="fa fa-comment" aria-hidden="true">  {{ topic.nbsujet }} Sujet</i>
+                                             <label href="#"></label>
+                                          </span>
+                                                {% endif %}
+                                             </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </aside>
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
 {% endblock %}

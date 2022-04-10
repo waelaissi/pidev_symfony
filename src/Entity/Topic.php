@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * Topic
  *
  * @ORM\Table(name="topic", indexes={@ORM\Index(name="fk_userid", columns={"iduser"})})
- * @ORM\Entity(repositoryClass="App\Repository\TopicRepository")
+ * @ORM\Entity
+ * @Vich\Uploadable
  */
 class Topic
 {
@@ -64,9 +66,39 @@ class Topic
     private $hide = '0';
 
     /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     */
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+    }
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="topic_image", fileNameProperty="imageName")
+     *
+     * @var File|null
+     */
+    private $imageFile;
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="imageName", type="string", length=255, nullable=true)
+     */
+    private $imageName;
+
+    /**
      * @var \Utilisateur
      *
-     * @ORM\ManyToOne(targetEntity="Utilisateur" ,cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Utilisateur")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="iduser", referencedColumnName="id")
      * })
@@ -146,6 +178,18 @@ class Topic
     public function setHide(int $hide): self
     {
         $this->hide = $hide;
+
+        return $this;
+    }
+
+    public function getImagename(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImagename(?string $imagename): self
+    {
+        $this->imageName = $imagename;
 
         return $this;
     }

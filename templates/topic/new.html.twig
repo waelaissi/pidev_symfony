@@ -3,9 +3,23 @@
 {% block title %}New Topic{% endblock %}
 
 {% block body %}
-    <a class="btn btn-outline-secondary" href="{{ path('app_topic_index') }}">back to list</a>
-    <h1>Create new Topic</h1>
+
+    <div class="inner-baner-container" >
+        <div class="container">
+            <div class="inner-banner-content">
+                <h1 class="inner-title">Ajouter Topic</h1>
+            </div>
+        </div>
+    </div>
+    <div class="trip-search-section shape-search-section">
+        <div class="slider-shape"></div>
+        <a class="fa fa-arrow-left fa-5x" href="{{ path('app_topic_index') }}"></a>
+    </div>
+    </div>
+
+
 <div class="container">
+
     {{ include('topic/_form.html.twig') }}
 </div>
 

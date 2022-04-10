@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * Sujet
  *
- * @ORM\Table(name="sujet", indexes={@ORM\Index(name="fk_idtopic", columns={"idtopic"}), @ORM\Index(name="fk_iduser", columns={"iduser"})})
- * @ORM\Entity(repositoryClass="App\Repository\SujetRepository")
+ * @ORM\Table(name="sujet", indexes={@ORM\Index(name="fk_iduser", columns={"iduser"}), @ORM\Index(name="fk_idtopic", columns={"idtopic"})})
+ * @ORM\Entity
+ * @Vich\Uploadable
  */
 class Sujet
 {
@@ -57,14 +59,36 @@ class Sujet
     private $nbcom = '0';
 
     /**
-     * @var \Utilisateur
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @ORM\ManyToOne(targetEntity="Utilisateur")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="iduser", referencedColumnName="id")
-     * })
+     * @Vich\UploadableField(mapping="topic_image", fileNameProperty="imageName")
+     *
+     * @var File|null
      */
-    private $iduser;
+    private $imageFile;
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="imageName", type="string", length=255, nullable=true)
+     */
+    private $imageName;
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     */
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+    }
+
 
     /**
      * @var \Topic
@@ -76,6 +100,26 @@ class Sujet
      */
     private $idtopic;
 
+    /**
+     * @var \Utilisateur
+     *
+     * @ORM\ManyToOne(targetEntity="Utilisateur")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="iduser", referencedColumnName="id")
+     * })
+     */
+    private $iduser;
+    public function getImagename(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImagename(?string $imagename): self
+    {
+        $this->imageName = $imagename;
+
+        return $this;
+    }
     public function getIdsujet(): ?int
     {
         return $this->idsujet;
@@ -141,18 +185,6 @@ class Sujet
         return $this;
     }
 
-    public function getIduser(): ?Utilisateur
-    {
-        return $this->iduser;
-    }
-
-    public function setIduser(?Utilisateur $iduser): self
-    {
-        $this->iduser = $iduser;
-
-        return $this;
-    }
-
     public function getIdtopic(): ?Topic
     {
         return $this->idtopic;
@@ -161,6 +193,18 @@ class Sujet
     public function setIdtopic(?Topic $idtopic): self
     {
         $this->idtopic = $idtopic;
+
+        return $this;
+    }
+
+    public function getIduser(): ?Utilisateur
+    {
+        return $this->iduser;
+    }
+
+    public function setIduser(?Utilisateur $iduser): self
+    {
+        $this->iduser = $iduser;
 
         return $this;
     }

@@ -1,0 +1,35 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Sujet{% endblock %}
+
+{% block body %}
+
+<div class="db-info-wrap">
+    <div class="product-outer-wrap">
+    <a class="fa fa-arrow-left fa-4x" href="{{ path('app_sujet_indexb', {'idtopic': topic.idtopic}) }}"></a>
+    <h1>Sujet</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Titresujet</th>
+            <td>{{ sujet.titresujet }}</td>
+        </tr>
+        <tr>
+            <th>Contenu</th>
+            <td>{{ sujet.contenu }}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{ sujet.date ? sujet.date|date('Y-m-d') : '' }}</td>
+        </tr>
+
+        <tr>
+            <th>Nombre de commentaire :</th>
+            <td>{{ sujet.nbcom }}</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

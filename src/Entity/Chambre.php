@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Chambre
  *
  * @ORM\Table(name="chambre", indexes={@ORM\Index(name="id_hotel", columns={"id_hotel"})})
- * @ORM\Entity(repositoryClass="App\Repository\ChambreRepository")
+ * @ORM\Entity
  */
 class Chambre
 {
@@ -22,9 +22,9 @@ class Chambre
     private $id;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(name="type", type="string", length=255, nullable=false)
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
      */
     private $type;
 
@@ -62,7 +62,7 @@ class Chambre
         return $this->type;
     }
 
-    public function setType(string $type): self
+    public function setType(?string $type): self
     {
         $this->type = $type;
 

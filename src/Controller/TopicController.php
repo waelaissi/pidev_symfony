@@ -65,13 +65,13 @@ class TopicController extends AbstractController
     }
 
     /**
-     * @Route("/{idtopic}/{user}/edit", name="app_topic_edit", methods={"GET", "POST"})
+     * @Route("/{idtopic}/edit", name="app_topic_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Topic $topic, TopicRepository $topicRepository,Utilisateur $user): Response
+    public function edit(Request $request, Topic $topic, TopicRepository $topicRepository): Response
     {
 
 
-            if($user->getId()==$topic->getIduser()->getId()){
+
                 $form = $this->createForm(TopicType::class, $topic);
                 $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -84,34 +84,48 @@ class TopicController extends AbstractController
             'form' => $form->createView(),
         ]);
         }
-    else{
-        /*return new Response(
 
-            "tu peux pas changer les topics des autres  "
 
-        );*/
-        return $this->redirectToRoute('app_topic_index', [], Response::HTTP_SEE_OTHER);
-    }
-    }
 
 
 
 
     /**
-     * @Route("/{idtopic}/{user}", name="app_topic_delete", methods={"POST"})
+     * @Route("/delete/admin/{idtopic}/", name="app_topic_deletead", methods={"POST"})
      */
-    public function delete(Request $request, Topic $topic, TopicRepository $topicRepository,Utilisateur $user): Response
+    public function delete(Request $request, Topic $topic, TopicRepository $topicRepository): Response
     {  // dump($this->getUser());
-        if ($user->getId() == $topic->getIduser()->getId()) {
-
 
             if ($this->isCsrfTokenValid('delete' . $topic->getIdtopic(), $request->request->get('_token'))) {
                 $topicRepository->remove($topic);
             }
 
 
-            return $this->redirectToRoute('app_topic_index', [], Response::HTTP_SEE_OTHER);
-        }
-        return $this->redirectToRoute('app_topic_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_topic_indexadmin', [], Response::HTTP_SEE_OTHER);
+
     }
+    /**
+     * @Route("/delete/{idtopic}/", name="app_topic_delete", methods={"GET"})
+     */
+    public function deletef(Request $request, Topic $topic, TopicRepository $topicRepository): Response
+    {  // dump($this->getUser());
+
+
+            $topicRepository->remove($topic);
+
+
+
+        return $this->redirectToRoute('app_topic_index', [], Response::HTTP_SEE_OTHER);
+
+    }
+    /**
+     * @Route("/admin/liste", name="app_topic_indexadmin", methods={"GET"})
+     */
+    public function indexadmin(TopicRepository $topicRepository): Response
+    {
+        return $this->render('topic/indexb.html.twig', [
+            'topics' => $topicRepository->findAll(),
+        ]);
+    }
+
 }
