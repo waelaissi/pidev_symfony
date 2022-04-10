@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Reclamation
  *
  * @ORM\Table(name="reclamation", indexes={@ORM\Index(name="fkiduserrecl", columns={"id_user"})})
- * @ORM\Entity(repositoryClass="App\Repository\ReclamationRepository")
+ * @ORM\Entity
  */
 class Reclamation
 {

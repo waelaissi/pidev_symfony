@@ -1,0 +1,156 @@
+{% extends "base.html.twig" %}
+
+{% block header %}
+    {% include "partials/navbar1.html.twig" %}
+{% endblock %}
+
+{% block body %}
+    <div id="siteLoader" class="site-loader">
+        <div class="preloader-content">
+            <img src="../../assets/images/loader1.gif" alt="">
+        </div>
+    </div>
+    <main id="content" class="site-main">
+        <div class="step-section cart-section">
+            <div class="container">
+                <div class="step-link-wrap">
+                    <div class="step-item active">
+                        Your cart
+                        <a href="#" class="step-icon"></a>
+                    </div>
+                    <div class="step-item active">
+                        Your Details
+                        <a href="#" class="step-icon"></a>
+                    </div>
+                    <div class="step-item active">
+                        Finish
+                        <a href="#" class="step-icon"></a>
+                    </div>
+                </div>
+                <!-- step three form html start -->
+                <div class="confirmation-outer">
+                    <div class="success-notify">
+                        <div class="success-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="success-content">
+                            <h3>PAYMENT CONFIRMED</h3>
+                            <p>Thank you, your payment has been successful and your booking is now confirmed.A confirmation email has been sent to info@travele.com.</p>
+                        </div>
+                    </div>
+                    <div class="confirmation-inner">
+                        <div class="row">
+                            <div class="col-lg-8 right-sidebar">
+                                <div class="confirmation-details">
+                                    <h3>BOOKING DETAILS</h3>
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td>Booking id:</td>
+                                            <td>{{ transaction.id }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>First Name:</td>
+                                            <td>{{ user.nom }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Last Name:</td>
+                                            <td>{{ user.prenom }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email:</td>
+                                            <td>{{user.email}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phone</td>
+                                            <td>{{ user.numTel }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Card number</td>
+                                            <td>XXX-XXXX-XXX-XXXX-{{ transaction.numeroCarte|slice(-2) }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Address</td>
+                                            <td>{{ user.adresse }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="details payment-details">
+                                        <h3>PAYMENT</h3>
+                                        <div class="details-desc">
+                                            <p>Payment is successful via Master card</p>
+                                        </div>
+                                    </div>
+                                    <div class="details">
+                                        <h3>VIEW BOOKING DETAILS</h3>
+                                        <div class="details-desc">
+                                            <p><a href={{ path('app_reservation_get_client',{'type':'all','id_user':user.id}) }}>http://127.0.0.1:8000/all/{{ user.id }}</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <aside class="sidebar">
+                                    <div class="widget-bg widget-table-summary">
+                                        <h4 class="bg-title">Summary</h4>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <strong> Booking cost </strong>
+                                                </td>
+                                                <td class="text-right">
+                                                    {{ format_to_currency(total) }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <strong> Advance rate </strong>
+                                                </td>
+                                                <td class="text-right">
+                                                    {{ taux_avance }} %
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <strong>tax</strong>
+                                                </td>
+                                                <td class="text-right">
+                                                    0%
+                                                </td>
+                                            </tr>
+                                            <tr class="total">
+                                                <td>
+                                                    <strong>Total cost</strong>
+                                                </td>
+                                                <td class="text-right">
+                                                    <strong> {{ format_to_currency(montant_avance) }}</strong>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="widget-bg widget-support-wrap">
+                                        <div class="icon">
+                                            <i class="fas fa-phone-volume"></i>
+                                        </div>
+                                        <div class="support-content">
+                                            <h5>HELP AND SUPPORT</h5>
+                                            <a clas.s="phone">+56 353 474</a>
+                                            <small>Monday to Friday 9.00am - 7.30pm</small>
+                                        </div>
+                                    </div>
+                                </aside>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- step three form html end -->
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Reservation
  *
- * @ORM\Table(name="reservation", indexes={@ORM\Index(name="fk_resvoiture", columns={"id_voiture"}), @ORM\Index(name="id_maison", columns={"id_maison"}), @ORM\Index(name="fkchambre", columns={"id_chambre"}), @ORM\Index(name="id_ticket", columns={"id_ticket"}), @ORM\Index(name="id_transaction", columns={"id_transaction"}), @ORM\Index(name="id_user", columns={"id_user"})})
- * @ORM\Entity(repositoryClass="App\Repository\ReservationRepository")
+ * @ORM\Table(name="reservation", indexes={@ORM\Index(name="id_transaction", columns={"id_transaction"}), @ORM\Index(name="id_user", columns={"id_user"}), @ORM\Index(name="fk_resvoiture", columns={"id_voiture"}), @ORM\Index(name="id_maison", columns={"id_maison"}), @ORM\Index(name="fkchambre", columns={"id_chambre"}), @ORM\Index(name="id_ticket", columns={"id_ticket"})})
+ * @ORM\Entity
  */
 class Reservation
 {
@@ -50,27 +50,6 @@ class Reservation
     private $resteAPayer;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="id_ticket", type="integer", nullable=true)
-     */
-    private $idTicket;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="id_maison", type="integer", nullable=true)
-     */
-    private $idMaison;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="id_user", type="integer", nullable=true)
-     */
-    private $idUser;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="etat", type="string", length=255, nullable=false, options={"default"="confirmé"})
@@ -78,18 +57,51 @@ class Reservation
     private $etat = 'confirmé';
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id_transaction", type="integer", nullable=false)
-     */
-    private $idTransaction;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=20, nullable=false)
      */
     private $type;
+
+    /**
+     * @var \Utilisateur
+     *
+     * @ORM\ManyToOne(targetEntity="Utilisateur")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     * })
+     */
+    private $idUser;
+
+    /**
+     * @var \Voiture
+     *
+     * @ORM\ManyToOne(targetEntity="Voiture")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_voiture", referencedColumnName="id")
+     * })
+     */
+    private $idVoiture;
+
+    /**
+     * @var \Maison
+     *
+     * @ORM\ManyToOne(targetEntity="Maison")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_maison", referencedColumnName="id")
+     * })
+     */
+    private $idMaison;
+
+    /**
+     * @var \Transaction
+     *
+     * @ORM\ManyToOne(targetEntity="Transaction")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_transaction", referencedColumnName="id")
+     * })
+     */
+    private $idTransaction;
 
     /**
      * @var \Chambre
@@ -102,14 +114,14 @@ class Reservation
     private $idChambre;
 
     /**
-     * @var \Voiture
+     * @var \Ticket
      *
-     * @ORM\ManyToOne(targetEntity="Voiture")
+     * @ORM\ManyToOne(targetEntity="Ticket")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_voiture", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="id_ticket", referencedColumnName="id")
      * })
      */
-    private $idVoiture;
+    private $idTicket;
 
     public function getId(): ?int
     {
@@ -164,42 +176,6 @@ class Reservation
         return $this;
     }
 
-    public function getIdTicket(): ?int
-    {
-        return $this->idTicket;
-    }
-
-    public function setIdTicket(?int $idTicket): self
-    {
-        $this->idTicket = $idTicket;
-
-        return $this;
-    }
-
-    public function getIdMaison(): ?int
-    {
-        return $this->idMaison;
-    }
-
-    public function setIdMaison(?int $idMaison): self
-    {
-        $this->idMaison = $idMaison;
-
-        return $this;
-    }
-
-    public function getIdUser(): ?int
-    {
-        return $this->idUser;
-    }
-
-    public function setIdUser(?int $idUser): self
-    {
-        $this->idUser = $idUser;
-
-        return $this;
-    }
-
     public function getEtat(): ?string
     {
         return $this->etat;
@@ -208,18 +184,6 @@ class Reservation
     public function setEtat(string $etat): self
     {
         $this->etat = $etat;
-
-        return $this;
-    }
-
-    public function getIdTransaction(): ?int
-    {
-        return $this->idTransaction;
-    }
-
-    public function setIdTransaction(int $idTransaction): self
-    {
-        $this->idTransaction = $idTransaction;
 
         return $this;
     }
@@ -236,14 +200,14 @@ class Reservation
         return $this;
     }
 
-    public function getIdChambre(): ?Chambre
+    public function getIdUser(): ?Utilisateur
     {
-        return $this->idChambre;
+        return $this->idUser;
     }
 
-    public function setIdChambre(?Chambre $idChambre): self
+    public function setIdUser(?Utilisateur $idUser): self
     {
-        $this->idChambre = $idChambre;
+        $this->idUser = $idUser;
 
         return $this;
     }
@@ -256,6 +220,54 @@ class Reservation
     public function setIdVoiture(?Voiture $idVoiture): self
     {
         $this->idVoiture = $idVoiture;
+
+        return $this;
+    }
+
+    public function getIdMaison(): ?Maison
+    {
+        return $this->idMaison;
+    }
+
+    public function setIdMaison(?Maison $idMaison): self
+    {
+        $this->idMaison = $idMaison;
+
+        return $this;
+    }
+
+    public function getIdTransaction(): ?Transaction
+    {
+        return $this->idTransaction;
+    }
+
+    public function setIdTransaction(?Transaction $idTransaction): self
+    {
+        $this->idTransaction = $idTransaction;
+
+        return $this;
+    }
+
+    public function getIdChambre(): ?Chambre
+    {
+        return $this->idChambre;
+    }
+
+    public function setIdChambre(?Chambre $idChambre): self
+    {
+        $this->idChambre = $idChambre;
+
+        return $this;
+    }
+
+    public function getIdTicket(): ?Ticket
+    {
+        return $this->idTicket;
+    }
+
+    public function setIdTicket(?Ticket $idTicket): self
+    {
+        $this->idTicket = $idTicket;
 
         return $this;
     }

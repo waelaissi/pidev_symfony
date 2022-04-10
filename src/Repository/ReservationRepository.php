@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Reservation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -73,4 +75,79 @@ class ReservationRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function create_reservation(Reservation $entity, bool $flush = true): void
+    {
+        $this->_em->persist($entity);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
+    public function cancel_reservation($id)
+
+    {
+        $em=$this->getEntityManager();
+        return $em->createQuery("Update App\Entity\Reservation r set r.etat = :etat where r.id = :id")
+            ->setParameter('etat',"annulée")
+            ->setParameter('id',$id)
+            ->getResult();
+    }
+
+
+
+
+    public function findClientReservationsByType($type,$id_user)
+    {
+        $query="";
+        switch ($type) {
+            case "hotel":
+                $query=$this->createQueryBuilder('r')
+                    ->where('r.idUser = :id_user')
+                    ->andWhere('r.type = :type ')
+                    ->setParameter('id_user',$id_user)
+                    ->setParameter('type','hotel')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "house":
+                $query=$this->createQueryBuilder('r')
+                    ->where('r.idUser = :id_user')
+                    ->andWhere('r.type = :type ')
+                    ->setParameter('id_user',$id_user)
+                    ->setParameter('type','voiture')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "car":
+                $query=$this->createQueryBuilder('r')
+                    ->where('r.idUser = :id_user')
+                    ->andWhere('r.type = :type ')
+                    ->setParameter('id_user',$id_user)
+                    ->setParameter('type','maison')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "event":
+                $query=$this->createQueryBuilder('r')
+                    ->where('r.idUser = :id_user')
+                    ->andWhere('r.type = :type ')
+                    ->setParameter('id_user',$id_user)
+                    ->setParameter('type',"evenement")
+                    ->getQuery()
+                    ->getResult();
+                break;
+            default :
+                $query=$this->createQueryBuilder('r')
+                    ->join("r.idTransaction",'t')
+                    ->orderBy('t.createdAt','DESC')
+                    ->where('r.idUser = :id_user')
+                    ->setParameter('id_user',$id_user)
+                    ->getQuery()
+                    ->getResult();
+        }
+        return$query;
+    }
+
+
+
 }

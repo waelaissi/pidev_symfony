@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Transaction
  *
  * @ORM\Table(name="transaction")
- * @ORM\Entity(repositoryClass="App\Repository\TransactionRepository")
+ * @ORM\Entity
  */
 class Transaction
 {
@@ -26,7 +28,60 @@ class Transaction
      *
      * @ORM\Column(name="created_At", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $createdAt = 'CURRENT_TIMESTAMP';
+    private $createdAt ;
+
+    /**
+     * @var string
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 50,
+     *      minMessage = "The name must be at least {{ limit }} characters long",
+     *      maxMessage = "The name cannot be longer than {{ limit }} characters"
+     * )
+     * @ORM\Column(name="nom_carte", type="string", length=255, nullable=false)
+     */
+    private $nomCarte;
+
+    /**
+     * @var string
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *      min =16 ,
+     *      minMessage = "Minimum length is 16",
+     * )
+     * @ORM\Column(name="numero_carte", type="string", length=255, nullable=false)
+     */
+    private $numeroCarte;
+
+    /**
+     * @var int
+     * @Assert\NotBlank(message = "Required")
+     * @ORM\Column(name="exp_mois", type="integer", nullable=false)
+     */
+    private $expMois;
+
+    /**
+     * @var int
+     * @Assert\NotBlank(
+     *      message = "Required",
+     * )
+     * @ORM\Column(name="exp_annee", type="integer", nullable=false)
+     */
+    private $expAnnee;
+
+    /**
+     * @var int
+     * @Assert\NotBlank(
+     *      message = "Required",
+     * )
+     * @Assert\Length(
+     *      min =3 ,
+     *      minMessage = "Minimum length is 3",
+     * )
+     * @ORM\Column(name="cvc", type="integer", nullable=false)
+     */
+    private $cvc;
 
     /**
      * @var int
@@ -36,39 +91,11 @@ class Transaction
     private $tauxAvance;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="taux_commission", type="integer", nullable=false)
-     */
-    private $tauxCommission;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="taux_garantie", type="integer", nullable=false)
-     */
-    private $tauxGarantie;
-
-    /**
      * @var float
      *
      * @ORM\Column(name="montant_paye_avance", type="float", precision=10, scale=0, nullable=false)
      */
     private $montantPayeAvance;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="montant_commission", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $montantCommission;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="montant_garantie", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $montantGarantie;
 
     /**
      * @var string
@@ -87,9 +114,63 @@ class Transaction
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+
+    public function getNomCarte(): ?string
     {
-        $this->createdAt = $createdAt;
+        return $this->nomCarte;
+    }
+
+    public function setNomCarte(string $nomCarte): self
+    {
+        $this->nomCarte = $nomCarte;
+
+        return $this;
+    }
+
+    public function getNumeroCarte(): ?string
+    {
+        return $this->numeroCarte;
+    }
+
+    public function setNumeroCarte(string $numeroCarte): self
+    {
+        $this->numeroCarte = $numeroCarte;
+
+        return $this;
+    }
+
+    public function getExpMois(): ?int
+    {
+        return $this->expMois;
+    }
+
+    public function setExpMois(int $expMois): self
+    {
+        $this->expMois = $expMois;
+
+        return $this;
+    }
+
+    public function getExpAnnee(): ?int
+    {
+        return $this->expAnnee;
+    }
+
+    public function setExpAnnee(int $expAnnee): self
+    {
+        $this->expAnnee = $expAnnee;
+
+        return $this;
+    }
+
+    public function getCvc(): ?int
+    {
+        return $this->cvc;
+    }
+
+    public function setCvc(int $cvc): self
+    {
+        $this->cvc = $cvc;
 
         return $this;
     }
@@ -106,30 +187,6 @@ class Transaction
         return $this;
     }
 
-    public function getTauxCommission(): ?int
-    {
-        return $this->tauxCommission;
-    }
-
-    public function setTauxCommission(int $tauxCommission): self
-    {
-        $this->tauxCommission = $tauxCommission;
-
-        return $this;
-    }
-
-    public function getTauxGarantie(): ?int
-    {
-        return $this->tauxGarantie;
-    }
-
-    public function setTauxGarantie(int $tauxGarantie): self
-    {
-        $this->tauxGarantie = $tauxGarantie;
-
-        return $this;
-    }
-
     public function getMontantPayeAvance(): ?float
     {
         return $this->montantPayeAvance;
@@ -138,30 +195,6 @@ class Transaction
     public function setMontantPayeAvance(float $montantPayeAvance): self
     {
         $this->montantPayeAvance = $montantPayeAvance;
-
-        return $this;
-    }
-
-    public function getMontantCommission(): ?float
-    {
-        return $this->montantCommission;
-    }
-
-    public function setMontantCommission(float $montantCommission): self
-    {
-        $this->montantCommission = $montantCommission;
-
-        return $this;
-    }
-
-    public function getMontantGarantie(): ?float
-    {
-        return $this->montantGarantie;
-    }
-
-    public function setMontantGarantie(float $montantGarantie): self
-    {
-        $this->montantGarantie = $montantGarantie;
 
         return $this;
     }

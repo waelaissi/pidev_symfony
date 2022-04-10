@@ -73,4 +73,10 @@ class TransactionRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    //logic
+    public function calculate_amount_to_pay(float $total,int $taux){
+        return ($total*$taux)/100;
+    }
 }

@@ -1,0 +1,152 @@
+
+{% extends "base.html.twig" %}
+
+{% block header %}
+     {% include "partials/navbar1.html.twig" %}
+ {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="db-info-wrap db-booking">
+            <div class="dashboard-box table-opp-color-box" style="margin-bottom: 10em">
+                <h2>Recent Booking</h2>
+                <p>La liste de toutes les réservations que vous avez fait</p>
+                <input id="search_input" type="text" name="search_input" placeholder="Search.." style="margin: 1em 0">
+                <div class="table-responsive">
+                    <table class="table" id="myTable" data-pagination="true" style="" data-toggle="table"
+                           data-classes="table table-hover table-condensed"
+
+                           data-striped="true"
+
+                           data-sort-name="Quality"
+
+                           data-sort-order="desc"
+                           data-sort-order="desc"
+
+                           data-pagination="true">
+                        <thead>
+                        <tr>
+                            <th data-field="user" data-sortable="true">Type</th>
+                            <th data-field="user" data-sortable="true">Crée le </th>
+                            <th data-field="user" data-sortable="true">Date début</th>
+                            <th data-field="date" data-sortable="true">Date départ</th>
+                            <th data-field="des" data-sortable="true">Total</th>
+                            <th data-field="id" data-sortable="true">Payé</th>
+                            <th data-field="status" data-sortable="true">Reste</th>
+                            <th data-field="en" data-sortable="true">Etat</th>
+                            <th data-sortable="true">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for reservation in reservations %}
+                        <tr>
+                            <td>
+                                </span><span class="list-enq-name">{{ reservation.type }}</span>
+                            </td>
+                            <td>
+                                </span><span class="list-enq-name">{{reservation.idTransaction.createdAt | date("m/d/Y", "Europe/Paris")}}</span>
+                            </td>
+                            <td>{{ reservation.getDateDebut() |  date("m/d/Y", "Europe/Paris") }} </td>
+                            <td>{{ reservation.getDateFin() | date("m/d/Y", "Europe/Paris") }}</td>
+                            <td>
+                                {% if reservation.montantAPayer %}
+                                    {{ format_to_currency(reservation.montantAPayer) }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if reservation.montantAPayer %}
+                                    {{ format_to_currency(reservation.idTransaction.montantPayeAvance) }}
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                {% if reservation.montantAPayer %}
+                                    {{ format_to_currency(reservation.resteAPayer) }}
+                                {% endif %}
+                            </td>
+                              {% if reservation.etat=="confirmée" %}
+                                  <td> <span class="badge badge-success"> Confirmée </span> </td>
+                                  {% else %}
+
+                                      <td> <span class="badge badge-danger"> Annulée </span> </td>
+                              {% endif %}
+                            <td>
+                                <span class="badge badge-info cursor"><i class="far fa-list-alt"> details</i></span>
+                                {% if date_difference(date() | date("m/d/Y"),reservation.getDateDebut() | date("m/d/Y"))>0 and reservation.etat!="annulée" %}
+                                    <span class="badge badge-warning cursor" id="cancel_button" onclick="myFunction()"><i class="far fa-trash-alt"> annuler</i></span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                            <div class="modal" id="myModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Annulation de la réservation</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Vous les vous vraiment annuler la reservation ? </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-success" style="font-size: 12px !important;"
+                                                    onclick="cancel_reservation({{ reservation.id }},{{ reservation.IdUser.id }})">  Save changes</button>
+                                            <button type="button" class="btn btn-secondary" style="font-size: 12px !important;" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+
+    <script>
+        function myFunction(){
+            $("#myModal").modal('show');
+
+        }
+        function cancel_reservation(id,id_user){
+            const queryString = window.location.pathname;
+            const type=queryString.split("/")[3];
+            window.location.href="http://127.0.0.1:8000/reservation/cancel/"+id+"/"+type+"/"+id_user;
+        }
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $("#search_input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+
+
+{% endblock  %}
+
+
+
+
+
+
+
+
+
+
