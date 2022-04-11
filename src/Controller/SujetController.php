@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Commentaire;
 use App\Entity\Sujet;
 use App\Form\SujetType;
 use App\Repository\SujetRepository;
@@ -70,17 +71,18 @@ class SujetController extends AbstractController
      */
     public function show(Sujet $sujet,Topic $topic): Response
     {
+        $commentaires=$this->getDoctrine()->getRepository(Commentaire::class)->findByidsujet($sujet->getIdsujet());
         return $this->render('sujet/show.html.twig', [
-            'sujet' => $sujet,'topic'=>$topic
+            'sujet' => $sujet,'topic'=>$topic,'commentaires'=>$commentaires
         ]);
     }
     /**
      * @Route("/admin/{idtopic}/{idsujet}", name="app_sujet_showb", methods={"GET"})
      */
     public function showb(Sujet $sujet,Topic $topic): Response
-    {
+    { $commentaires=$this->getDoctrine()->getRepository(Commentaire::class)->findByidsujet($sujet->getIdsujet());
         return $this->render('sujet/showb.html.twig', [
-            'sujet' => $sujet,'topic'=>$topic
+            'sujet' => $sujet,'topic'=>$topic,'commentaires'=>$commentaires
         ]);
     }
 

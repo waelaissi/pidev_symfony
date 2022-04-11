@@ -99,10 +99,10 @@
                     <nav id="navigation" class="navigation">
                         <ul>
                             <li class="menu-item-has-children">
-                                <a href="index.html">Home</a>
+                                <a href="{{ path('app_home') }}">Home</a>
                                 <ul>
                                     <li>
-                                        <a href="index-v2.html">Home 2</a>
+                                        <a href="{{ path('app_home') }}">Home 2</a>
                                     </li>
                                 </ul>
                             </li>
@@ -344,5 +344,7 @@
             </div>
         </div>
     {% endblock %}
+
 </footer>
+
 </html>

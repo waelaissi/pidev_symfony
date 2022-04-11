@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * Topic
@@ -25,14 +26,26 @@ class Topic
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 50,
+     *      minMessage = "Le titre doit comporter au moins {{ limit }} caractères",
+     *      maxMessage = "Le titre ne peut pas dépasser {{ limit }} caractères"
+     * )
      * @ORM\Column(name="titretopic", type="string", length=255, nullable=true)
      */
     private $titretopic;
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 15,
+     *      max = 100,
+     *      minMessage = "La description doit comporter au moins {{ limit }} caractères",
+     *      maxMessage = "Le titre ne peut pas dépasser {{ limit }} caractères"
+     * )
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
@@ -90,7 +103,6 @@ class Topic
     private $imageFile;
     /**
      * @var string|null
-     *
      * @ORM\Column(name="imageName", type="string", length=255, nullable=true)
      */
     private $imageName;

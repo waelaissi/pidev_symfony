@@ -69,78 +69,78 @@
                         <!-- post comment html -->
                         <div class="comment-area">
                             {% if ( sujet.nbcom >1) %}
-                            <h2 class="comment-title">{{ sujet.nbcom }} commentaires</h2>
+                                <h2 class="comment-title">{{ sujet.nbcom }} commentaires</h2>
                             {% elseif (sujet.nbcom<2) %}
-                            <h2 class="comment-title">{{ sujet.nbcom }} commentaire</h2>
+                                <h2 class="comment-title">{{ sujet.nbcom }} commentaire</h2>
                             {% endif %}
                             <div class="comment-area-inner">
                                 {% for commentaire in commentaires %}
-                                <ol>
-                                    <li>
-                                        <figure class="comment-thumb">
-                                            <img src="{{ asset('assets/images/img20.jpg') }}" alt="">
-                                        </figure>
-                                        <div class="comment-content">
-                                            <div class="comment-header">
+                                    <ol>
+                                        <li>
+                                            <figure class="comment-thumb">
+                                                <img src="{{ asset('assets/images/img20.jpg') }}" alt="">
+                                            </figure>
+                                            <div class="comment-content">
+                                                <div class="comment-header">
                                                 <span>
                                                 <h5 class="author-name">  <i class="fa fa-user" aria-hidden="true">  {{ commentaire.iduser.login }}</i></h5>
                                                 </span> <span class="post-on">  <i class="fa fa-calendar" aria-hidden="true">  {{ commentaire.date ? commentaire.date|date('Y-m-d') : '' }}</i></span>
-                                                {% if(commentaire.iduser.id==33) %}
-                                                <span class="posted-on">
+                                                    {% if(commentaire.iduser.id==33) %}
+                                                    <span class="posted-on">
 
-                                         <a class="fa fa-edit text-success"  href="{{ path('app_sujet_edit', {'idsujet': sujet.idsujet,'user': 33}) }}" ></a>
+                                         <a class="fa fa-edit text-success"  href="{{ path('app_commentaire_edit',{'idtopic': topic.idtopic,'idsujet':sujet.idsujet,'idcom':commentaire.idcom}) }}" ></a>
                                             </span>
-                                            {% elseif(commentaire.iduser.id!=33)  %}
-                                                <span class="posted-on">
+                                                {% elseif(commentaire.iduser.id!=33)  %}
+                                                    <span class="posted-on">
 
 
-                                         <a class="fa fa-edit "  href="{{ path('app_sujet_edit', {'idsujet': sujet.idsujet,'user': 33}) }}" style="pointer-events: none"></a>
+                                         <a class="fa fa-edit "  href="{{ path('app_commentaire_edit',{'idtopic': topic.idtopic,'idsujet':sujet.idsujet,'idcom':commentaire.idcom}) }}" style="pointer-events: none"></a>
 
                                                 {% endif %}
                                              </span>
-                                                {% if(commentaire.iduser.id==33) %}
-                                                <span class="posted-on">
-                                                <a class="fa fa-trash text-danger"  href="{{ path('app_commentaire_deletef', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet,'idcom':commentaire.idcom}) }}" onclick="return confirm('Etes vous sûr de supprimer ce sujet?');"></a>
+                                                    {% if(commentaire.iduser.id==33) %}
+                                                    <span class="posted-on">
+                                                <a class="fa fa-trash text-danger"  href="{{ path('app_commentaire_deletef', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet,'idcom':commentaire.idcom}) }}" onclick="return confirm('Etes vous sûr de supprimer ce commentaire?');"></a>
                                                 </span>
-                                                {% elseif(commentaire.iduser.id!=33)  %}
-                                                <span class="posted-on">
+                                                    {% elseif(commentaire.iduser.id!=33)  %}
+                                                    <span class="posted-on">
 
 
                   <a class="fa fa-trash"  method="post" href="{{ path('app_commentaire_deletef', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet,'idcom':commentaire.idcom}) }}" style="pointer-events: none"></a>
 
                                                 {% endif %}
                                              </span>
-                                            </div>
-                                            <p>{{  commentaire.contenu}}</p>
+                                                </div>
+                                                <p>{{  commentaire.contenu}}</p>
 
-                                        </div>
-                                    </li>
-                                </ol>
+                                            </div>
+                                        </li>
+                                    </ol>
                                 {% endfor %}
                             </div>
                         </div>
 
                         <div class="comment-form-wrap">
 
-                            <h2 class="comment-title">Leave a Reply</h2>
-                            <p>Your email address will not be published. Required fields are marked *</p>
-                            {{ form_start(formcom,{'attr':{'novalidate':'novalidate'  }}) }}
-                            <form class="comment-form"> {{ form_label(formcom.contenu,'Commentaire :') }}
+                            <h2 class="comment-title">Leave a Comment</h2>
+                            {{ form_start(formcomedit,{'attr':{'novalidate':'novalidate'  }}) }}
+                            <form class="comment-form"> {{ form_label(formcomedit.contenu,'Commentaire :') }}
 
                                 <p class="full-width">
 
-                                    {{ form_widget(formcom.contenu) }}
-                                <div style="color:  red">  {{ form_errors(formcom.contenu) }}</div>
+                                    {{ form_widget(formcomedit.contenu) }}
+                                <div style="color:  red">  {{ form_errors(formcomedit.contenu) }}</div>
                                 </p>
 
                                 <p class="full-width">
-                                    <button class="button-primary">{{ button_label|default('Ajouter commentaire') }}</button>
+                                    <button class="button-primary">{{ button_label|default('Modifier Commentaire') }}</button>
                                 </p>
+                                {{ form_rest(formcomedit) }}
                             </form>
 
                         </div>
-                        {{ form_rest(formcom) }}
-                        {{ form_end(formcom) }}
+
+                        {{ form_end(formcomedit) }}
                     </div></div>
 
             </div>

@@ -71,9 +71,8 @@ class TopicController extends AbstractController
     {
 
 
-
-                $form = $this->createForm(TopicType::class, $topic);
-                $form->handleRequest($request);
+        $form = $this->createForm(TopicType::class, $topic);
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $topicRepository->add($topic);
             return $this->redirectToRoute('app_topic_index', [], Response::HTTP_SEE_OTHER);
@@ -83,7 +82,7 @@ class TopicController extends AbstractController
             'topic' => $topic,
             'form' => $form->createView(),
         ]);
-        }
+    }
 
 
 

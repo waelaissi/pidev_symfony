@@ -1,4 +1,4 @@
-{{ form_start(form) }}
+{{ form_start(form,{'attr':{'novalidate':'novalidate'  }}) }}
 
 <div class="widget-bg booking-form-wrap">
     <h4 class="bg-title">Sujet</h4>
@@ -8,27 +8,27 @@
                 <div class="form-group">
                     {{ form_label(form.titresujet,'Titre Sujet :') }}
                     {{ form_widget(form.titresujet) }}
-                    {{ form_errors(form.titresujet) }}
+                    <div style="color:  red">  {{ form_errors(form.titresujet) }}</div>
                 </div>
             </div>
             <div class="col-sm-12">
                 <div class="form-group">
                     {{ form_label(form.contenu,'Description Sujet :') }}
                     {{ form_widget(form.contenu) }}
-                    {{ form_errors(form.contenu) }}
+                    <div style="color:  red">   {{ form_errors(form.contenu) }}</div>
                 </div>
             </div>
             <div class="col-sm-12">
                 <div class="form-group">
                     {{ form_label(form.imageFile,'image Topic :') }}
                     {{ form_widget(form.imageFile) }}
-                    {{ form_errors(form.imageFile) }}
+                    <div style="color:  red">  {{ form_errors(form.imageFile) }}</div>
                 </div>
             </div>
 
             <div class="col-sm-12">
                 <div class="form-group submit-btn">
-                    <button class="btn btn-primary">{{ button_label|default('Ajouter Sujet') }}</button>
+                    <button class="button-primary">{{ button_label|default('Ajouter Sujet') }}</button>
                 </div>
             </div>
         </div>

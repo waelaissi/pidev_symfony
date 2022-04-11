@@ -44,7 +44,25 @@ class CommentaireRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+    public function findByidsujet(int $value) : array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.idsujet = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    public function setnbsujet(int $value,int $id) : void
+    {
+        $entityManager=$this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder
+            ->update('App\Entity\Sujet', 'u')
+            ->set('u.nbcom',$value+1)
+            ->where($queryBuilder->expr()->eq('u.idsujet', $id));
 
+    }
     // /**
     //  * @return Commentaire[] Returns an array of Commentaire objects
     //  */

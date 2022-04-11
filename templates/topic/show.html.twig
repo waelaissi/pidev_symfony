@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Topic{% endblock %}
+{% block title %}Sujet{% endblock %}
 
 {% block body %}
     <section class="inner-banner-wrap">
@@ -30,9 +30,10 @@
                 </div>
             </div>
         </div>
+
         <div class="inner-shape"></div>
-        <a class="fa fa-arrow-left fa-5x" href="{{ path('app_topic_index') }}"></a>
-        <a class="fa fa-plus-square fa-5x" href="{{ path('app_sujet_new',{'idtopic': topic.idtopic}) }}"></a>
+
+
 
     </section>
 
@@ -42,19 +43,23 @@
 <div class="single-post-section">
     <div class="single-post-inner">
         <div class="container">
+
             <div class="row">
+
+
                 <div class="col-lg-8 primary right-sidebar">
                     <!-- single blog post html start -->
-                    <figure class="feature-image">
+
+                    <figure class="feature-image justify-content-center">
                         <img src="{{ vich_uploader_asset(topic) }}" alt="">
                     </figure>
+
                     <article class="single-content-wrap">
 
                         <blockquote>
 <p>{{ topic.description }}</p>
                         </blockquote>
                     </article>
-
 
                 </div></div>
 
@@ -76,7 +81,7 @@
                                     </figure>
                                     <div class="entry-content">
                                         <h3>
-                                            <a href="{{ path('app_sujet_show', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet}) }}">  {{ sujet.titresujet }}</a>
+                                            <a href="{{ path('app_commentaire_new', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet}) }}">  {{ sujet.titresujet }}</a>
                                         </h3>
                                         <div class="entry-meta">
                                           <span class="byline">
@@ -111,19 +116,19 @@
                                                 {% endif %}
                                              </span>
                                             {% if(sujet.iduser.id==33) %}
-                                            <a class="fa fa-remove-format text-danger"  href="{{ path('app_sujet_deletef', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet}) }}" onclick="return confirm('Etes vous sûr de supprimer ce sujet?');"></a>
+                                            <a class="fa fa-trash text-danger"  href="{{ path('app_sujet_deletef', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet}) }}" onclick="return confirm('Etes vous sûr de supprimer ce sujet?');"></a>
                                             {% elseif(sujet.iduser.id!=33)  %}
                                             <span class="posted-on">
 
 
-                  <a class="fa fa-remove-format"  method="post" href="{{ path('app_sujet_deletef', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet}) }}" style="pointer-events: none"></a>
+                  <a class="fa fa-trash"  method="post" href="{{ path('app_sujet_deletef', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet}) }}" style="pointer-events: none"></a>
 
                                                 {% endif %}
                                              </span>
                                         </div>
 
                                         <p>{{ sujet.contenu }}</p>
-                                        <a href="{{ path('app_sujet_show', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet}) }}" class="button-text">CONTINUE READING..</a>
+                                        <a href="{{ path('app_commentaire_new', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet}) }}" class="button-text">CONTINUE READING..</a>
                                     </div>
                                 </article>
                             </div>
@@ -138,7 +143,10 @@
                     <div class="sidebar">
 
                         <aside class="widget widget_latest_post widget-post-thumb">
-                            <h3 class="widget-title">Populaire Topic</h3>
+                            <div class="widget-title" style="background-color: #F56960"> <a style="color: white"  href="{{ path('app_sujet_new',{'idtopic': topic.idtopic}) }}">Ajouter Sujet</a></div>
+
+                    <h3 class="widget-title">Populaire Sujet</h3>
+
                             <ul>
                                 {% for sujet in sujets %}
                                     <li>

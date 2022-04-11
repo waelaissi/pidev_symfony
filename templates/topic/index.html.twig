@@ -10,11 +10,10 @@
             </div>
         </div>
     </div>
-    <div class="trip-search-section shape-search-section">
+    <div class=" shape-search-section">
         <div class="slider-shape"></div>
 
-    </div>
-    </div>
+
     <!-- Inner Banner html start-->
 
     <!-- Inner Banner html end-->
@@ -97,6 +96,8 @@
                         <div class="sidebar">
 
                             <aside class="widget widget_latest_post widget-post-thumb">
+                                <div class="widget-title" style="background-color: #F56960"> <a style="color: white"  href="{{ path('app_topic_new') }}">Ajouter Topic</a></div>
+
                                 <h3 class="widget-title">Populaire Topic</h3>
                                 <ul>
                                     {% for topic in topics %}
@@ -143,4 +144,7 @@
         </div>
 
     </main>
+    </div>
+    </div>
 {% endblock %}
+
