@@ -49,87 +49,29 @@
                 <nav id="navigation" class="navigation">
                     <ul>
                         <li class="menu-item-has-children">
-                            <a href="index.html">Home</a>
-                            <ul>
-                                <li>
-                                    <a href="index-v2.html">Home 2</a>
-                                </li>
-                            </ul>
+                            <a href="{{ path('app_home') }}">Home</a>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="#">Tour</a>
-                            <ul>
-                                <li>
-                                    <a href="destination.html">Destination</a>
-                                </li>
-                                <li>
-                                    <a href="tour-packages.html">Tour Packages</a>
-                                </li>
-                                <li>
-                                    <a href="package-offer.html">Package Offer</a>
-                                </li>
-                                <li>
-                                    <a href="package-detail.html">Package Detail</a>
-                                </li>
-                                <li>
-                                    <a href="tour-cart.html">Tour Cart</a>
-                                </li>
-                                <li>
-                                    <a href="booking.html">Package Booking</a>
-                                </li>
-                                <li>
-                                    <a href="confirmation.html">Confirmation</a>
-                                </li>
-                            </ul>
+                            <a href="{{ path('app_hotels') }}">Hotels</a>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="#">About us</a>
-                            <ul>
-                                <li>
-                                    <a href="about.html">About</a>
-                                </li>
-                                <li>
-                                    <a href="service.html">Service</a>
-                                </li>
-                                <li>
-                                    <a href="career.html">Career</a>
-                                </li>
-                                <li>
-                                    <a href="career-detail.html">Career Detail</a>
-                                </li>
-                                <li>
-                                    <a href="tour-guide.html">Tour Guide</a>
-                                </li>
-                                <li>
-                                    <a href="gallery.html">Gallery</a>
-                                </li>
-                                <li>
-                                    <a href="single-page.html">Single Page</a>
-                                </li>
-                                <li>
-                                    <a href="faq.html">FAQ Page</a>
-                                </li>
-                                <li>
-                                    <a href="testimonial-page.html">Testimonial Page</a>
-                                </li>
-
-                            </ul>
+                            <a href="#">Houses</a>
                         </li>
-
+                        <li class="menu-item-has-children">
+                            <a href="#">Cars</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a href="#">Events</a>
+                        </li>
                         <li class="menu-item-has-children">
                             <a href="#">Blog</a>
-                            <ul>
-                                <li><a href="blog-archive.html">Blog List</a></li>
-                                <li><a href="blog-archive-left.html">Blog Left Sidebar</a></li>
-                                <li><a href="blog-archive-both.html">Blog Both Sidebar</a></li>
-                                <li><a href="blog-single.html">Blog Single</a></li>
-                            </ul>
+
                         </li>
                         <li class="menu-item-has-children">
                             <a href="#">Dashboard</a>
                             <ul>
-                                <li>
-                                    <a href="admin/user.html">My Reservations</a>
+                                <li class="menu-item-has-children">
+                                    <a href={{ path('app_reservation_get_client',{'type':'all','id_user':32}) }}>My Reservations</a>
                                 </li>
 
                                 <li class="menu-item-has-children">
@@ -191,35 +133,6 @@
             </div>
         </section>
 
-        <div class="trip-search-section shape-search-section">
-            <div class="slider-shape"></div>
-            <div class="container">
-                <div class="trip-search-inner white-bg d-flex">
-                    <div class="input-group">
-                        <label> Search Destination* </label>
-                        <input type="text" name="s" placeholder="Enter Destination">
-                    </div>
-                    <div class="input-group">
-                        <label> Pax Number* </label>
-                        <input type="text" name="s" placeholder="No.of People">
-                    </div>
 
-                        <div class="input-group width-col-3">
-                            <label> Checkin Date* </label>
-                            <i class="far fa-calendar"></i>
-                            <input class="input-date-picker" type="text" name="s" placeholder="MM / DD / YY" autocomplete="off" readonly="readonly">
-                        </div>
-                        <div class="input-group width-col-3">
-                            <label> Checkout Date* </label>
-                            <i class="far fa-calendar"></i>
-                            <input class="input-date-picker" type="text" name="s" placeholder="MM / DD / YY" autocomplete="off" readonly="readonly">
-                        </div>
-                        <div class="input-group width-col-3">
-                            <label class="screen-reader-text"> Search </label>
-                            <input type="submit" name="travel-search" value="INQUIRE NOW"  />
-                        </div>
-                </div>
-            </div>
-        </div>
     </main>
 </div>

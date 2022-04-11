@@ -1,0 +1,418 @@
+
+{% extends "base.html.twig" %}
+
+{% block header %}
+    {% include "partials/navbar1.html.twig" %}
+{% endblock %}
+
+{% block body %}
+    <main id="content" class="site-main">
+        <div class="single-tour-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="single-tour-inner">
+                            <h2>MOVENPIC RESORT <br> DELUXE DOUBLE ROOM</h2>
+                            <figure class="feature-image">
+                                <img src="{{asset('assets/images/romm_zoom.jpg')}}" alt="">
+                                <div class="package-meta text-center">
+                                    <ul>
+                                        <li>
+                                            <i class="far fa-clock"></i>
+                                             <span id="days">6 days / 5 night</span>
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-user-friends"></i>
+                                            People: 4
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-map-marked-alt"></i>
+                                            Sousse
+                                        </li>
+                                    </ul>
+                                </div>
+                            </figure>
+                            <div class="tab-container">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">DESCRIPTION</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="program-tab" data-toggle="tab" href="#program" role="tab" aria-controls="program" aria-selected="false">PROGRAM</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">REVIEW</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="map-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="false">Map</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                                        <div class="overview-content">
+                                            <p>Occaecat pariatur! Quaerat ligula, ab, consequuntur orci mus ultricies praesent aute blandit beatae nisl aut, totam mauris rhoncus? Tellus netus fringilla class auctor dui. Dolores excepteur, doloribus, blanditiis aliquip nisl. Occaecat iusto? Provident sociis rerum. Amet, asperiores molestie varius eos! Libero, fermentum fermentum totam! Sunt praesentium, totam. Excepteur platea nisl. Convallis aliquam? Iaculis erat ipsa molestie, quod, vestibulum reiciendis, maxime nostra, integer unde officiis quo integer unde officiis quo.</p>
+                                            <p>Occaecat pariatur! Quaerat ligula, ab, consequuntur orci mus ultricies praesent aute blandit beatae nisl aut, totam mauris rhoncus? Tellus netus fringilla class auctor dui. Dolores excepteur, doloribus, blanditiis aliquip nisl..</p>
+                                            <ul>
+                                                <li>- Travel cancellation insurance</li>
+                                                <li>- Breakfast and dinner included</li>
+                                                <li>- Health care included</li>
+                                                <li>- Transfer to the airport and return to the agency</li>
+                                                <li>- Lorem ipsum dolor sit amet, consectetur adipiscing</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="program" role="tabpanel" aria-labelledby="program-tab">
+                                        <div class="itinerary-content">
+                                            <h3>Program <span>( 4 days )</span></h3>
+                                            <p>Dolores maiores dicta dolore. Natoque placeat libero sunt sagittis debitis? Egestas non non qui quos, semper aperiam lacinia eum nam! Pede beatae. Soluta, convallis irure accusamus voluptatum ornare saepe cupidatat.</p>
+                                        </div>
+                                        <div class="itinerary-timeline-wrap">
+                                            <ul>
+                                                <li>
+                                                    <div class="timeline-content">
+                                                        <div class="day-count">Day <span>1</span></div>
+                                                        <h4>Ancient Rome Visit</h4>
+                                                        <p>Nostra semper ultricies eu leo eros orci porta provident, fugit? Pariatur interdum assumenda, qui aliquip ipsa! Dictum natus potenti pretium.</p>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="timeline-content">
+                                                        <div class="day-count">Day <span>2</span></div>
+                                                        <h4>Classic Rome Sightseeing</h4>
+                                                        <p>Nostra semper ultricies eu leo eros orci porta provident, fugit? Pariatur interdum assumenda, qui aliquip ipsa! Dictum natus potenti pretium.</p>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="timeline-content">
+                                                        <div class="day-count">Day <span>3</span></div>
+                                                        <h4>Vatican City Visit</h4>
+                                                        <p>Nostra semper ultricies eu leo eros orci porta provident, fugit? Pariatur interdum assumenda, qui aliquip ipsa! Dictum natus potenti pretium.</p>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="timeline-content">
+                                                        <div class="day-count">Day <span>4</span></div>
+                                                        <h4>Italian Food Tour</h4>
+                                                        <p>Nostra semper ultricies eu leo eros orci porta provident, fugit? Pariatur interdum assumenda, qui aliquip ipsa! Dictum natus potenti pretium.</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="review" role="tabpanel" aria-labelledby="review-tab">
+                                        <div class="summary-review">
+                                            <div class="review-score">
+                                                <span>4.9</span>
+                                            </div>
+                                            <div class="review-score-content">
+                                                <h3>
+                                                    Excellent
+                                                    <span>( Based on 24 reviews )</span>
+                                                </h3>
+                                                <p>Tincidunt iaculis pede mus lobortis hendrerit eveniet impedit aenean mauris qui, pharetra rem doloremque laboris euismod deserunt non, cupiditate, vestibulum.</p>
+                                            </div>
+                                        </div>
+                                        <!-- review comment html -->
+                                        <div class="comment-area">
+                                            <h3 class="comment-title">3 Reviews</h3>
+                                            <div class="comment-area-inner">
+                                                <ol>
+                                                    <li>
+                                                        <figure class="comment-thumb">
+                                                            <img src="../../assets/images/img20.jpg" alt="">
+                                                        </figure>
+                                                        <div class="comment-content">
+                                                            <div class="comment-header">
+                                                                <h5 class="author-name">Tom Sawyer</h5>
+                                                                <span class="post-on">Jana 10 2020</span>
+                                                                <div class="rating-wrap">
+                                                                    <div class="rating-start" title="Rated 5 out of 5">
+                                                                        <span style="width: 90%;"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <p>Officia amet posuere voluptates, mollit montes eaque accusamus laboriosam quisque cupidatat dolor pariatur, pariatur auctor.</p>
+                                                            <a href="#" class="reply"><i class="fas fa-reply"></i>Reply</a>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <ol>
+                                                            <li>
+                                                                <figure class="comment-thumb">
+                                                                    <img src="../../assets/images/img21.jpg" alt="">
+                                                                </figure>
+                                                                <div class="comment-content">
+                                                                    <div class="comment-header">
+                                                                        <h5 class="author-name">John Doe</h5>
+                                                                        <span class="post-on">Jana 10 2020</span>
+                                                                        <div class="rating-wrap">
+                                                                            <div class="rating-start" title="Rated 5 out of 5">
+                                                                                <span style="width: 90%"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p>Officia amet posuere voluptates, mollit montes eaque accusamus laboriosam quisque cupidatat dolor pariatur, pariatur auctor.</p>
+                                                                    <a href="#" class="reply"><i class="fas fa-reply"></i>Reply</a>
+                                                                </div>
+                                                            </li>
+                                                        </ol>
+                                                    </li>
+                                                </ol>
+                                                <ol>
+                                                    <li>
+                                                        <figure class="comment-thumb">
+                                                            <img src="../../assets/images/img22.jpg" alt="">
+                                                        </figure>
+                                                        <div class="comment-content">
+                                                            <div class="comment-header">
+                                                                <h5 class="author-name">Jaan Smith</h5>
+                                                                <span class="post-on">Jana 10 2020</span>
+                                                                <div class="rating-wrap">
+                                                                    <div class="rating-start" title="Rated 5 out of 5">
+                                                                        <span></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <p>Officia amet posuere voluptates, mollit montes eaque accusamus laboriosam quisque cupidatat dolor pariatur, pariatur auctor.</p>
+                                                            <a href="#" class="reply"><i class="fas fa-reply"></i>Reply</a>
+                                                        </div>
+                                                    </li>
+                                                </ol>
+                                            </div>
+                                            <div class="comment-form-wrap">
+                                                <h3 class="comment-title">Leave a Review</h3>
+                                                <form class="comment-form">
+                                                    <div class="full-width rate-wrap">
+                                                        <label>Your rating</label>
+                                                        <div class="procduct-rate">
+                                                            <span></span>
+                                                        </div>
+                                                    </div>
+                                                    <p>
+                                                        <input type="text" name="name" placeholder="Name">
+                                                    </p>
+                                                    <p>
+                                                        <input type="text" name="name" placeholder="Last name">
+                                                    </p>
+                                                    <p>
+                                                        <input type="email" name="email" placeholder="Email">
+                                                    </p>
+                                                    <p>
+                                                        <input type="text" name="subject" placeholder="Subject">
+                                                    </p>
+                                                    <p>
+                                                        <textarea rows="6" placeholder="Your review"></textarea>
+                                                    </p>
+                                                    <p>
+                                                        <input type="submit" name="submit" value="Submit">
+                                                    </p>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="map" role="tabpanel" aria-labelledby="map-tab">
+                                        <div class="map-area">
+                                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60998820.06503915!2d95.3386452160086!3d-21.069765827214972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2b2bfd076787c5df%3A0x538267a1955b1352!2sAustralia!5e0!3m2!1sen!2snp!4v1579777829477!5m2!1sen!2snp" height="450" allowfullscreen=""></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="single-tour-gallery">
+                                <h3>GALLERY / PHOTOS</h3>
+                                <div class="single-tour-slider">
+                                    <div class="single-tour-item">
+                                        <figure class="feature-image">
+                                            <img src="../../assets/images/img28.jpg" alt="">
+                                        </figure>
+                                    </div>
+                                    <div class="single-tour-item">
+                                        <figure class="feature-image">
+                                            <img src="../../assets/images/img29.jpg" alt="">
+                                        </figure>
+                                    </div>
+                                    <div class="single-tour-item">
+                                        <figure class="feature-image">
+                                            <img src="../../assets/images/img32.jpg" alt="">
+                                        </figure>
+                                    </div>
+                                    <div class="single-tour-item">
+                                        <figure class="feature-image">
+                                            <img src="../../assets/images/img33.jpg" alt="">
+                                        </figure>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="sidebar">
+                            <div class="package-price">
+                                <h5 class="price">
+                                    <span>{{ format_to_currency(room.prix)}}</span> / per night
+                                </h5>
+                                <div class="start-wrap">
+                                    <div class="rating-start" title="Rated 5 out of 5">
+                                        <span style="width: 60%"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-bg booking-form-wrap">
+                                <h4 class="bg-title">Booking</h4>
+                                <form class="booking-form">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label> Full Name </label>
+                                                <input name="name_booking" type="text" placeholder="Full Name" value="{{ user.nom ~ " "~ user.prenom }} " disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label> Email </label>
+                                                <input name="email_booking" type="text" placeholder="Email" value="{{ user.email }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label> Phone number </label>
+                                                <input name="phone_booking" type="text" placeholder="Number" value="{{ user.numTel }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+
+                                            <div class="form-group">
+                                                <label> Checkin date </label>
+                                                <input id="date_picker_arrivee" type="date" name="date_arrivee"  placeholder="Checkin Date" value="{{ date_arrive }}" disabled/>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label> Checkout date </label>
+                                                <input id="date_picker_depart" type="date" name="date_depart"  placeholder="Checkout Date"  value="{{ date_depart }}"  disabled/>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-12" style="display: flex; align-items: center">
+                                            <div class="col"  style="margin-left: -10px">
+                                                <span> Total :</span>
+
+                                                <span id="total_value" style="font-weight:bold; margin-left: 10px"
+                                                      data-arrive="{{ date_arrive }}" data-depart="{{ date_depart }}"
+                                                      data-prix="{{ room.prix }}"> </span>
+                                            </div>
+
+
+                                        </div>
+
+
+
+                                        <div class="col-sm-12">
+                                            <div class="form-group submit-btn">
+                                                <input type="button" onclick="redirect_to_checkout({{ user.id }},{{ room.id }},)" name="submit"  value="Boook Now">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="widget-bg information-content text-center">
+                                <h5>TRAVEL TIPS</h5>
+                                <h3>NEED TRAVEL RELATED TIPS & INFORMATION</h3>
+                                <p>Mollit voluptatem perspiciatis convallis elementum corporis quo veritatis aliquid blandit, blandit torquent, odit placeat. </p>
+                                <a href="#" class="button-primary">GET A QUOTE</a>
+                            </div>
+                            <div class="travel-package-content text-center" style="background-image: url('../../public/assets/images/img11.jpg');">
+                                <h5>MORE PACKAGES</h5>
+                                <h3>OTHER TRAVEL PACKAGES</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus.</p>
+                                <ul>
+                                    <li>
+                                        <a href="#"><i class="far fa-arrow-alt-circle-right"></i>Vacation packages</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="far fa-arrow-alt-circle-right"></i>Honeymoon packages</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="far fa-arrow-alt-circle-right"></i>New year packages</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="far fa-arrow-alt-circle-right"></i>Weekend packages</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- subscribe section html start -->
+        <section class="subscribe-section" style="background-image: url('../../public/assets/images/img11.jpg');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="section-heading section-heading-white">
+                            <h5 class="dash-style">HOLIDAY PACKAGE OFFER</h5>
+                            <h2>HOLIDAY SPECIAL 25% OFF !</h2>
+                            <h4>Sign up now to recieve hot special offers and information about the best tour packages, updates and discounts !!</h4>
+                            <div class="newsletter-form">
+                                <form>
+                                    <input type="email" name="s" placeholder="Your Email Address">
+                                    <input type="submit" name="signup" value="SIGN UP NOW!">
+                                </form>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Eaque adipiscing, luctus eleifend temporibus occaecat luctus eleifend tempo ribus.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- subscribe html end -->
+    </main>
+
+    <script>
+        $(document).ready(function () {
+            $("#date_picker_arrivee").datepicker({
+                minDate: 0
+            });
+        });
+        $(document).ready(function () {
+            $("#date_picker_depart").datepicker({
+                minDate: 0
+            });
+        });
+        total_html=document.getElementById("total_value");
+        days_html=document.getElementById("days");
+        date_arrive_string=total_html.dataset.arrive;
+        date_depart_string=total_html.dataset.depart;
+        date_arrive=new Date(total_html.dataset.arrive);
+        date_depart=new Date(total_html.dataset.depart);
+        prix_chambre=parseFloat(document.getElementById("total_value").dataset.prix);
+        difference = date_depart.getTime() - date_arrive.getTime();
+        days = Math.ceil(difference / (1000 * 3600 * 24));
+        total=prix_chambre*days;
+        let dollarUSLocale = Intl.NumberFormat('en-US');
+        currency_total=new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(total);
+        total_html.innerText=currency_total.toString();
+        days_html.innerText=days+" days"
+        console.log('date_arrive '+currency_total);
+
+        function redirect_to_checkout(id_user,id_room){
+            window.location.href = "http://127.0.0.1:8000/transaction/hotel/"+id_room+"/"+id_user+"/"+total+"/"+date_arrive_string+"/"+date_depart_string;
+        }
+
+
+    </script>
+
+
+
+{% endblock  %}
+
+
+
+
+
+
+
+
+
+

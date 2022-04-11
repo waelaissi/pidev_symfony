@@ -73,7 +73,7 @@
                               {% endif %}
                             <td>
                                 <span class="badge badge-info cursor"><i class="far fa-list-alt"> details</i></span>
-                                {% if date_difference(date() | date("m/d/Y"),reservation.getDateDebut() | date("m/d/Y"))>0 and reservation.etat!="annulée" %}
+                                {% if date_difference(date() | date("m/d/Y"),reservation.getDateDebut() | date("m/d/Y"))<0 and reservation.etat!="annulée" %}
                                     <span class="badge badge-warning cursor" id="cancel_button" onclick="myFunction()"><i class="far fa-trash-alt"> annuler</i></span>
                                 {% endif %}
                             </td>
