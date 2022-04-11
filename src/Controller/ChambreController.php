@@ -48,7 +48,8 @@ class ChambreController extends AbstractController
                 ],
             ])
             ->add('prix')
-            ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
+            ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block',
+                                                                     'formnovalidate' => 'formnovalidate'   ]])
             ->getForm();
 
         $form->handleRequest($request);

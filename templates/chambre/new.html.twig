@@ -1,11 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_admin.html.twig' %}
 
 {% block title %}New Chambre{% endblock %}
 
 {% block body %}
     <h1>Create new Chambre</h1>
+    <div class="db-info-wrap">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="dashboard-box">
+                    {{ include('chambre/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 
-    {{ include('chambre/_form.html.twig') }}
-
-    <a href="{{ path('app_chambre_index') }}">back to list</a>
 {% endblock %}

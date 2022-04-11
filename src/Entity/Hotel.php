@@ -38,6 +38,7 @@ class Hotel
      * @var string
      *
      * @ORM\Column(name="ville", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Il faut choisir une ville")
      */
     private $ville;
 
@@ -45,6 +46,7 @@ class Hotel
      * @var string
      *
      * @ORM\Column(name="region", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Il faut choisir une region")
      */
     private $region;
 
@@ -52,6 +54,12 @@ class Hotel
      * @var int
      *
      * @ORM\Column(name="num_tel", type="integer", nullable=false)
+     * @Assert\NotBlank(message="Il faut entrer un numéro")
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 8,
+     *      minMessage = "Il faut entrer un numéro valide",
+     *      maxMessage = "Il faut entrer un numéro valide")
      */
     private $numTel;
 
@@ -59,6 +67,7 @@ class Hotel
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=false)
+     * @Assert\NotBlank(message="Il faut entrer une description pour l'hotel")
      */
     private $description;
 
@@ -66,6 +75,7 @@ class Hotel
      * @var string
      *
      * @ORM\Column(name="libelle", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Il faut choisir un nom pour l'hotel")
      */
     private $libelle;
 
@@ -73,6 +83,8 @@ class Hotel
      * @var int
      *
      * @ORM\Column(name="nb_etoiles", type="integer", nullable=false)
+     * @Assert\NotBlank(message="Il faut choisir le nombre d'etoile")
+     * @Assert\LessThanOrEqual(5)
      */
     private $nbEtoiles;
 
@@ -111,18 +123,20 @@ class Hotel
      *
      * @ORM\ManyToOne(targetEntity="Utilisateur")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     * @ORM\JoinColumn(name="id_user", referencedColumnName="id")
      * })
      */
     private $idUser;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\NotBlank(message="Il faut choisir une latitude pour l'hotel")
      */
     private $lat;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\NotBlank(message="Il faut choisir une longitude l'hotel")
      */
     private $lon;
 

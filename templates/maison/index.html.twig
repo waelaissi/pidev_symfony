@@ -1,48 +1,64 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_admin.html.twig' %}
 
 {% block title %}Maison index{% endblock %}
 
 {% block body %}
     <h1>Mes maisons</h1>
-<div class="container">
-    <a href="{{ path('app_maison_new') }}">Create new</a>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Adresse</th>
-            <th scope="col">Region</th>
-            <th scope="col">NumTel</th>
-            <th scope="col">Description</th>
-            <th scope="col">Capacite</th>
-            <th scope="col">NbChambres</th>
-            <th scope="col">Prix</th>
-            <th scope="col">Image</th>
-            <th scope="col">actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for maison in maisons %}
-            <tr scope="row">
-                <td>{{ maison.adresse }}</td>
-                <td>{{ maison.region }}</td>
-                <td>{{ maison.numTel }}</td>
-                <td>{{ maison.description }}</td>
-                <td>{{ maison.capacite }}</td>
-                <td>{{ maison.nbChambres }}</td>
-                <td>{{ maison.prix }}</td>
-                <td>{{ maison.image }}</td>
-                <td>
-                    <a href="{{ path('app_maison_show', {'id': maison.id}) }}">voir</a>
-                    <a href="{{ path('app_maison_edit', {'id': maison.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr scope="row">
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div class="db-info-wrap">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="dashboard-box table-opp-color-box">
+                <h3>Liste des maisons</h3>
+                <a href="{{ path('app_maison_new') }}">Create new</a>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Adresse</th>
+                            <th>Region</th>
+                            <th>NumTel</th>
+                            <th>Description</th>
+                            <th>Capacite</th>
+                            <th>NbChambres</th>
+                            <th>Prix</th>
+                            <th>Image</th>
+                            <th>actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for maison in maisons %}
+                            <tr>
+                                <td>{{ maison.adresse }}</td>
+                                <td>{{ maison.region }}</td>
+                                <td>{{ maison.numTel }}</td>
+                                <td>{{ maison.description }}</td>
+                                <td>{{ maison.capacite }}</td>
+                                <td>{{ maison.nbChambres }}</td>
+                                <td>{{ maison.prix }}</td>
+                                <td><img src="{{ vich_uploader_asset(maison) | imagine_filter('squared_thumbnail_small')}}" alt="{{ maison.description }}" class="card-img-top"></td>
+                                <td>
+                                    <a href="{{ path('app_maison_show', {'id': maison.id}) }}">
+                                        <i class="far fa-eye"></i>
+                                    </a>
+                                    <a href="{{ path('app_maison_edit', {'id': maison.id}) }}">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                    <a href="{{ path('app_maison_delete', {'id': maison.id}) }}">
+                                        {{ include('maison/_delete_form.html.twig') }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr scope="row">
+                                <td colspan="10">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 

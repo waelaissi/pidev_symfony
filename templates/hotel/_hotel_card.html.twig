@@ -1,10 +1,46 @@
-<div class="card">
-    <img src="{{ vich_uploader_asset(hotel) }}" alt="{{ hotel.libelle }}" class="card-img-top">
-    <div class="card-body">
-        <div class="card-title text-primary" style="font-weight: bold; font-size: 1.5rem;">{{ hotel.libelle }}</div>
-        <div class="text text-warning"></div>
-        <p class="text text-muted">{{ hotel.description }}</p>
-        <a href="{{ path('app_hotel_show', {id: hotel.id}) }}" class="btn btn-outline-success btn-sm">voir</a>
-        <a href="" class="btn btn-outline-danger btn-sm"><i class="fa fa-heart"></i></a>
+<div class="package-wrap">
+    <figure class="feature-image">
+        <a href="#">
+            <img src="{{ vich_uploader_asset(hotel) }}" alt="" height="365" width="305">
+        </a>
+    </figure>
+    <div class="package-price">
+        <h6>
+            <span>$1,900 </span> / per person
+        </h6>
+    </div>
+    <div class="package-content-wrap">
+        <div class="package-meta text-center">
+            <ul>
+                <li>
+                    <i class="far fa-clock"></i>
+                    7D/6N
+                </li>
+                <li>
+                    <i class="fas fa-user-friends"></i>
+                    People: 5
+                </li>
+                <li>
+                    <i class="fas fa-map-marker-alt"></i>
+                    Malaysia
+                </li>
+            </ul>
+        </div>
+        <div class="package-content">
+            <h3>
+                <a href="#">{{ hotel.libelle }}</a>
+            </h3>
+            <div class="review-area">
+                <span class="review-text">(25 reviews)</span>
+                <div class="rating-start" title="Rated 5 out of 5">
+                    <span style="width: 60%"></span>
+                </div>
+            </div>
+            <p>{{ hotel.description }}.</p>
+            <div class="btn-wrap">
+                <a href="{{ path('app_hotel_show', {'id': hotel.id}) }}" class="button-text width-6">Book Now<i class="fas fa-arrow-right"></i></a>
+                <a href="#" class="button-text width-6">Wish List<i class="far fa-heart"></i></a>
+            </div>
+        </div>
     </div>
 </div>

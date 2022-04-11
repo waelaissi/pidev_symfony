@@ -30,7 +30,7 @@ class SearchForm extends AbstractType
                 'choices'  => [
                     ' ' => '',
                     'Sousse' => 'Sousse',
-                    'Bizeter' => 'Bizeter',
+                    'Bizete' => 'Bizete',
                     'Mednine' => 'Mednine',
                     'Nabeul' => 'Nabeul',
                     'Siliana' => 'Siliana',

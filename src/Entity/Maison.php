@@ -30,6 +30,7 @@ class Maison
      * @var string
      *
      * @ORM\Column(name="adresse", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Il faut choisir une description pour le maison")
      */
     private $adresse;
 
@@ -37,6 +38,7 @@ class Maison
      * @var string
      *
      * @ORM\Column(name="region", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Il faut choisir une region pour le maison")
      */
     private $region;
 
@@ -44,6 +46,7 @@ class Maison
      * @var int
      *
      * @ORM\Column(name="num_tel", type="integer", nullable=false)
+     * @Assert\NotBlank(message="Il faut choisir un numero de telephone")
      */
     private $numTel;
 
@@ -51,6 +54,7 @@ class Maison
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=false)
+     * @Assert\NotBlank(message="Il faut choisir une description pour le maison")
      */
     private $description;
 
@@ -58,6 +62,7 @@ class Maison
      * @var int
      *
      * @ORM\Column(name="capacite", type="integer", nullable=false)
+     * @Assert\NotBlank(message="Il faut mentionné le capacité du maison")
      */
     private $capacite;
 
@@ -65,6 +70,7 @@ class Maison
      * @var int
      *
      * @ORM\Column(name="nb_chambres", type="integer", nullable=false)
+     * @Assert\NotBlank(message="Il faut mentionnée le nombre de chambre du maison")
      */
     private $nbChambres;
 
@@ -72,6 +78,8 @@ class Maison
      * @var float
      *
      * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
+     * @Assert\NotBlank(message="Il faut préciser le prix du maison")
+     * @Assert\Positive(message="le prix doit etre posistive")
      */
     private $prix;
 

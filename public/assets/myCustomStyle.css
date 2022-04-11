@@ -1,0 +1,35 @@
+.myTable_th{
+    background-color: red;
+}
+.content_title{
+    border: none;
+    display: flex;
+    text-align: center;
+    margin: .5em 0em;
+    font-weight: bold;
+    font-size: 16px;
+
+}
+.content_container{
+    display: flex;
+    text-align: center;
+    color: red;
+    margin: 2em 0em;
+    border: none;
+}
+.cursor{
+    cursor: pointer;
+}
+.table-responsive {
+    max-height:300px;
+}
+th{
+    align-items: center;
+}
+
+.form-error{
+    font-size: 13px;
+    color: red;
+    list-style: none;
+
+}

@@ -10,6 +10,7 @@ use App\Repository\HotelRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -55,8 +56,30 @@ class HotelController extends AbstractController
                 ])
             ->add('ville',TextType::class, [
                 'label' => false])
-            ->add('region', TextType::class,[
-                'label' => false])
+            ->add('region', ChoiceType::class, [
+                'choices'  => [
+                    ' ' => '',
+                    'Sousse' => 'Sousse',
+                    'Bizete' => 'Bizete',
+                    'Mednine' => 'Mednine',
+                    'Nabeul' => 'Nabeul',
+                    'Siliana' => 'Siliana',
+                    'Jendouba' => 'Jendouba',
+                    'Kairaouane' => 'Kairaouane',
+                    'Kasserine' => 'Kasserine',
+                    'Mahdia' => 'Mahdia',
+                    'Monastir' => 'Monastir',
+                    'Sfax' => 'Sfax',
+                    'Zaghouan' => 'Zaghouan',
+                    'Ben arous' => 'Ben arous',
+                    'Gabes' => 'Gabes',
+                    'Kebili' => 'Kebili',
+                    'Tozeur' => 'Tozeur',
+                    'Tunis' => 'Tunis',
+                ],
+                'required' => false,
+                'label' => false,
+            ])
             ->add('numTel', IntegerType::class, [
                 'label' => false])
             ->add('description', TextareaType::class, [
@@ -167,7 +190,7 @@ class HotelController extends AbstractController
             $this->addFlash('error', 'Hotel supprimer avec succées !');
         }
 
-        return $this->redirectToRoute('app_hotel_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_admin_hotel', [], Response::HTTP_SEE_OTHER);
     }
 
     /**

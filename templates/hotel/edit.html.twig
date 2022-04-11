@@ -1,17 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_admin.html.twig' %}
 
 {% block title %}Edit Hotel{% endblock %}
 
 {% block body %}
     <h1>Edit Hotel</h1>
-    <main role="main" class="container">
-        {{ include('hotel/_delete_form.html.twig') }}
+    <div class="db-info-wrap">
         <div class="row">
-            <div class="col-md-6 mx-auto">
+            <div class="col-lg-12">
+                <div class="dashboard-box">
+                <h1>Edit Hotel</h1>
                 {{ include('hotel/_form.html.twig', {'button_label': 'Update'}) }}
+                </div>
             </div>
         </div>
-    </main>
-
+    </div>
 
 {% endblock %}

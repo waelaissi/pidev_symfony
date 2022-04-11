@@ -56,7 +56,8 @@ class MaisonController extends AbstractController
                     'download_uri' => false,
                     'imagine_pattern' => 'squared_thumbnail_small',
                 ])
-                ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block']])
+                ->add('Ajouter',SubmitType::class, ['attr' => ['class' => 'btn btn-info btn-block',
+                                                                            'formnovalidate' => 'formnovalidate']])
         ->getForm();
         $form->handleRequest($request);
 
