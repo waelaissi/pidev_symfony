@@ -58,7 +58,7 @@
                             <a href="#">Houses</a>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="#">Cars</a>
+                            <a href={{ path('app_cars') }}>Cars</a>
                         </li>
                         <li class="menu-item-has-children">
                             <a href="#">Events</a>
@@ -84,6 +84,9 @@
                                             <a href="admin/user-edit.html">Log out</a>
                                         </li>
                                     </ul>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a href={{ path('app_admin_reservations_hotels') }}>Admin</a>
                                 </li>
 
                             </ul>

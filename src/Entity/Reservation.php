@@ -54,7 +54,7 @@ class Reservation
      *
      * @ORM\Column(name="etat", type="string", length=255, nullable=false, options={"default"="confirmé"})
      */
-    private $etat = 'confirmé';
+    private $etat = 'confirmée';
 
     /**
      * @var string

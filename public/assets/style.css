@@ -4385,7 +4385,7 @@ Due to the split circle of progress-left and progress right, we must use the ani
 >>> Main Footer  
 ----------------------------------------------------------------*/
 .site-footer {
-  background-color: #383838;
+  background-color: #2f3459;
   padding-top: 80px;
 }
 .site-footer .top-footer {
@@ -4557,7 +4557,7 @@ Due to the split circle of progress-left and progress right, we must use the ani
   position: relative;
 }
 .inner-baner-container:before {
-  background-color: #2f3459;
+  background-color: #f4b707;
   content: "";
   display: block;
   opacity: 0.65;

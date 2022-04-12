@@ -7,29 +7,37 @@
             <li><a><i class="fas fa-user"></i>Users</a>
                 <ul>
                     <li>
-                        <a href="user.html">User</a>
+                        <a href="">User</a>
                     </li>
                     <li>
-                        <a href="user-edit.html">User edit</a>
+                        <a href="" >User edit</a>
                     </li>
                     <li>
-                        <a href="{{ path('agencier') }}">New user</a>
+                        <a href="">New user</a>
                     </li>
                 </ul>
             </li>
-            <li><a href="db-add-package.html"><i class="fas fa-umbrella-beach"></i>Add Package</a></li>
             <li>
-                <a><i class="fas fa-hotel"></i></i>packages</a>
+                <a ><i class="fas fa-umbrella-beach"></i>Accommodation</a>
                 <ul>
-                    <li><a href="db-package-active.html">Active</a></li>
-                    <li><a href="db-package-pending.html">Pending</a></li>
-                    <li><a href="db-package-expired.html">Expired</a></li>
+                    <li><a href="">Hotels</a></li>
+                    <li><a href="">Houses</a></li>
                 </ul>
             </li>
-            <li><a href="db-booking.html"><i class="fas fa-ticket-alt"></i> Booking & Enquiry</a></li>
-            <li><a href="db-wishlist.html"><i class="far fa-heart"></i>Wishlist</a></li>
-            <li><a href="db-comment.html"><i class="fas fa-comments"></i>Comments</a></li>
-            <li><a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            <li>
+                <a><i class="fas fa-hotel"></i></i>Reservations</a>
+                <ul>
+                    <li><a href={{ path('app_admin_reservations_hotels') }}>Hotels</a></li>
+                    <li><a href={{ path('app_admin_reservations_houses') }}>Houses</a></li>
+                    <li><a href={{ path('app_admin_reservations_cars') }}>Cars</a></li>
+                    <li><a href={{ path('app_admin_reservations_events') }}>Events</a></li>
+                </ul>
+            </li>
+            <li><a href="db-booking.html"><i class="fas fa-ticket-alt"></i> Car</a></li>
+            <li><a href="db-booking.html"><i class="far fa-heart"></i>Event</a></li>
+            <li><a href="db-booking.html"><i class="fas fa-ticket-alt"></i> Blog</a></li>
+
+            <li><a href={{ path('app_home') }}><i class="fas fa-sign-out-alt"></i> Log out</a></li>
         </ul>
     </div>
 </div>

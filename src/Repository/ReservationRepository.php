@@ -95,6 +95,55 @@ class ReservationRepository extends ServiceEntityRepository
 
 
 
+    public function findReservationsByType($type)
+    {
+        $query="";
+        switch ($type) {
+            case "hotel":
+                $query=$this->createQueryBuilder('r')
+                    ->Where('r.type = :type ')
+                    ->join("r.idTransaction",'t')
+                    ->orderBy('t.createdAt','DESC')
+                    ->setParameter('type','hotel')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "house":
+                $query=$this->createQueryBuilder('r')
+                    ->Where('r.type = :type ')
+                    ->join("r.idTransaction",'t')
+                    ->orderBy('t.createdAt','DESC')
+                    ->setParameter('type','maison')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "car":
+                $query=$this->createQueryBuilder('r')
+                    ->Where('r.type = :type ')
+                    ->join("r.idTransaction",'t')
+                    ->orderBy('t.createdAt','DESC')
+                    ->setParameter('type','voiture')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "event":
+                $query=$this->createQueryBuilder('r')
+                    ->Where('r.type = :type ')
+                    ->join("r.idTransaction",'t')
+                    ->orderBy('t.createdAt','DESC')
+                    ->setParameter('type',"evenement")
+                    ->getQuery()
+                    ->getResult();
+                break;
+            default :
+                $query=$this->createQueryBuilder('r')
+                    ->join("r.idTransaction",'t')
+                    ->orderBy('t.createdAt','DESC')
+                    ->getQuery()
+                    ->getResult();
+        }
+        return$query;
+    }
 
     public function findClientReservationsByType($type,$id_user)
     {

@@ -37,3 +37,9 @@ th{
     padding-left: 0.2em;
 
 }
+.sub_title{
+    font-weight: bold;
+    font-size:13px!important;
+    color: #f4b707;
+ }
+.header_detail{ background-color:#f4b707 }

@@ -7,6 +7,8 @@
 
 {% block body %}
     <div class="container">
+
+
         <div class="db-info-wrap db-booking">
             <div class="dashboard-box table-opp-color-box" style="margin-bottom: 10em">
                 <h2>Recent Booking</h2>
@@ -15,14 +17,10 @@
                 <div class="table-responsive">
                     <table class="table" id="myTable" data-pagination="true" style="" data-toggle="table"
                            data-classes="table table-hover table-condensed"
-
                            data-striped="true"
-
                            data-sort-name="Quality"
-
                            data-sort-order="desc"
                            data-sort-order="desc"
-
                            data-pagination="true">
                         <thead>
                         <tr>
@@ -50,19 +48,19 @@
                             <td>{{ reservation.getDateFin() | date("m/d/Y", "Europe/Paris") }}</td>
                             <td>
                                 {% if reservation.montantAPayer %}
-                                    {{ format_to_currency(reservation.montantAPayer) }}
+                                    {{ format_to_currency(reservation.montantAPayer | default(0)) }}
                                 {% endif %}
                             </td>
                             <td>
                                 {% if reservation.montantAPayer %}
-                                    {{ format_to_currency(reservation.idTransaction.montantPayeAvance) }}
+                                    {{ format_to_currency(reservation.idTransaction.montantPayeAvance|default(0)) }}
                                 {% endif %}
 
                             </td>
 
                             <td>
                                 {% if reservation.montantAPayer %}
-                                    {{ format_to_currency(reservation.resteAPayer) }}
+                                    {{ format_to_currency(reservation.resteAPayer|default(0)) }}
                                 {% endif %}
                             </td>
                               {% if reservation.etat=="confirmée" %}
@@ -72,7 +70,7 @@
                                       <td> <span class="badge badge-danger"> Annulée </span> </td>
                               {% endif %}
                             <td>
-                                <span class="badge badge-info cursor"><i class="far fa-list-alt"> details</i></span>
+                                <span class="badge badge-info cursor" onclick="myFunctionDetail('{{ reservation.type }}')"><i class="far fa-list-alt"> details</i></span>
                                 {% if date_difference(date() | date("m/d/Y"),reservation.getDateDebut() | date("m/d/Y"))<0 and reservation.etat!="annulée" %}
                                     <span class="badge badge-warning cursor" id="cancel_button" onclick="myFunction()"><i class="far fa-trash-alt"> annuler</i></span>
                                 {% endif %}
@@ -98,6 +96,351 @@
                                     </div>
                                 </div>
                             </div>
+                        <div class="modal fade" id="myModalDetailsHotel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content" style="text-align: center">
+                                    <div class="modal-header header_detail" style="text-align: center">
+                                        <h5 class="modal-title" id="exampleModalLongTitle" > <h4> Reservation Hotel details :</h4> </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container">
+                                            <div class="row" >
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">HOTEL INFOS :</h5>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Name : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idChambre.idHotel.libelle|default("") }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Region : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idChambre.idHotel.region|default("") }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">City : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idChambre.idHotel.ville|default("") }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Address : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idChambre.idHotel.adresse|default("") }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Rating : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idChambre.idHotel.nbEtoiles|default("") }} Stars</h6>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">ROOM INFOS :</h5>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Type : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idChambre.type|default("") }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Night Price : </h6>
+                                                        <h6 style="margin-left: 5px">{{ format_to_currency(reservation.idChambre.prix|default("")) }}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" >
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">BOOKING INFOS :</h5>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Checkin Date : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.dateDebut |date("m/d/Y") }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Checkout Date : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.dateFin |date("m/d/Y")}}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Status : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.etat }}</h6>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">PAYMENT :</h5>
+
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Total : </h6>
+                                                        <h6 style="margin-left: 5px"> {{ format_to_currency(reservation.montantAPayer) }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Advance rate : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idTransaction.tauxAvance }} %</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Payed : </h6>
+                                                        <h6 style="margin-left: 5px">{{ format_to_currency(reservation.idTransaction.montantPayeAvance) }}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="myModalDetailsHouse" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content" style="text-align: center">
+                                    <div class="modal-header header_detail" style="text-align: center">
+                                        <h5 class="modal-title" id="exampleModalLongTitle" > <h4> Reservation House details :</h4> </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container">
+                                            <div class="row" >
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">HOUSE INFOS :</h5>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Description : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idMaison.description | default("") }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Region : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idMaison.region | default("") }}</h6>
+                                                    </div>
+
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Address : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idMaison.adresse |default("") }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Rooms Capacity : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idMaison.nbChambres |default("") }} </h6>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">OWNER INFOS :</h5>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Full Name : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idMaison.idUser.nom|default("")~" "~reservation.idUser.prenom|default("")}}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Email : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idMaison.idUser.email|default("")}}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Phone : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idMaison.idUser.numTel|default("") }}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" >
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">BOOKING INFOS :</h5>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Checkin Date : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.dateDebut |date("m/d/Y") }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Checkout Date : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.dateFin |date("m/d/Y")}}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Status : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.etat }}</h6>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">PAYMENT :</h5>
+
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Total : </h6>
+                                                        <h6 style="margin-left: 5px"> {{ format_to_currency(reservation.montantAPayer) }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Advance rate : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idTransaction.tauxAvance|default("") }} %</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Payed : </h6>
+                                                        <h6 style="margin-left: 5px">{{ format_to_currency(reservation.idTransaction.montantPayeAvance) }}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="myModalDetailsCar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content" style="text-align: center">
+                                    <div class="modal-header header_detail" style="text-align: center">
+                                        <h5 class="modal-title" id="exampleModalLongTitle" > <h4> Reservation Car details :</h4> </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container">
+                                            <div class="row" >
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">CAR INFOS :</h5>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Brand : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idVoiture.marque|default("") }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Model : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idVoiture.model|default("") }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Color : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idVoiture.couleur|default("") }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Day Price : </h6>
+                                                        <h6 style="margin-left: 5px">{{ format_to_currency(reservation.idVoiture.prix|default(0)) }} Stars</h6>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">Agency INFOS :</h5>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Full Name : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idVoiture.idUser.nom|default("")~" "~reservation.idUser.prenom|default("")}}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Email : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idVoiture.idUser.email|default("")}}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Phone : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idVoiture.idUser.numTel|default("") }}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" >
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">BOOKING INFOS :</h5>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Checkin Date : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.dateDebut |date("m/d/Y") }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Checkout Date : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.dateFin |date("m/d/Y")}}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Status : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.etat }}</h6>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">PAYMENT :</h5>
+
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Total : </h6>
+                                                        <h6 style="margin-left: 5px"> {{ format_to_currency(reservation.montantAPayer) }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Advance rate : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idTransaction.tauxAvance|default("") }} %</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Payed : </h6>
+                                                        <h6 style="margin-left: 5px">{{ format_to_currency(reservation.idTransaction.montantPayeAvance|default(0)) }}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="myModalDetailsEvent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content" style="text-align: center">
+                                        <div class="modal-header header_detail" style="text-align: center">
+                                            <h5 class="modal-title" id="exampleModalLongTitle" > <h4> Reservation Event details :</h4> </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="container">
+                                                <div class="row" >
+                                                    <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                        <h5 class="sub_title">Event INFOS :</h5>
+                                                        <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                            <h6 style="font-weight: bold">Name : </h6>
+                                                            <h6 style="margin-left: 5px">{{ reservation.idTicket.idEvenement.libelle|default("") }}</h6>
+                                                        </div>
+                                                        <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                            <h6 style="font-weight: bold">Emplacement : </h6>
+                                                            <h6 style="margin-left: 5px">{{ reservation.idTicket.idEvenement.emplacement|default("")}}}</h6>
+                                                        </div>
+                                                        <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                            <h6 style="font-weight: bold">Durée : </h6>
+                                                            <h6 style="margin-left: 5px">{{ reservation.idTicket.idEvenement.duree|default("") }}</h6>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                        <h5 class="sub_title">Ticket INFOS :</h5>
+                                                        <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                            <h6 style="font-weight: bold">PRICE : </h6>
+                                                            <h6 style="margin-left: 5px">{{ format_to_currency(reservation.idTicket.prix|default(0)) }}</h6>
+                                                        </div>
+                                                        <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                            <h6 style="font-weight: bold">Type : </h6>
+                                                            <h6 style="margin-left: 5px">{{ reservation.idTicket.type|default("")}}</h6>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="row" >
+                                                    <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                        <h5 class="sub_title">BOOKING INFOS :</h5>
+                                                        <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                            <h6 style="font-weight: bold">Checkin Date : </h6>
+                                                            <h6 style="margin-left: 5px">{{ reservation.dateDebut | date("m/d/Y") }}</h6>
+                                                        </div>
+
+                                                        <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                            <h6 style="font-weight: bold">Status : </h6>
+                                                            <h6 style="margin-left: 5px">{{ reservation.etat|default("") }}</h6>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                        <h5 class="sub_title">PAYMENT :</h5>
+
+                                                        <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                            <h6 style="font-weight: bold">Total : </h6>
+                                                            <h6 style="margin-left: 5px"> {{ format_to_currency(reservation.montantAPayer|default(0)) }}</h6>
+                                                        </div>
+
+                                                        <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                            <h6 style="font-weight: bold">Payed : </h6>
+                                                            <h6 style="margin-left: 5px">{{ format_to_currency(reservation.montantAPayer|default(0)) }}</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                </div>
+                        </div>
 
                         {% endfor %}
 
@@ -117,7 +460,29 @@
     <script>
         function myFunction(){
             $("#myModal").modal('show');
-
+        }
+        function myFunctionDetail(type){
+           if(type=="hotel"){
+               myFunctionDetailHotel();
+           }else if(type=="maison"){
+               myFunctionDetailHouse();
+           }else if(type=="voiture"){
+               myFunctionDetailCar();
+           }else{
+               myFunctionDetailCar();
+           }
+        }
+        function myFunctionDetailHotel(){
+            $("#myModalDetailsHotel").modal('show');
+        }
+        function myFunctionDetailHouse(){
+            $("#myModalDetailsHouse").modal('show');
+        }
+        function myFunctionDetailCar(){
+            $("#myModalDetailsCar").modal('show');
+        }
+        function myFunctionDetailEvent(){
+            $("#myModalDetailsEvent").modal('show');
         }
         function cancel_reservation(id,id_user){
             const queryString = window.location.pathname;

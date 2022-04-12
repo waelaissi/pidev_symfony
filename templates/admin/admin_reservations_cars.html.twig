@@ -1,0 +1,326 @@
+
+{% extends "base_admin.html.twig" %}
+
+{% block header %}
+    {% include "partials/navigation_panel_admin.html.twig" %}
+{% endblock %}
+
+{% block body %}
+    <div class="db-info-wrap db-booking">
+        <div class="row">
+            <!-- Item -->
+            <div class="col-xl-3 col-sm-6">
+                <div class="db-info-list">
+                    <div class="dashboard-stat-icon bg-blue">
+                        <i class="far fa-chart-bar"></i>
+                    </div>
+                    <div class="dashboard-stat-content">
+                        <h4>Today Booked</h4>
+                        <h5>22,520</h5>
+                    </div>
+                </div>
+            </div>
+            <!-- Item -->
+            <div class="col-xl-3 col-sm-6">
+                <div class="db-info-list">
+                    <div class="dashboard-stat-icon bg-green">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="dashboard-stat-content">
+                        <h4>Earnings</h4>
+                        <h5>16,520</h5>
+                    </div>
+                </div>
+            </div>
+            <!-- Item -->
+            <div class="col-xl-3 col-sm-6">
+                <div class="db-info-list">
+                    <div class="dashboard-stat-icon bg-purple">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="dashboard-stat-content">
+                        <h4>Total Booked</h4>
+                        <h5>18,520</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6">
+                <div class="db-info-list">
+                    <div class="dashboard-stat-icon bg-red">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="dashboard-stat-content">
+                        <h4>Cancled</h4>
+                        <h5>19,520</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-box table-opp-color-box" style="margin-bottom: 10em">
+            <h2>Recent Booking Cars</h2>
+            <p>List of all cars reservations</p>
+            <input id="search_input" type="text" name="search_input" placeholder="Search.." style="margin: 1em 0">
+            <div class="table-responsive">
+                <table class="table" id="myTable" data-pagination="true" style="" data-toggle="table"
+                       data-classes="table table-hover table-condensed"
+                       data-striped="true"
+                       data-sort-name="Quality"
+                       data-sort-order="desc"
+                       data-sort-order="desc"
+                       data-pagination="true">
+                    <thead>
+                    <tr>
+                        <th data-field="user" data-sortable="true">Voiture</th>
+                        <th data-field="user" data-sortable="true">Agence</th>
+                        <th data-field="user" data-sortable="true">Client</th>
+                        <th data-field="user" data-sortable="true">Crée le </th>
+                        <th data-field="user" data-sortable="true">Date début</th>
+                        <th data-field="date" data-sortable="true">Date départ</th>
+                        <th data-field="des" data-sortable="true">Total</th>
+                        <th data-field="id" data-sortable="true">Payé</th>
+                        <th data-field="status" data-sortable="true">Reste</th>
+                        <th data-field="en" data-sortable="true">Etat</th>
+                        <th data-sortable="true">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for reservation in reservations %}
+                        <tr>
+
+                            <td>
+                                </span><span class="list-enq-name">{{ reservation.idVoiture.model }}</span>
+                            </td>
+                            <td>
+                                </span><span class="list-enq-name">{{ reservation.idVoiture.idUser.nom ~" "~reservation.idVoiture.idUser.prenom }}</span>
+                            </td>
+                            <td>
+                                </span><span class="list-enq-name">{{ reservation.idUser.email }}</span>
+                            </td>
+                            <td>
+                                </span><span class="list-enq-name">{{reservation.idTransaction.createdAt | date("m/d/Y", "Europe/Paris")}}</span>
+                            </td>
+                            <td>{{ reservation.getDateDebut() |  date("m/d/Y", "Europe/Paris") }} </td>
+                            <td>{{ reservation.getDateFin() | date("m/d/Y", "Europe/Paris") }}</td>
+                            <td>
+                                {% if reservation.montantAPayer %}
+                                    {{ format_to_currency(reservation.montantAPayer) }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if reservation.montantAPayer %}
+                                    {{ format_to_currency(reservation.idTransaction.montantPayeAvance) }}
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                {% if reservation.montantAPayer %}
+                                    {{ format_to_currency(reservation.resteAPayer) }}
+                                {% endif %}
+                            </td>
+                            {% if reservation.etat=="confirmée" %}
+                                <td> <span class="badge badge-success"> Confirmée </span> </td>
+                            {% else %}
+
+                                <td> <span class="badge badge-danger"> Annulée </span> </td>
+                            {% endif %}
+                            <td>
+                                <span class="badge badge-info cursor"  onclick="myFunctionDetail()"><i class="far fa-list-alt"> details</i></span>
+                                {% if date_difference(date() | date("m/d/Y"),reservation.getDateDebut() | date("m/d/Y"))<0 and reservation.etat!="annulée" %}
+                                    <span class="badge badge-warning cursor" id="cancel_button" onclick="myFunction()"><i class="far fa-trash-alt"> annuler</i></span>
+                                {% endif %}
+                                <span class="badge badge-danger cursor" id="delete_button" onclick="myFunctionDelete()"><i class="far fa-trash-alt"> Supprimer</i></span>
+
+                            </td>
+                        </tr>
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog"  style="margin-top: 50px">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Annulation de la réservation</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Vous les vous vraiment annuler la reservation ? </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-success" style="font-size: 12px !important;"
+                                                onclick="cancel_reservation({{ reservation.id }},{{ reservation.IdUser.id }})">  Save changes</button>
+                                        <button type="button" class="btn btn-secondary" style="font-size: 12px !important;" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="myModalSupp" tabindex="-1" role="dialog" style="margin-top: 50px">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Supression de la réservation</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Vous les vous vraiment supprimer la reservation ? </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-success" style="font-size: 12px !important;"
+                                                onclick="delete_reservation({{ reservation.id }})">  Save changes</button>
+                                        <button type="button" class="btn btn-secondary" style="font-size: 12px !important;" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="myModalDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content" style="text-align: center">
+                                    <div class="modal-header header_detail" style="text-align: center">
+                                        <h5 class="modal-title" id="exampleModalLongTitle" > <h4> Reservation Car details :</h4> </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container">
+                                            <div class="row" >
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">CAR INFOS :</h5>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Brand : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idVoiture.marque }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Model : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idVoiture.model }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Color : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idVoiture.couleur }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Day Price : </h6>
+                                                        <h6 style="margin-left: 5px">{{ format_to_currency(reservation.idVoiture.prix) }} Stars</h6>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">Agency INFOS :</h5>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Full Name : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idVoiture.idUser.nom~" "~reservation.idUser.prenom}}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Email : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idVoiture.idUser.email}}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Phone : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idVoiture.idUser.numTel }}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" >
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">BOOKING INFOS :</h5>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Checkin Date : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.dateDebut |date("m/d/Y") }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Checkout Date : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.dateFin |date("m/d/Y")}}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Status : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.etat }}</h6>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="col" style="display:flex; flex-direction: column; align-items: center;">
+                                                    <h5 class="sub_title">PAYMENT :</h5>
+
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Total : </h6>
+                                                        <h6 style="margin-left: 5px"> {{ format_to_currency(reservation.montantAPayer) }}</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Advance rate : </h6>
+                                                        <h6 style="margin-left: 5px">{{ reservation.idTransaction.tauxAvance }} %</h6>
+                                                    </div>
+                                                    <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
+                                                        <h6 style="font-weight: bold">Payed : </h6>
+                                                        <h6 style="margin-left: 5px">{{ format_to_currency(reservation.idTransaction.montantPayeAvance) }}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function myFunction(){
+            $("#myModal").modal('show');
+        }
+        function myFunctionDelete(){
+            $("#myModalSupp").modal('show');
+        }
+        function myFunctionDetail(){
+            $("#myModalDetails").modal('show');
+        }
+        function cancel_reservation(id,id_user){
+            window.location.href="http://127.0.0.1:8000/reservation/cancel/"+id+"/car";
+        }
+        function delete_reservation(id){
+            window.location.href="http://127.0.0.1:8000/reservation/delete/"+id+"/car";
+        }
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $("#search_input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+
+
+
+{% endblock  %}
+
+
+
+
+
+
+
+
+
+
+

@@ -10,7 +10,9 @@ use App\Repository\TicketRepository;
 use App\Repository\TransactionRepository;
 use App\Repository\UtilisateurRepository;
 use App\Repository\VoitureRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ObjectManager;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -80,6 +82,45 @@ class ReservationController extends AbstractController
         var_dump($result);
         return $this->redirectToRoute('app_reservation_get_client',['type'=>$type,'id_user'=>$id_user]);
 
+    }
+    /**
+     * @Route("/reservation/cancel/{id}/{type}", name="app_reservation_admin_cancel")
+     */
+    public function cancel_reservation_admin($id,$type,ReservationRepository $reservationRepository)
+    {
+        $result=$reservationRepository->cancel_reservation($id);
+        switch ($type) {
+            case "hotel":
+                return $this->redirectToRoute('app_admin_reservations_hotels');
+            case "house":
+                return $this->redirectToRoute('app_admin_reservations_houses');
+            case "car":
+                return $this->redirectToRoute('app_admin_reservations_cars');
+            case "event":
+                return $this->redirectToRoute('app_admin_reservations_events');
+        }
+        return $this->redirectToRoute('app_admin_reservations_hotels');
+    }
+
+    /**
+     * @Route("/reservation/delete/{id}/{type}", name="app_reservation_delete")
+     */
+    public function delete_reservation($id,$type,ReservationRepository $reservationRepository,EntityManagerInterface $entityManager)
+    {
+        $reservation=$reservationRepository->find($id);
+        $entityManager->remove($reservation);
+        $entityManager->flush();
+        switch ($type) {
+            case "hotel":
+                return $this->redirectToRoute('app_admin_reservations_hotels');
+            case "house":
+                return $this->redirectToRoute('app_admin_reservations_houses');
+            case "car":
+                return $this->redirectToRoute('app_admin_reservations_cars');
+            case "event":
+                return $this->redirectToRoute('app_admin_reservations_events');
+        }
+        return $this->redirectToRoute('app_admin_reservations_hotels');
     }
 
     /**
