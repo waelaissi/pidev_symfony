@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Commentaire;
+use App\Entity\Dislikee;
+use App\Entity\Likee;
 use App\Entity\Sujet;
 use App\Entity\Topic;
 use App\Entity\Utilisateur;
 use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
+use Doctrine\Bundle\DoctrineBundle\Mapping\EntityListenerServiceResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -122,6 +125,66 @@ class CommentaireController extends AbstractController
         $idsujet->setNbcom($idsujet->getNbcom()-1);
             $entityManager->remove($idcom);
             $entityManager->flush();
+        return $this->redirectToRoute('app_commentaire_new', [ 'idsujet' => $idsujet->getIdsujet(),'idtopic'=>$idtopic->getIdtopic()], Response::HTTP_SEE_OTHER);
+
+
+    }
+    /**
+     * @Route("/{idtopic}/{idsujet}/{idcom}/like", name="app_commentaire_like", methods={"GET"})
+     */
+    public function like(Request $request, Commentaire $idcom, EntityManagerInterface $entityManager,Sujet $idsujet,Topic $idtopic): Response
+    {        $dislikeee=$this->getDoctrine()->getRepository(Dislikee::class)->findoneBy(['idCommentaire'=>$idcom->getIdcom(),'idUser'=>33]);
+        $likeee=$this->getDoctrine()->getRepository(likee::class)->findBy(['idCommentaire'=>$idcom->getIdcom(),'idUser'=>33]);
+    if($likeee==null){
+
+        $idcom->setNblike($idcom->getNblike()+1);
+        $like = new likee();
+        $like->setIdCommentaire($idcom);
+        $user=$this->getDoctrine()->getRepository(Utilisateur::class)->find(33);
+        $like->setIdUser($user);
+        $entityManager->persist($like);
+        if($dislikeee!=null)
+        {
+            $idcom->setNbdislike($idcom->getNbdislike()-1);
+            $entityManager->remove($dislikeee);
+
+        }
+        $entityManager->flush();}
+    else
+    {
+        dump($likeee);
+    }
+        return $this->redirectToRoute('app_commentaire_new', [ 'idsujet' => $idsujet->getIdsujet(),'idtopic'=>$idtopic->getIdtopic()], Response::HTTP_SEE_OTHER);
+
+
+    }
+    /**
+     * @Route("/{idtopic}/{idsujet}/{idcom}/dislike", name="app_commentaire_dislike", methods={"GET"})
+     */
+    public function dislike(Request $request, Commentaire $idcom, EntityManagerInterface $entityManager,Sujet $idsujet,Topic $idtopic): Response
+    {
+        $dislikeee=$this->getDoctrine()->getRepository(Dislikee::class)->findBy(['idCommentaire'=>$idcom->getIdcom(),'idUser'=>33]);
+        $likeee=$this->getDoctrine()->getRepository(Likee::class)->findOneBy(['idCommentaire'=>$idcom->getIdcom(),'idUser'=>33]);
+
+        if($dislikeee==null){
+
+            $idcom->setNbdislike($idcom->getNbdislike()+1);
+            $dislike = new Dislikee();
+            $dislike->setIdCommentaire($idcom);
+            $user=$this->getDoctrine()->getRepository(Utilisateur::class)->find(33);
+            $dislike->setIdUser($user);
+
+            if($likeee!=null)
+            {
+                $idcom->setNblike($idcom->getNblike()-1);                $entityManager->remove($likeee);
+
+            }
+            $entityManager->persist($dislike);
+            $entityManager->flush();}
+        else
+        {
+            dump($dislikeee);
+        }
         return $this->redirectToRoute('app_commentaire_new', [ 'idsujet' => $idsujet->getIdsujet(),'idtopic'=>$idtopic->getIdtopic()], Response::HTTP_SEE_OTHER);
 
 

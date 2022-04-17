@@ -25,7 +25,7 @@
                         <!-- blog post item html start -->
                         <div class="grid row">
     {% for topic in topics %}
-        {% if topic.accepter ==1 %}
+        {% if (topic.accepter ==1 and topic.hide==0) %}
                             <div class="grid-item col-md-6">
                                 <article class="post">
                                     <figure class="feature-image">

@@ -112,7 +112,11 @@
                                              </span>
                                                 </div>
                                                 <p>{{  commentaire.contenu}}</p>
-
+                                                <a href="{{ path('app_commentaire_like', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet,'idcom':commentaire.idcom}) }}">
+                                                    <i style="color: #0062cc" class="fa fa-thumbs-up close-icon" aria-hidden="true"></i></a>
+                                                <a href="{{ path('app_commentaire_dislike', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet,'idcom':commentaire.idcom}) }}">({{ commentaire.nblike }})
+                                                    <i style="color: orangered" class="fa fa-thumbs-down" aria-hidden="true"></i>
+                                                </a>({{ commentaire.nbdislike }})
                                             </div>
                                         </li>
                                     </ol>
