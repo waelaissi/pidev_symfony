@@ -131,5 +131,15 @@ class SujetController extends AbstractController
 
         return $this->redirectToRoute('app_topic_show', ['idtopic'=> $topic->getIdtopic()], Response::HTTP_SEE_OTHER);
     }
+    /**
+     * @Route("/{idtopic}/{idsujet}/accepter", name="app_sujet_accepter", methods={"GET"})
+     */
+    public function acceptersujet(Request $request, Sujet $sujet, SujetRepository $sujetRepository,Topic $topic): Response
+    {
+        if($topic->getAccepter()==1 &&$sujet->getAccepter()==0)
+        $sujet->setAccepter(1);
+        $this->getDoctrine()->getManager()->flush();
 
+        return $this->redirectToRoute('app_sujet_indexb', ['idtopic'=> $topic->getIdtopic()], Response::HTTP_SEE_OTHER);
+    }
 }

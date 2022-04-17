@@ -127,4 +127,31 @@ class TopicController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/admin/accepter/{idtopic}", name="app_topic_accepter", methods={"GET"})
+     */
+    public function acceptertopic(TopicRepository $topicRepository,Topic $idtopic): Response
+    {
+        $idtopic->setAccepter(1);
+        $this->getDoctrine()->getManager()->flush();
+        return $this->render('topic/indexb.html.twig', [
+            'topics' => $topicRepository->findAll(),
+        ]);
+    }
+    /**
+     * @Route("/admin/hide/{idtopic}", name="app_topic_hide", methods={"GET"})
+     */
+    public function hidetopic(TopicRepository $topicRepository,Topic $idtopic): Response
+    {
+        if($idtopic->getHide()==0 && $idtopic->getAccepter()==1){
+        $idtopic->setHide(1);}
+        else{
+            $idtopic->setHide(0);
+        }
+        $this->getDoctrine()->getManager()->flush();
+        return $this->render('topic/indexb.html.twig', [
+            'topics' => $topicRepository->findAll(),
+        ]);
+    }
+
 }

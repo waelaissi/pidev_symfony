@@ -8,7 +8,7 @@
 
 <div class="db-info-wrap">
     <div class="product-outer-wrap">
-        <a class="fa fa-arrow-left fa-4x" href="{{ path('app_topic_indexadmin') }}"></a>
+
     <h1>Detail Topic : </h1>
 
     <table class="table">
@@ -64,7 +64,13 @@
                         {{ include('sujet/_delete_form.html.twig',{'idtopic': topic.idtopic}) }}
 
                     </td>
-
+                <td >
+                    {% if sujet.accepter==0 %}
+                        <a href="{{ path('app_sujet_accepter',{'idtopic': topic.idtopic,'idsujet':sujet.idsujet}) }}">
+                            <i class="fa fa-check-square" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+                </td>
             </tr>
         {% else %}
             <tr>

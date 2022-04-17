@@ -19,6 +19,8 @@
             <th bgcolor="#fff8dc">Nombre de Sujet</th>
 
             <th bgcolor="#fff8dc" colspan="2">actions</th>
+            <th bgcolor="#fff8dc" colspan="2"></th>
+            <th bgcolor="#fff8dc" colspan="2"></th>
 
         </tr>
         </thead>
@@ -36,7 +38,24 @@
 
                     {{ include('topic/_delete_form.html.twig') }}
                 </td>
-
+                <td >
+{% if topic.accepter==0 %}
+                   <a href="{{ path('app_topic_accepter',{'idtopic':topic.idtopic}) }}">
+                       <i class="fa fa-check-square" aria-hidden="true"></i>
+                   </a>
+                    {% endif %}
+                </td>
+                <td >
+                    {% if topic.hide==0%}
+                    <a href="{{ path('app_topic_hide',{'idtopic':topic.idtopic}) }}">
+                        <i class="fa fa-toggle-off" aria-hidden="true"></i>
+                    </a>
+                    {% elseif topic.hide==1 %}
+                        <a href="{{ path('app_topic_hide',{'idtopic':topic.idtopic}) }}">
+                            <i class="fa fa-toggle-on" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+                </td>
             </tr>
         {% else %}
             <tr>

@@ -6,7 +6,6 @@
 
 <div class="db-info-wrap">
     <div class="product-outer-wrap">
-    <a class="fa fa-arrow-left fa-4x" href="{{ path('app_sujet_indexb', {'idtopic': topic.idtopic}) }}"></a>
     <h1>Sujet</h1>
 
     <table class="table">
@@ -38,7 +37,7 @@
             <tr>
 
                 <th bgcolor="#fff8dc">Contenu</th>
-                <th bgcolor="#fff8dc">Date</th>
+                <th bgcolor="#fff8dc"> Date   </th>
                 <th bgcolor="#fff8dc">Nblike</th>
                 <th bgcolor="#fff8dc">Nbdislike</th>
                 <th bgcolor="#fff8dc">actions</th>
@@ -49,7 +48,7 @@
                 <tr>
 
                     <td>{{ commentaire.contenu }}</td>
-                    <td>{{ commentaire.date ? commentaire.date|date('Y-m-d') : '' }}</td>
+                    <td>  {{ commentaire.date ? commentaire.date|date('Y-m-d') : '' }}   </td>
                     <td>{{ commentaire.nblike }}</td>
                     <td>{{ commentaire.nbdislike }}</td>
                     <td>

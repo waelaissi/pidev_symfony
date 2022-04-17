@@ -33,6 +33,7 @@ class Sujet
      *      minMessage = "Le titre doit comporter au moins {{ limit }} caractères",
      *      maxMessage = "Le titre ne peut pas dépasser {{ limit }} caractères"
      * )
+     * @Assert\Type(type={"alpha"})
      * @ORM\Column(name="titresujet", type="string", length=255, nullable=false)
      */
     private $titresujet;
@@ -46,6 +47,7 @@ class Sujet
      *      minMessage = "La description doit comporter au moins {{ limit }} caractères",
      *      maxMessage = "La description ne peut pas dépasser {{ limit }} caractères"
      * )
+     * @Assert\Type(type={"alpha"})
      * @ORM\Column(name="contenu", type="text", length=65535, nullable=false)
      */
     private $contenu;
