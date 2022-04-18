@@ -88,6 +88,12 @@
     "jms/metadata": {
         "version": "2.6.1"
     },
+    "knplabs/knp-components": {
+        "version": "v3.4.0"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.8.0"
+    },
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
@@ -590,6 +596,9 @@
     },
     "twig/twig": {
         "version": "v3.3.8"
+    },
+    "vangrg/profanity-bundle": {
+        "version": "v1.1.6"
     },
     "vich/uploader-bundle": {
         "version": "1.19",

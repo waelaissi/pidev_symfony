@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vangrg\ProfanityBundle\Validator\Constraints as ProfanityAssert;
+
 /**
  * Topic
  *
@@ -26,6 +28,7 @@ class Topic
 
     /**
      * @var string|null
+     *  @ProfanityAssert\ProfanityCheck
      * @Assert\NotBlank
      * @Assert\Length(
      *      min = 10,
@@ -38,6 +41,7 @@ class Topic
     private $titretopic;
 
     /**
+     *  @ProfanityAssert\ProfanityCheck
      * @var string|null
      * @Assert\NotBlank
      * @Assert\Length(

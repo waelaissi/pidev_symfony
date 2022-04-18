@@ -25,7 +25,7 @@ class SujetController extends AbstractController
     public function index(SujetRepository $sujetRepository,Topic $topic): Response
     {
         return $this->render('topic/show.html.twig', [
-            'topic' => $topic, 'sujets' => $sujetRepository->findByidtopic($topic->getIdtopic()),
+            'topic' => $topic, 'sujets' => $sujetRepository->findByidtopic($topic->getIdtopic()),'sujetssort'=>$sujetRepository->findBy(['idtopic'=>$topic->getIdtopic()],['nbcom'=>'desc'])
         ]);
     }
     /**

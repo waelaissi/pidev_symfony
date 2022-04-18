@@ -150,7 +150,8 @@
                     <h3 class="widget-title">Populaire Sujet</h3>
 
                             <ul>
-                                {% for sujet in sujets %}
+                                {% for sujet in sujetssort %}
+                                    {% if sujet.accepter==1 %}
                                     <li>
                                         <figure class="post-thumb">
                                             <a href="#"><img src="{{ vich_uploader_asset(sujet) }}" alt=""></a>
@@ -182,6 +183,7 @@
                                             </div>
                                         </div>
                                     </li>
+                                    {% endif %}
                                 {% endfor %}
                             </ul>
                         </aside>

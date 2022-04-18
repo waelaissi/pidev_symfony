@@ -24,7 +24,7 @@ class TopicController extends AbstractController
     public function index(TopicRepository $topicRepository): Response
     {
         return $this->render('topic/index.html.twig', [
-            'topics' => $topicRepository->findAll(),
+            'topics' => $topicRepository->findAll(),'topicssort'=>$topicRepository->findby([],['nbsujet' => 'desc'])
         ]);
     }
 
@@ -59,7 +59,7 @@ class TopicController extends AbstractController
     {
 
         return $this->render('topic/show.html.twig', [
-            'topic' => $topic, 'sujets' => $sujetRepository->findByidtopic($topic->getIdtopic())
+            'topic' => $topic, 'sujets' => $sujetRepository->findByidtopic($topic->getIdtopic()),'sujetssort'=>$sujetRepository->findBy(['idtopic'=>$topic->getIdtopic()],['nbcom'=>'desc'])
         ]);
 
     }
