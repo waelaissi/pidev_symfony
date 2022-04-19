@@ -17,6 +17,7 @@ use \DiscordWebhooks\Client;
 use \DiscordWebhook\EmbedColor;
 use DiscordWebhook\Webhook;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 
 /**
  * @Route("/admin")
@@ -27,10 +28,35 @@ class AdminController extends AbstractController
     /**
      * @Route("/", name="app_land")
      */
-    public function land(): Response
+    public function land( UtilisateurRepository $repository): Response
     {
-        return $this->render('test/index.html.twig');
-    }
+        $user_activer= $repository->countUtilisateurByetat("activer");
+        $user_desactiver= $repository->countUtilisateurByetat("desactiver");
+        $pieChart = new PieChart();
+        $pieChart->getData()->setArrayToDataTable(
+            [['Reclamation', 'etat'],
+                ['users activer',      $user_activer],
+                ['users descativer',      $user_desactiver],
+
+
+            ]
+        );
+        $pieChart->getOptions()->setHeight(300);
+        $pieChart->getOptions()->setWidth(300);
+        $pieChart->getOptions()->setColors(['#009900', '#990000', '#FF8C00']);
+        $pieChart->getOptions()->getTitleTextStyle()->setBold(true);
+        $pieChart->getOptions()->getTitleTextStyle()->setColor('#009900');
+        $pieChart->getOptions()->getTitleTextStyle()->setItalic(true);
+        $pieChart->getOptions()->getTitleTextStyle()->setFontName('Arial');
+        $pieChart->getOptions()->getTitleTextStyle()->setFontSize(20);
+
+        $users = $this->getDoctrine()
+            ->getRepository(Utilisateur::class)
+            ->findAll();
+        return $this->render('admin/index.html.twig', [
+            'users' => $users,
+            'pieChart' => $pieChart,
+        ]);    }
 
     /**
      * @param Request $request
@@ -171,24 +197,44 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('afficheall');
     }
 
+
     /**
-     * @param Request $request
-     * @param NormalizerInterface $Normalizer
      * @param UtilisateurRepository $repository
      * @return Response
-     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
-     * @Route("/searchuser",name="user_search")
+     * @Route("/stat",name="usersstat")
      */
-    public function searchProduit(Request $request,NormalizerInterface $Normalizer, UtilisateurRepository $repository)
+    public function usersStat(UtilisateurRepository $repository)
     {
+        $user_activer= $repository->countUtilisateurByetat("activer");
+        $user_desactiver= $repository->countUtilisateurByetat("desactiver");
+        $pieChart = new PieChart();
+        $pieChart->getData()->setArrayToDataTable(
+            [['Reclamation', 'etat'],
+                ['users activer',      $user_activer],
+                ['users descativer',      $user_desactiver],
 
-        $requestString=$request->get('searchValue');
-        $user= $repository->findUtilidateurByNom($requestString);
 
-        $jsonContent = $Normalizer->normalize($user, 'json',['groups'=>'post:read']);
-        $retour=json_encode($jsonContent);
-        return new Response($retour);
+            ]
+        );
+        $pieChart->getOptions()->setHeight(300);
+        $pieChart->getOptions()->setWidth(300);
+        $pieChart->getOptions()->setColors(['#009900', '#990000', '#FF8C00']);
+        $pieChart->getOptions()->getTitleTextStyle()->setBold(true);
+        $pieChart->getOptions()->getTitleTextStyle()->setColor('#009900');
+        $pieChart->getOptions()->getTitleTextStyle()->setItalic(true);
+        $pieChart->getOptions()->getTitleTextStyle()->setFontName('Arial');
+        $pieChart->getOptions()->getTitleTextStyle()->setFontSize(20);
+
+        $users = $this->getDoctrine()
+            ->getRepository(Utilisateur::class)
+            ->findAll();
+        return $this->render('admin/index.html.twig', [
+            'users' => $users,
+            'pieChart' => $pieChart,
+        ]);
+
     }
+
 
 
 }

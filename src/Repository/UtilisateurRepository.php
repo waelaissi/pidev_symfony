@@ -74,6 +74,19 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
             ->getResult();
     }
 
+    public function countUtilisateurByetat($value)
+    {
+
+        return (int)$this->createQueryBuilder('r')
+            ->andWhere('r.etat = :val')
+            ->setParameter('val', $value)
+            ->select('count(r.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
+
     // /**
     //  * @return Utilisateur[] Returns an array of Utilisateur objects
     //  */
