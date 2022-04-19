@@ -74,6 +74,14 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
             ->getResult();
     }
 
+    public function findUtilidateurByEtat($etat){
+        return $this->createQueryBuilder('a')
+            ->where('a.etat LIKE :etat')
+            ->setParameter('etat', '%'.$etat.'%')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function countUtilisateurByetat($value)
     {
 

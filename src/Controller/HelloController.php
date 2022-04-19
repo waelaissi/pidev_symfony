@@ -17,4 +17,15 @@ class HelloController extends AbstractController
             'controller_name' => 'HelloController',
         ]);
     }
+
+
+    /**
+     * @return Response
+     * @Route("/error",name="eroor")
+     */
+    function showPage()
+    {
+        return $this->render('404pages/404.html.twig');
+
+    }
 }

@@ -1,514 +1,163 @@
-{% extends 'base_admin.html.twig' %}
-
-{% block title %}Hello TestController!{% endblock %}
-
-{% block body %}
-    {% include "partials/header_admin.html.twig" %}
-    {% include "partials/navigation_panel_admin.html.twig" %}
-    <div>
-
-    <!-- start Container Wrapper -->
-    <div id="container-wrapper">
-        <!-- Dashboard -->
-        <div id="dashboard" class="dashboard-container">
-
-            <div class="db-info-wrap">
-                {# a pratir de c est deux iv on integre #}
-                <div class="row">
-                    <!-- Item -->
-                    <div class="col-xl-3 col-sm-6">
-                        <div class="db-info-list">
-                            <div class="dashboard-stat-icon bg-blue">
-                                <i class="far fa-chart-bar"></i>
-                            </div>
-                            <div class="dashboard-stat-content">
-                                <h4>Today Views</h4>
-                                <h5>22,520</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item -->
-                    <div class="col-xl-3 col-sm-6">
-                        <div class="db-info-list">
-                            <div class="dashboard-stat-icon bg-green">
-                                <i class="fas fa-dollar-sign"></i>
-                            </div>
-                            <div class="dashboard-stat-content">
-                                <h4>Earnings</h4>
-                                <h5>16,520</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item -->
-                    <div class="col-xl-3 col-sm-6">
-                        <div class="db-info-list">
-                            <div class="dashboard-stat-icon bg-purple">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="dashboard-stat-content">
-                                <h4>Users</h4>
-                                <h5>18,520</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6">
-                        <div class="db-info-list">
-                            <div class="dashboard-stat-icon bg-red">
-                                <i class="far fa-envelope-open"></i>
-                            </div>
-                            <div class="dashboard-stat-content">
-                                <h4>Enquiry</h4>
-                                <h5>19,520</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="dashboard-box table-opp-color-box">
-                            <h4>Recent Booking</h4>
-                            <p>Airtport Hotels The Right Way To Start A Short Break Holiday</p>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>Select</th>
-                                        <th>User</th>
-                                        <th>Name</th>
-                                        <th>Date</th>
-                                        <th>City</th>
-                                        <th>Enquiry</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <label class="custom-input"><input type="checkbox" checked="checked">
-                                                <span class="custom-input-field"></span></label>
-                                        </td>
-                                        <td><span class="list-img"><img src="/assetsadmin/images/comment.jpg" alt=""></span>
-                                        </td>
-                                        <td><span class="list-enq-name">John Doe</span>
-                                        </td>
-                                        <td>12 may</td>
-                                        <td>Japan</td>
-                                        <td>
-                                            <span class="badge badge-success">15</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label class="custom-input"><input type="checkbox" checked="checked">
-                                                <span class="custom-input-field"></span></label>
-                                        </td>
-                                        <td><span class="list-img"><img src="/assetsadmin/images/comment2.jpg" alt=""></span>
-                                        </td>
-                                        <td><span class="list-enq-name">John Doe</span>
-                                        </td>
-                                        <td>12 may</td>
-                                        <td>Japan</td>
-                                        <td>
-                                            <span class="badge badge-success">15</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label class="custom-input"><input type="checkbox" checked="checked">
-                                                <span class="custom-input-field"></span></label>
-                                        </td>
-                                        <td><span class="list-img"><img src="/assetsadmin/images/comment3.jpg" alt=""></span>
-                                        </td>
-                                        <td><span class="list-enq-name">John Doe</span>
-                                        </td>
-                                        <td>12 may</td>
-                                        <td>Japan</td>
-                                        <td>
-                                            <span class="badge badge-success">15</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label class="custom-input"><input type="checkbox" checked="checked">
-                                                <span class="custom-input-field"></span></label>
-                                        </td>
-                                        <td><span class="list-img"><img src="/assetsadmin/images/comment4.jpg" alt=""></span>
-                                        </td>
-                                        <td><span class="list-enq-name">John Doe</span>
-                                        </td>
-                                        <td>12 may</td>
-                                        <td>Japan</td>
-                                        <td>
-                                            <span class="badge badge-success">15</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label class="custom-input"><input type="checkbox" checked="checked">
-                                                <span class="custom-input-field"></span></label>
-                                        </td>
-                                        <td><span class="list-img"><img src="/assetsadmin/images/comment5.jpg" alt=""></span>
-                                        </td>
-                                        <td><span class="list-enq-name">John Doe</span>
-                                        </td>
-                                        <td>12 may</td>
-                                        <td>Japan</td>
-                                        <td>
-                                            <span class="badge badge-success">15</span>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="dashboard-box table-opp-color-box">
-                            <h4>Package Enquiry</h4>
-                            <p>Airtport Hotels The Right Way To Start A Short Break Holiday</p>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>Select</th>
-                                        <th>User</th>
-                                        <th>Name</th>
-                                        <th>Date</th>
-                                        <th>City</th>
-                                        <th>Enquiry</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <label class="custom-input"><input type="checkbox">
-                                                <span class="custom-input-field"></span></label>
-                                        </td>
-                                        <td><span class="list-img"><img src="/assetsadmin/images/comment.jpg" alt=""></span>
-                                        </td>
-                                        <td><span class="list-enq-name">John Doe</span>
-                                        </td>
-                                        <td>12 may</td>
-                                        <td>Japan</td>
-                                        <td>
-                                            <span class="badge badge-success">15</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label class="custom-input"><input type="checkbox">
-                                                <span class="custom-input-field"></span></label>
-                                        </td>
-                                        <td><span class="list-img"><img src="/assetsadmin/images/comment2.jpg" alt=""></span>
-                                        </td>
-                                        <td><span class="list-enq-name">John Doe</span>
-                                        </td>
-                                        <td>12 may</td>
-                                        <td>Japan</td>
-                                        <td>
-                                            <span class="badge badge-success">15</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label class="custom-input"><input type="checkbox">
-                                                <span class="custom-input-field"></span></label>
-                                        </td>
-                                        <td><span class="list-img"><img src="/assetsadmin/images/comment3.jpg" alt=""></span>
-                                        </td>
-                                        <td><span class="list-enq-name">John Doe</span>
-                                        </td>
-                                        <td>12 may</td>
-                                        <td>Japan</td>
-                                        <td>
-                                            <span class="badge badge-success">15</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label class="custom-input"><input type="checkbox">
-                                                <span class="custom-input-field"></span></label>
-                                        </td>
-                                        <td><span class="list-img"><img src="/assetsadmin/images/comment4.jpg" alt=""></span>
-                                        </td>
-                                        <td><span class="list-enq-name">John Doe</span>
-                                        </td>
-                                        <td>12 may</td>
-                                        <td>Japan</td>
-                                        <td>
-                                            <span class="badge badge-success">15</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label class="custom-input"><input type="checkbox">
-                                                <span class="custom-input-field"></span></label>
-                                        </td>
-                                        <td><span class="list-img"><img src="/assetsadmin/images/comment5.jpg" alt=""></span>
-                                        </td>
-                                        <td><span class="list-enq-name">John Doe</span>
-                                        </td>
-                                        <td>12 may</td>
-                                        <td>Japan</td>
-                                        <td>
-                                            <span class="badge badge-success">15</span>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="dashboard-box">
-                            <h4>User Details</h4>
-                            <p>Airtport Hotels The Right Way To Start A Short Break Holiday</p>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>User</th>
-                                        <th>Name</th>
-                                        <th>Phone</th>
-                                        <th>Email</th>
-                                        <th>Country</th>
-                                        <th>Listings</th>
-                                        <th>Enquiry</th>
-                                        <th>Bookings</th>
-                                        <th>Reviews</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td><span class="list-img"><img src="/assetsadmin/images/comment.jpg" alt=""></span>
-                                        </td>
-                                        <td><a href="#"><span class="list-name">Kathy Brown</span><span class="list-enq-city">United States</span></a>
-                                        </td>
-                                        <td>+01 3214 6522</td>
-                                        <td>chadengle@dummy.com</td>
-                                        <td>Australia</td>
-                                        <td>
-                                            <span class="badge badge-primary">02</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-danger">12</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-success">24</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-dark">36</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="list-img"><img src="/assetsadmin/images/comment2.jpg" alt=""></span>
-                                        </td>
-                                        <td><a href="#"><span class="list-name">Kathy Brown</span><span class="list-enq-city">United States</span></a>
-                                        </td>
-                                        <td>+01 3214 6522</td>
-                                        <td>chadengle@dummy.com</td>
-                                        <td>Australia</td>
-                                        <td>
-                                            <span class="badge badge-primary">02</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-danger">12</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-success">24</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-dark">36</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="list-img"><img src="/assetsadmin/images/comment3.jpg" alt=""></span>
-                                        </td>
-                                        <td><a href="#"><span class="list-name">Kathy Brown</span><span class="list-enq-city">United States</span></a>
-                                        </td>
-                                        <td>+01 3214 6522</td>
-                                        <td>chadengle@dummy.com</td>
-                                        <td>Australia</td>
-                                        <td>
-                                            <span class="badge badge-primary">02</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-danger">12</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-success">24</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-dark">36</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="list-img"><img src="/assetsadmin/images/comment4.jpg" alt=""></span>
-                                        </td>
-                                        <td><a href="#"><span class="list-name">Kathy Brown</span><span class="list-enq-city">United States</span></a>
-                                        </td>
-                                        <td>+01 3214 6522</td>
-                                        <td>chadengle@dummy.com</td>
-                                        <td>Australia</td>
-                                        <td>
-                                            <span class="badge badge-primary">02</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-danger">12</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-success">24</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-dark">36</span>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <!-- Recent Activity -->
-                    <div class="col-lg-7 col-12">
-                        <div class="dashboard-box activities-box">
-                            <h4>Recent Activities</h4>
-                            <ul>
-                                <li>
-                                    <i class="far fa-calendar-alt"></i>
-                                    <small>5 mins ago</small>
-                                    <h5>Jane has sent a request for access</h5>
-                                    <a href="#" class="close-icon"><i class="fas fa-times"></i></a>
-                                </li>
-                                <li>
-                                    <i class="far fa-calendar-alt"></i>
-                                    <small>5 mins ago</small>
-                                    <h5>Williams has just joined Project X</h5>
-                                    <a href="#" class="close-icon"><i class="fas fa-times"></i></a>
-                                </li>
-                                <li>
-                                    <i class="far fa-calendar-alt"></i>
-                                    <small>5 mins ago</small>
-                                    <h5>Williams has just joined Project X</h5>
-                                    <a href="#" class="close-icon"><i class="fas fa-times"></i></a>
-                                </li>
-                                <li>
-                                    <i class="far fa-calendar-alt"></i>
-                                    <small>25 mins ago</small>
-                                    <h5>Kathy Brown left a review on Hotel</h5>
-                                    <a href="#" class="close-icon"><i class="fas fa-times"></i></a>
-                                </li>
-                                <li>
-                                    <i class="far fa-calendar-alt"></i>
-                                    <small>25 mins ago</small>
-                                    <h5>Kathy Brown left a review on Hotel</h5>
-                                    <a href="#" class="close-icon"><i class="fas fa-times"></i></a>
-                                </li>
-                                <li>
-                                    <i class="far fa-calendar-alt"></i>
-                                    <small>5 mins ago</small>
-                                    <h5>Williams has just joined Project X</h5>
-                                    <a href="#" class="close-icon"><i class="fas fa-times"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 col-md-12 col-xs-12">
-                        <div class="dashboard-box report-list">
-                            <h4>Reports</h4>
-                            <div class="report-list-content">
-                                <div class="date">
-                                    <h5>Auguest 12</h5>
-                                </div>
-                                <div class="total-amt">
-                                    <strong>$1250000</strong>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>2356</td>
-                                        <td>dummy text </td>
-                                        <td>6,200.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4589</td>
-                                        <td>Lorem Ipsum</td>
-                                        <td>6,500.00</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>3269</td>
-                                        <td>specimen book</td>
-                                        <td>6,800.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5126</td>
-                                        <td>Letraset sheets</td>
-                                        <td>7,200.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>7425</td>
-                                        <td>PageMaker</td>
-                                        <td>5,900.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>7425</td>
-                                        <td>PageMaker</td>
-                                        <td>5,900.00</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <!-- site traffic -->
-                    <div class="col-lg-4">
-                        <div class="dashboard-box chart-box">
-                            <h4>Site Traffic</h4>
-                            <div id="chartContainer" style="height: 250px; width: 100%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="dashboard-box chart-box">
-                            <h4>Bar Chart</h4>
-                            <div id="barchart" style="height: 250px; width: 100%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 chart-box">
-                        <div class="dashboard-box">
-                            <h4>Search Engine</h4>
-                            <div id="piechart" style="height: 250px; width: 100%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Content / End -->
-            <!-- Copyrights -->
-            <div class="copyrights">
-                Copyright © 2021 Travele. All rights reserveds.
-            </div>
-        </div>
-        <!-- Dashboard / End -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>sending email with voice</title>
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+</head>
+<body>
+<div class="container">
+    <br/>
+    <h1 class="text-center">send email</h1>
+    <br/>
+    <span id="instructions"></span>
+    <div class="form-group">
+        <textarea
+                class="form-control"
+                id="textarea"
+                cols="30"
+                rows="10"
+        ></textarea>
     </div>
-    <!-- end Container Wrapper -->
-    <!-- *Scripts* -->
+    <button id="start" class="btn btn-primary btn-block">
+        Start Recording
+    </button>
+    <button id="load" class="btn btn-success btn-block">Load File</button>
+    <button id="saveas" class="btn btn-warning btn-block">
+        Save to File
+    </button>
+    <button id="clear" class="btn btn-danger btn-block">Clear Text</button>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="script.js"></script>
+</html>
 
-    </div>
+<script>
+    var SpeechRecognition = window.webkitSpeechRecognition;
 
+    var recognition = new SpeechRecognition();
+    let saveHandle;
 
-{% endblock %}
+    var Textbox = $("#textarea");
+    var instructions = $("#instructions");
+
+    var Content = "";
+
+    recognition.continuous = true;
+
+    recognition.onresult = function (event) {
+        var current = event.resultIndex;
+
+        var transcript = event.results[current][0].transcript;
+
+        Content += transcript;
+        Textbox.val(Content);
+    };
+
+    $("#start").on("click", function (e) {
+        if ($(this).text() == "Stop Recording") {
+            $(this).html("Start Recording");
+            $("#instructions").html("");
+            recognition.stop();
+        } else {
+            $(this).html("Stop Recording");
+            $("#instructions").html("Voice Recognition is on");
+            if (Content.length) {
+                Content += " ";
+            }
+            recognition.start();
+        }
+    });
+
+    $("#saveas").click(function (e) {
+        saveText(Content);
+    });
+
+    async function saveText(content) {
+        const opts = {
+            type: "save-file",
+            accepts: [
+                {
+                    description: "Text file",
+                    extensions: ["txt"],
+                    mimeTypes: ["text/plain"],
+                },
+            ],
+        };
+        const handle = await window.chooseFileSystemEntries(opts);
+
+        const writable = await handle.createWritable();
+        // Write the contents of the file to the stream.
+        await writable.write(content);
+        // Close the file and write the contents to disk.
+        await writable.close();
+    }
+
+    $("#load").click(function () {
+        if ($(this).html() == "Modify Changes") {
+            saveFile(saveHandle, Content);
+        } else {
+            $(this).html("Modify Changes");
+            loadFile();
+        }
+    });
+
+    async function getNewFileHandle() {
+        const handle = await window.chooseFileSystemEntries();
+        return handle;
+    }
+
+    async function loadFile() {
+        saveHandle = await getNewFileHandle();
+
+        if (await verifyPermission(saveHandle, true)) {
+            // Request permission, if the user grants permission, return true.
+            const file = await saveHandle.getFile();
+            const contents = await file.text();
+            console.log(contents);
+            Content += contents;
+            $("textarea").val(contents);
+        }
+    }
+
+    async function saveFile(saveHandle, content) {
+        const writable = await saveHandle.createWritable();
+        // Write the contents of the file to the stream.
+        await writable.write(content);
+        // Close the file and write the contents to disk.
+        await writable.close();
+
+        alert("File Changes were Saved");
+    }
+
+    async function verifyPermission(fileHandle, withWrite) {
+        const opts = {};
+        if (withWrite) {
+            opts.writable = true;
+        }
+        // Check if we already have permission, if so, return true.
+        if ((await fileHandle.queryPermission(opts)) === "granted") {
+            return true;
+        }
+        // Request permission to the file, if the user grants permission, return true.
+        if ((await fileHandle.requestPermission(opts)) === "granted") {
+            return true;
+        }
+        // The user did nt grant permission, return false.
+        return false;
+    }
+
+    $("#clear").click(function () {
+        Textbox.val("");
+        $("#load").html("Load File");
+        Content = "";
+        $("#start").html("Start Recording");
+    });
+
+    Textbox.on("input", function () {
+        Content = $(this).val();
+    });
+</script>

@@ -43,3 +43,4 @@ security:
          - { path: ^/account, roles: ROLE_USER }
          - { path: ^/agencier, roles: ROLE_AGENCIER }
          - { path: ^/hotelier, roles: ROLE_HOTELIER }
+
