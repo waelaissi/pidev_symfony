@@ -1,0 +1,97 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% include "partials/header_admin.html.twig" %}
+    {% include "partials/navigation_panel_admin.html.twig" %}
+    <div class="db-info-wrap">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="dashboard-box">
+                    <h4>Ajouter Nouveau Agencier</h4>
+                    <p><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. enidis rem suscipit!</span></p>
+                    <div class="message-flash">
+                        {% for flash_error in app.flashes('verify_email_error') %}
+                            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                        {% endfor %}
+                    </div>
+                    {{ form_start(form ,{'attr':{'novalidate':'novalidate'  }}) }}
+                    <div class="form-horizontal" >
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ form_row(form.login) }}
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ form_row(form.nom) }}
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ form_row(form.prenom) }}
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ form_row(form.num_tel) }}
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ form_row(form.cin) }}
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ form_row(form.adresse) }}
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ form_row(form.image) }}
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ form_row(form.description) }}
+
+                                </div>
+                            </div>
+
+
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                {{ form_row(form.email) }}
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                {{ form_row(form.plainPassword, {
+                                    label: 'Password'
+                                }) }}
+                            </div>
+                        </div>
+                </div>
+                        <br>
+                        <div class="form-group">
+                            <button type="submit" class="button-primary"  name="ajouterAgencier">Register
+                            </button>
+                        </div>                    </div>
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
