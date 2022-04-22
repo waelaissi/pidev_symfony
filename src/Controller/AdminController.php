@@ -10,6 +10,7 @@ use App\Repository\UtilisateurRepository;
 use DiscordWebhook\Embed;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -168,7 +169,7 @@ class AdminController extends AbstractController
         $webhook =new Webhook((array)'https://discord.com/api/webhooks/962166291127472158/0L-7NJz5tjIAO3_4D1osVu6jHoksEOoRovZro08XbYk8_fDvNJRXE3rq8g5d2RyKbykX');
         $embed = new \DiscordWebhook\Embed();
         $embed
-            ->setTitle('descativation')
+            ->setTitle('desactiver')
             ->setDescription('you have banned '.$user->getNom().' '.$user->getPrenom()."\n email :".$user->getEmail()."\n phone Number :".$user->getNumTel());
         $webhook
             ->setMessage('un utilisateur a ete banner!')
@@ -181,7 +182,7 @@ class AdminController extends AbstractController
      * @param UtilisateurRepository $repository
      * @param $id
      * @param EntityManagerInterface $entityManager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      * @Route("/activer/{id}",name="activerUser")
      */
     public function desactiverUser(UtilisateurRepository $repository,$id, EntityManagerInterface $entityManager)
