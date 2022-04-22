@@ -5,12 +5,15 @@ namespace App\Controller;
 use App\Entity\Utilisateur;
 use App\Form\RegisterAgencierType;
 use App\Form\RegisterHotelierType;
+use App\Form\SendmailType;
 use App\Repository\UtilisateurRepository;
 use DiscordWebhook\Embed;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use \DiscordWebhooks\Client;
@@ -34,7 +37,7 @@ class AdminController extends AbstractController
         $user_desactiver= $repository->countUtilisateurByetat("desactiver");
         $pieChart = new PieChart();
         $pieChart->getData()->setArrayToDataTable(
-            [['Reclamation', 'etat'],
+            [['users', 'etat'],
                 ['users activer',      $user_activer],
                 ['users descativer',      $user_desactiver],
 
@@ -211,7 +214,7 @@ class AdminController extends AbstractController
         $user_desactiver= $repository->countUtilisateurByetat("desactiver");
         $pieChart = new PieChart();
         $pieChart->getData()->setArrayToDataTable(
-            [['Reclamation', 'etat'],
+            [['users', 'etat'],
                 ['users activer',      $user_activer],
                 ['users descativer',      $user_desactiver],
 
@@ -235,6 +238,47 @@ class AdminController extends AbstractController
             'pieChart' => $pieChart,
         ]);
 
+    }
+
+    /**
+     * @Route("/email/{email_use}",name="sendMailToUser")
+     */
+    public function sendEmail(MailerInterface $mailer,Request $request,$email_use): Response
+    {
+        $form =$this->createForm(SendmailType::class,null);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $message=$form->get('message')->getData();
+            $subject=$form->get('subject')->getData();
+
+
+
+            // if every think is ok we send the mail
+            $data="this is a test variable";
+            $email = (new Email())
+                ->from('chaker.ayachi@esprit.com')
+                ->to((string)$email_use)
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject((string)$subject)
+                ->text('Sending emails is fun again!')
+                ->html("<p>$message</p>");
+
+            $mailer->send($email);
+            $this->addFlash('success', 'votre email a ete bien envoyer');
+
+            return $this->redirectToRoute('afficheall');
+
+        }
+
+
+
+        return $this->render('admin/sendMail.html.twig', ['form' => $form->createView(),'user_email'=>$email_use]);
+
+        // ...
     }
 
 

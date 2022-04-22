@@ -8,29 +8,52 @@
     />
 </head>
 <body>
+
 <div class="container">
     <br/>
     <h1 class="text-center">send email</h1>
     <br/>
-    <span id="instructions"></span>
     <div class="form-group">
-        <textarea
-                class="form-control"
-                id="textarea"
-                cols="30"
-                rows="10"
-        ></textarea>
+
+        <span id="instructions" style="color: red"></span>
+
+
     </div>
+    {{ form_start(form) }}
+    <div class="form-group">
+
+        <label> users addresse </label>
+        <input required="" value="{{ user_email}}" class="form-control"
+               name="email" readonly>
+
+    </div>
+
+
+    <div class="form-group">
+        {{ form_row(form.subject) }}
+
+    </div>
+    <div class="form-group">
+
+        {{ form_row(form.message , { 'id': 'textarea' }) }}
+
+    </div>
+
+
+    <div class="form-group">
+        <button type="submit" class="button-primary" name="sendMailToUser">send email
+        </button>
+    </div>
+    {{ form_end(form) }}
     <button id="start" class="btn btn-primary btn-block">
         Start Recording
     </button>
-    <button id="load" class="btn btn-success btn-block">Load File</button>
-    <button id="saveas" class="btn btn-warning btn-block">
-        Save to File
-    </button>
+
     <button id="clear" class="btn btn-danger btn-block">Clear Text</button>
 </div>
+
 </body>
+
 </html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -63,7 +86,7 @@
             recognition.stop();
         } else {
             $(this).html("Stop Recording");
-            $("#instructions").html("Voice Recognition is on");
+            $("#instructions").html("yalla sam3ni eka swyette el 7nine ");
             if (Content.length) {
                 Content += " ";
             }
@@ -71,29 +94,8 @@
         }
     });
 
-    $("#saveas").click(function (e) {
-        saveText(Content);
-    });
 
-    async function saveText(content) {
-        const opts = {
-            type: "save-file",
-            accepts: [
-                {
-                    description: "Text file",
-                    extensions: ["txt"],
-                    mimeTypes: ["text/plain"],
-                },
-            ],
-        };
-        const handle = await window.chooseFileSystemEntries(opts);
 
-        const writable = await handle.createWritable();
-        // Write the contents of the file to the stream.
-        await writable.write(content);
-        // Close the file and write the contents to disk.
-        await writable.close();
-    }
 
     $("#load").click(function () {
         if ($(this).html() == "Modify Changes") {
@@ -109,28 +111,6 @@
         return handle;
     }
 
-    async function loadFile() {
-        saveHandle = await getNewFileHandle();
-
-        if (await verifyPermission(saveHandle, true)) {
-            // Request permission, if the user grants permission, return true.
-            const file = await saveHandle.getFile();
-            const contents = await file.text();
-            console.log(contents);
-            Content += contents;
-            $("textarea").val(contents);
-        }
-    }
-
-    async function saveFile(saveHandle, content) {
-        const writable = await saveHandle.createWritable();
-        // Write the contents of the file to the stream.
-        await writable.write(content);
-        // Close the file and write the contents to disk.
-        await writable.close();
-
-        alert("File Changes were Saved");
-    }
 
     async function verifyPermission(fileHandle, withWrite) {
         const opts = {};

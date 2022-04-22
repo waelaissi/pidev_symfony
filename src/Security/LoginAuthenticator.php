@@ -73,6 +73,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
             throw new UsernameNotFoundException('Email could not be found.');
         }
 
+
         return $user;
     }
 
@@ -92,6 +93,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         $user = $token->getUser();
+
         if (in_array('ROLE_AGENCIER', $user->getRoles())) {
             return new RedirectResponse($this->urlGenerator->generate('dashboardagencier'));
         }

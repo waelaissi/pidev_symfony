@@ -31,6 +31,7 @@
                             <th>adresse</th>
                             <th>etat</th>
                             <th>action</th>
+                            <th>send email</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -126,10 +127,17 @@
 
                                     {% endif %}
                                 </td>
+                                <td>
+                                    <button type="button" class="btn btn-info"><a
+                                                href="{{ path('sendMailToUser',{'email_use':users.email}) }}">
+                                            <span class="badge badge-info">send</span></a>
+                                    </button>
+                                </td>
+
                             </tr>
                         {% else %}
                             <tr>
-                                <td> acun utilisateur trouveé</td>
+                                <td> aucun utilisateur trouveé</td>
                             </tr>
                         {% endfor %}
                         </tbody>
