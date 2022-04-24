@@ -7,7 +7,75 @@
 
 {% block body %}
     <main id="content" class="site-main">
+        <section id="search_form" class="inner-banner-wrap">
+            <div class="inner-baner-container" style="background-image: url('../../public/assets/images/inner-banner.jpg');">
+                <div class="container">
+                    <div class="inner-banner-content">
+                        <h1 class="inner-title">Cars</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="inner-shape"></div>
+        </section>
+        <div class="trip-search-section shape-search-section">
+            <div class="slider-shape"></div>
+            <div class="container">
+                <div  class="trip-search-inner white-bg d-flex" style="justify-content: center;">
 
+                    <div  class="input-group  width-col-3">
+                        <label> Search Destination </label>
+                        <select  size="1" id="destination" >
+                            <option value="" selected>None</option>
+                            <option value="Tunis">Tunis</option>
+                            <option value="Sfax">Sfax</option>
+                            <option value="Sousse">Sousse</option>
+                            <option value="Kairouan">Kairouan</option>
+                            <option value="Bizerte">Bizerte</option>
+                            <option value="Gabès">Gabès</option>
+                            <option value="Ariana">Ariana</option>
+                            <option value="Gafsa">Gafsa</option>
+                            <option value="Monastir">Monastir</option>
+                            <option value="Ben Arous">Ben Arous</option>
+                            <option value="Kasserine">Kasserine</option>
+                            <option value="Médenine">Médenine</option>
+                            <option value="Nabeul">Nabeul</option>
+                            <option value="Tataouine">Tataouine</option>
+                            <option value="Béja">Béja</option>
+                            <option value="Kef">Kef</option>
+                            <option value="Mahdia">Mahdia</option>
+                            <option value="Sidi Bouzid">Sidi Bouzid</option>
+                            <option value="Jendouba">Jendouba</option>
+                            <option value="Tozeur">Tozeur</option>
+                            <option value="Manouba">Manouba</option>
+                            <option value="Siliana">Siliana</option>
+                            <option value="Zaghouan">Zaghouan</option>
+                            <option value="Kébili">Kébili</option>
+                        </select>
+
+                    </div>
+                    <div class="input-group width-col-3">
+                        <label id="checkin"> Checkin Date* </label>
+                        <i class="far fa-calendar"></i>
+                        <input id="date_picker_arrivee"  type="text" name="s" placeholder="MM / DD / YY" autocomplete="off" readonly="readonly" onchange="changeMinDate()">
+                        <div class="invalid-feedback" id='required_date_arrivee'>
+                            Please select a valid state.
+                        </div>
+                    </div>
+                    <div class="input-group width-col-3">
+                        <label id="checkout"> Checkout Date* </label>
+                        <i class="far fa-calendar"></i>
+                        <input id="date_picker_depart" type="text" name="s" placeholder="MM / DD / YY" autocomplete="off" readonly="readonly" required>
+                        <div class="invalid-feedback">
+                            Please select a valid state.
+                        </div>
+                    </div>
+                    <div class="input-group width-col-3" >
+                        <label class="screen-reader-text"> Search </label>
+                        <input type="submit" name="travel-search" value="INQUIRE NOW" onclick="search()">
+                    </div>
+                </div>
+            </div>
+        </div>
         <section class="destination-section ">
             <div class="container">
                 <div class="section-heading text-center">
@@ -23,8 +91,8 @@
                     <div class="container">
                         <div class="package-inner">
                             <div class="row">
-                                {% set max = 10 %}
-                                {% for i in 0..max %}
+
+                                {% for car in cars %}
                                     <div class="col-lg-4 col-md-6">
                                         <div class="package-wrap">
                                             <figure class="feature-image">
@@ -34,7 +102,7 @@
                                             </figure>
                                             <div class="package-price">
                                                 <h6>
-                                                    <span>$70 </span> / per day
+                                                    <span>{{ format_to_currency(car.prix)}} </span> / per day
                                                 </h6>
                                             </div>
                                             <div class="package-content-wrap">
@@ -46,17 +114,17 @@
                                                         </li>
                                                         <li>
                                                             <i class="fas fa-user-friends"></i>
-                                                            People: 2
+                                                            People: {{ car.capacite }}
                                                         </li>
                                                         <li>
                                                             <i class="fas fa-map-marker-alt"></i>
-                                                            Sousse
+                                                            {{ car.idUser.adresse }}
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <div class="package-content">
                                                     <h3>
-                                                        <a href="#">Mercedes Benz </a>
+                                                        <a href="#">{{ car.marque }} </a>
                                                     </h3>
                                                     <div class="review-area">
                                                         <span class="review-text">(25 reviews)</span>
@@ -64,9 +132,13 @@
                                                             <span style="width: 60%"></span>
                                                         </div>
                                                     </div>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit luctus nec ullam. Ut elit tellus, luctus nec ullam elit tellpus.</p>
+                                                    <p>{{ car.description }}</p>
                                                     <div class="btn-wrap">
-                                                        <a href={{ path('app_car_details',{'id_car':44,'id_user':32,'date_arrive':'2022-04-13','date_depart':'2022-04-16'}) }} class="button-text width-6"> Book Now <i class="fas fa-arrow-right"></i></a>
+                                                        {% if date_arrive=="" %}
+                                                            <a  onclick="fill_form()" class="button-text width-6"> Book Now <i class="fas fa-arrow-right"></i></a>
+                                                        {% else %}
+                                                            <a href={{ path('app_car_details',{'id_car':car.id,'id_user':36,'date_arrive':date_arrive,'date_depart':date_depart}) }} class="button-text-width-6"> Book Now <i class="fas fa-arrow-right"></i></a>
+                                                        {% endif %}
                                                         <a href="#" class="button-text width-6">Wish List<i class="far fa-heart"></i></a>
                                                     </div>
                                                 </div>
@@ -87,7 +159,6 @@
 
         <!-- subscribe html end -->
     </main>
-
     <script>
         $(document).ready(function () {
             $("#date_picker_arrivee").datepicker({
@@ -99,15 +170,75 @@
                 minDate: 0
             });
         });
+
+        function get_arrive_date(){
+            return document.getElementById("date_picker_arrivee").value;
+        }
+        function get_arrive_depart(){
+            return document.getElementById("date_picker_depart").value;
+        }
+        function changeMinDate(){
+            min_date=get_arrive_date();
+            $('#date_picker_depart').datepicker('destroy');
+            $("#date_picker_depart").datepicker({
+                minDate: new Date(min_date)
+            });
+            document.getElementById("date_picker_depart").value=null;
+        }
+
+        function check_form_valid(){
+            check=true;
+            date_debut=document.getElementById("date_picker_arrivee").value;
+            date_fin=document.getElementById("date_picker_depart").value;
+            if(date_debut==''){
+                check=false;
+                date_debut=document.getElementById("checkin").innerHTML=" Checkin Date*<strong style='color: red;font-size: 10px !important;'> (Required)</strong>";
+            }else{
+                date_debut=document.getElementById("checkin").innerHTML="Checkin Date*";
+            }
+            if(date_fin==''){
+                check=false;
+                date_depart=document.getElementById("checkout").innerHTML=" Checkout Date*<strong style='color: red;font-size: 10px !important;'> (Required)</strong>";
+            }else{
+                date_debut=document.getElementById("checkout").innerHTML="Checkout Date*";
+            }
+            return check;
+        }
+        function search(){
+            check=check_form_valid();
+            if(check){
+                date_debut=formatDate(document.getElementById("date_picker_arrivee").value);
+                date_fin=formatDate(document.getElementById("date_picker_depart").value);
+                region=document.getElementById("destination").value;
+                if(region=="")
+                    region="null";
+                window.location.href = "http://127.0.0.1:8000/cars/available/"+date_debut+"/"+date_fin+"/"+region;
+            }
+        }
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+        function fill_form(){
+            const element = document.getElementById("search_form");
+            element.scrollIntoView();
+            check_form_valid();
+        }
     </script>
 
 
 
+
 {% endblock  %}
-
-
-
-
 
 
 

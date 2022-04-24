@@ -7,6 +7,17 @@
 
 {% block body %}
     <main id="content" class="site-main">
+        <section class="inner-banner-wrap">
+            <div class="inner-baner-container" style="background-image: url('../../public/assets/images/inner-banner.jpg');">
+                <div class="container">
+                    <div class="inner-banner-content">
+                        <h1 class="inner-title">Cars</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="inner-shape"></div>
+        </section>
+        <section class="destination-section ">
         <div class="single-tour-section">
             <div class="container">
                 <div class="row">
@@ -248,7 +259,7 @@
                         <div class="sidebar">
                             <div class="package-price">
                                 <h5 class="price">
-                                    <span>{{ format_to_currency(200 |default(0) )}}</span> / per night
+                                    <span>{{ format_to_currency(car.prix |default(0) )}}</span> / per night
                                 </h5>
                                 <div class="start-wrap">
                                     <div class="rating-start" title="Rated 5 out of 5">
@@ -299,7 +310,7 @@
 
                                                 <span id="total_value" style="font-weight:bold; margin-left: 10px"
                                                       data-arrive="{{ date_arrive }}" data-depart="{{ date_depart }}"
-                                                      data-prix="{{ 200|default(0) }}"> </span>
+                                                      data-prix="{{ car.prix|default(0) }}"> </span>
                                             </div>
 
 
@@ -309,7 +320,7 @@
 
                                         <div class="col-sm-12">
                                             <div class="form-group submit-btn">
-                                                <input type="button" onclick="redirect_to_checkout({{ user.id }},{{ 44}},)" name="submit"  value="Boook Now">
+                                                <input type="button" onclick="redirect_to_checkout({{ user.id }},{{ car.id}},)" name="submit"  value="Boook Now">
                                             </div>
                                         </div>
                                     </div>
@@ -345,6 +356,7 @@
                 </div>
             </div>
         </div>
+        </section>
         <!-- subscribe section html start -->
         <section class="subscribe-section" style="background-image: url('../../public/assets/images/img11.jpg');">
             <div class="container">
@@ -394,10 +406,10 @@
         currency_total=new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(total);
         total_html.innerText=currency_total.toString();
         days_html.innerText=days+" days"
-        console.log('date_arrive '+currency_total);
+        console.log('total '+typeof total);
 
-        function redirect_to_checkout(id_user,id_room){
-            window.location.href = "http://127.0.0.1:8000/transaction/car/"+id_room+"/"+id_user+"/"+total+"/"+date_arrive_string+"/"+date_depart_string;
+        function redirect_to_checkout(id_user,id_car){
+            window.location.href = "http://127.0.0.1:8000/transaction/car/"+id_car+"/"+id_user+"/"+total+"/"+date_arrive_string+"/"+date_depart_string;
         }
 
 

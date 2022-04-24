@@ -88,6 +88,9 @@
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
+    "mercuryseries/flashy-bundle": {
+        "version": "v5.1.0"
+    },
     "monolog/monolog": {
         "version": "1.27.0"
     },
@@ -215,6 +218,9 @@
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "stripe/stripe-php": {
+        "version": "v7.123.0"
     },
     "symfony/asset": {
         "version": "v4.4.37"

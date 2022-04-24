@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Chambre;
 use App\Entity\Reservation;
 use App\Repository\ChambreRepository;
+use App\Repository\EvenementRepository;
+use App\Repository\HotelRepository;
 use App\Repository\MaisonRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\TicketRepository;
@@ -14,6 +17,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ObjectManager;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,6 +74,7 @@ class ReservationController extends AbstractController
         $entityManager->persist($reservation);
         $entityManager->flush();
 
+
         return $this->redirectToRoute('app_transaction_confirmation',['id_user'=>$id_user,'id_transaction'=>$transaction->getId()]);
 
     }
@@ -123,6 +128,7 @@ class ReservationController extends AbstractController
         return $this->redirectToRoute('app_admin_reservations_hotels');
     }
 
+
     /**
      * @Route("/reservation/get/{type}/{id_user}", name="app_reservation_get_client")
      */
@@ -131,9 +137,22 @@ class ReservationController extends AbstractController
         $reservations=$reservationRepository->findClientReservationsByType($type,$id_user);
         return $this->render('reservation/reservations_client.html.twig', [
             'reservations' => $reservations,
-
         ]);
     }
+
+    /**
+     * @Route("/stats/hotels", name="app_hotels_available")
+     */
+    public function get_stats_hotels(ReservationRepository $reservationRepository)
+    {
+        //$data=$reservationRepository->findTotalBooked("car");
+        $data=$reservationRepository->findEarnings("hotel");
+         return new Response(json_encode($data));
+    }
+
+
+
+
 
 
 

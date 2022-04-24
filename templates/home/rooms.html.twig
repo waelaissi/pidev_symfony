@@ -23,8 +23,7 @@
                     <div class="container">
                         <div class="package-inner">
                             <div class="row">
-                                {% set max = 10 %}
-                                {% for i in 0..max %}
+                                {% for room in rooms %}
                                     <div class="col-lg-4 col-md-6">
                                         <div class="package-wrap">
                                             <figure class="feature-image">
@@ -34,7 +33,7 @@
                                             </figure>
                                             <div class="package-price">
                                                 <h6>
-                                                    <span>$1,900 </span> / per night
+                                                    <span>{{ format_to_currency(room.prix)}} </span> / per night
                                                 </h6>
                                             </div>
                                             <div class="package-content-wrap">
@@ -46,7 +45,7 @@
                                                         </li>
                                                         <li>
                                                             <i class="fas fa-user-friends"></i>
-                                                            People: 5
+                                                            People:
                                                         </li>
                                                         <li>
                                                             <i class="fas fa-map-marker-alt"></i>
@@ -56,7 +55,7 @@
                                                 </div>
                                                 <div class="package-content">
                                                     <h3>
-                                                        <a href="#">Sunset view of beautiful lakeside resident</a>
+                                                        <a href="#">{{ room.type }}</a>
                                                     </h3>
                                                     <div class="review-area">
                                                         <span class="review-text">(25 reviews)</span>
@@ -66,7 +65,7 @@
                                                     </div>
                                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit luctus nec ullam. Ut elit tellus, luctus nec ullam elit tellpus.</p>
                                                     <div class="btn-wrap">
-                                                        <a href={{ path('app_room_details',{'id_room':2,'id_hotel':3,'id_user':32,'date_arrive':date_arrive,'date_depart':date_depart}) }} class="button-text width-6"> Book Now <i class="fas fa-arrow-right"></i></a>
+                                                        <a href={{ path('app_room_details',{'id_room':room.id ,'id_hotel':room.idHotel.id ,'id_user':36,'date_arrive':date_arrive,'date_depart':date_depart}) }} class="button-text width-6"> Book Now <i class="fas fa-arrow-right"></i></a>
                                                         <a href="#" class="button-text width-6">Wish List<i class="far fa-heart"></i></a>
                                                     </div>
                                                 </div>

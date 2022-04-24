@@ -73,4 +73,24 @@ class EvenementRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAvailableEvents($date,$region)
+    {
+        if($region!=='null'){
+            return $this
+                ->createQueryBuilder('e')
+                ->where('e.date=:date')
+                ->andWhere('e.emplacement = :region')
+                ->setParameter('date',$date)
+                ->setParameter('region',$region)
+                ->getQuery()
+                ->getResult();
+        }
+        return $this
+            ->createQueryBuilder('e')
+            ->where('e.date=:date')
+            ->setParameter('date',$date)
+            ->getQuery()
+            ->getResult();
+    }
 }

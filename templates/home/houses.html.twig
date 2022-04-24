@@ -11,7 +11,7 @@
             <div class="inner-baner-container" style="background-image: url('../../public/assets/images/inner-banner.jpg');">
                 <div class="container">
                     <div class="inner-banner-content">
-                        <h1 class="inner-title">Hotels</h1>
+                        <h1 class="inner-title">houses</h1>
                     </div>
                 </div>
             </div>
@@ -57,17 +57,11 @@
                         <label id="checkin"> Checkin Date* </label>
                         <i class="far fa-calendar"></i>
                         <input id="date_picker_arrivee"  type="text" name="s" placeholder="MM / DD / YY" autocomplete="off" readonly="readonly" onchange="changeMinDate()">
-                        <div class="invalid-feedback" id='required_date_arrivee'>
-                            Please select a valid state.
-                        </div>
                     </div>
                     <div class="input-group width-col-3">
                         <label id="checkout"> Checkout Date* </label>
                         <i class="far fa-calendar"></i>
                         <input id="date_picker_depart" type="text" name="s" placeholder="MM / DD / YY" autocomplete="off" readonly="readonly" required>
-                        <div class="invalid-feedback">
-                            Please select a valid state.
-                        </div>
                     </div>
                     <div class="input-group width-col-3" >
                         <label class="screen-reader-text"> Search </label>
@@ -82,15 +76,15 @@
                 <div class="section-heading text-center">
                     <div class="row">
                         <div class="col-lg-8 offset-lg-2">
-                            <h5>Hotels</h5>
-                            <h2>TOP NOTCH HOTELS</h2>
+                            <h5>houses</h5>
+                            <h2>HOUSES</h2>
                             <div class="title-icon-divider"><i class="fas fa-suitcase-rolling"></i></div>
                         </div>
                     </div>
                 </div>
                 <div class="destination-inner destination-four-column">
                     <div class="row">
-                        {% for hotel in hotels %}
+                        {% for house in houses %}
                             <div class="col-lg-3 col-sm-6">
                                 <div class="desti-item text-center">
                                     <figure class="desti-image">
@@ -102,16 +96,16 @@
                                     </figure>
                                     <div class="desti-content">
                                         <h3>
-                                            <a href="#">{{ hotel.libelle }}</a>
+                                            <a href="#">{{ house.adresse }}</a>
                                         </h3>
                                         {% if date_arrive=="" %}
                                             <div class="meta-cat">
-                                                <a  class="sabri" onclick="fill_form()">CHECK ROOMS</a>
+                                                <a  onclick="fill_form()">CHECK details</a>
                                             </div>
                                         {% else %}
-                                                <div class="meta-cat">
-                                                    <a href="{{ path('app_rooms_available',{'id_hotel':hotel.id,'date_debut':date_arrive,'date_fin':date_depart}) }}">CHECK ROOMS</a>
-                                                </div>
+                                            <div class="meta-cat">
+                                                <a href={{ path('app_house_details',{'id_house':house.id ,'id_user':36,'date_arrive':date_arrive,'date_depart':date_depart}) }} class="button-text-width-6"> Book Now <i class="fas fa-arrow-right"></i></a>
+                                            </div>
                                         {% endif %}
 
                                     </div>
@@ -122,7 +116,7 @@
 
                     </div>
                     <div class="btn-wrap text-center">
-                        <a href="#" class="button-primary">MORE HOTELS</a>
+                        <a href="#" class="button-primary">MORE houseS</a>
                     </div>
                 </div>
             </div>
@@ -185,7 +179,7 @@
                 region=document.getElementById("destination").value;
                 if(region=="")
                     region="null";
-                window.location.href = "http://127.0.0.1:8000/hotels/available/"+date_debut+"/"+date_fin+"/"+region;
+                window.location.href = "http://127.0.0.1:8000/houses/available/"+date_debut+"/"+date_fin+"/"+region;
             }
         }
         function formatDate(date) {

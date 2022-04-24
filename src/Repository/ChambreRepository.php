@@ -73,4 +73,27 @@ class ChambreRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function  findByList($id_list,$id_hotel){
+        if(sizeof($id_list)==0){
+            return $this
+                ->createQueryBuilder('ch')
+                ->Where('h.id = :id_hotel')
+                ->join('ch.idHotel','h')
+                ->setParameter('id_hotel',$id_hotel)
+                ->getQuery()
+                ->getResult();
+
+        }else{
+            return $this
+                ->createQueryBuilder('ch')
+                ->where('ch.id not in ( :data )')
+                ->andWhere('h.id = :id_hotel')
+                ->join('ch.idHotel','h')
+                ->setParameter('data',$id_list)
+                ->setParameter('id_hotel',$id_hotel)
+                ->getQuery()
+                ->getResult();
+        }
+    }
+
 }

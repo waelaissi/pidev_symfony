@@ -14,28 +14,68 @@
     <div class="trip-search-section shape-search-section">
         <div class="slider-shape"></div>
         <div class="container">
-            <div class="trip-search-inner white-bg d-flex">
-                <div class="input-group">
-                    <label> Search Destination* </label>
-                    <input type="text" name="s" placeholder="Enter Destination">
+            <div class="trip-search-inner white-bg d-flex" style="justify-content: center;">
+
+                <div class="input-group  width-col-3">
+                    <label> Search Destination </label>
+                    <select  size="1" id="destination" >
+                        <option value="" selected>None</option>
+                        <option value="Tunis">Tunis</option>
+                        <option value="Sfax">Sfax</option>
+                        <option value="Sousse">Sousse</option>
+                        <option value="Kairouan">Kairouan</option>
+                        <option value="Bizerte">Bizerte</option>
+                        <option value="Gabès">Gabès</option>
+                        <option value="Ariana">Ariana</option>
+                        <option value="Gafsa">Gafsa</option>
+                        <option value="Monastir">Monastir</option>
+                        <option value="Ben Arous">Ben Arous</option>
+                        <option value="Kasserine">Kasserine</option>
+                        <option value="Médenine">Médenine</option>
+                        <option value="Nabeul">Nabeul</option>
+                        <option value="Tataouine">Tataouine</option>
+                        <option value="Béja">Béja</option>
+                        <option value="Kef">Kef</option>
+                        <option value="Mahdia">Mahdia</option>
+                        <option value="Sidi Bouzid">Sidi Bouzid</option>
+                        <option value="Jendouba">Jendouba</option>
+                        <option value="Tozeur">Tozeur</option>
+                        <option value="Manouba">Manouba</option>
+                        <option value="Siliana">Siliana</option>
+                        <option value="Zaghouan">Zaghouan</option>
+                        <option value="Kébili">Kébili</option>
+                    </select>
+
                 </div>
-                <div class="input-group">
-                    <label> Pax Number* </label>
-                    <input type="text" name="s" placeholder="No.of People">
+                <div class="input-group  width-col-3">
+                    <label id="search_type"> Search Type* </label>
+                    <select  size="1" id="type" >
+                        <option value="" disabled selected>Type</option>
+                        <option value="Hotel">Hotel</option>
+                        <option value="House">House</option>
+                        <option value="Car">Car</option>
+                        <option value="Event">Event</option>
+                    </select>
                 </div>
                 <div class="input-group width-col-3">
-                    <label> Checkin Date* </label>
+                    <label id="checkin"> Checkin Date* </label>
                     <i class="far fa-calendar"></i>
-                    <input class="input-date-picker" type="text" name="s" placeholder="MM / DD / YY" autocomplete="off" readonly="readonly">
+                    <input id="date_picker_arrivee"  type="text" name="s" placeholder="MM / DD / YY" autocomplete="off" readonly="readonly" onchange="changeMinDate()">
+                    <div class="invalid-feedback" id='required_date_arrivee'>
+                        Please select a valid state.
+                    </div>
                 </div>
                 <div class="input-group width-col-3">
-                    <label> Checkout Date* </label>
+                    <label id="checkout"> Checkout Date* </label>
                     <i class="far fa-calendar"></i>
-                    <input class="input-date-picker" type="text" name="s" placeholder="MM / DD / YY" autocomplete="off" readonly="readonly">
+                    <input id="date_picker_depart" type="text" name="s" placeholder="MM / DD / YY" autocomplete="off" readonly="readonly" required>
+                    <div class="invalid-feedback">
+                        Please select a valid state.
+                    </div>
                 </div>
-                <div class="input-group width-col-3">
+                <div class="input-group width-col-3" >
                     <label class="screen-reader-text"> Search </label>
-                    <input type="submit" name="travel-search" value="INQUIRE NOW">
+                    <input type="submit" name="travel-search" value="INQUIRE NOW" onclick="search()">
                 </div>
             </div>
         </div>
@@ -922,5 +962,103 @@
     </section>
     <!--  contact details html end -->
     </main>
+    <script>
+        $(document).ready(function () {
+            $("#date_picker_arrivee").datepicker({
+                minDate: 0
+            });
+        });
+        $(document).ready(function () {
+            $("#date_picker_depart").datepicker({
+                minDate: 0
+            });
+        });
 
+        function get_arrive_date(){
+            return document.getElementById("date_picker_arrivee").value;
+        }
+        function get_arrive_depart(){
+            return document.getElementById("date_picker_depart").value;
+        }
+        function changeMinDate(){
+            min_date=get_arrive_date();
+            $('#date_picker_depart').datepicker('destroy');
+            $("#date_picker_depart").datepicker({
+                minDate: new Date(min_date)
+            });
+            document.getElementById("date_picker_depart").value=null;
+        }
+
+        function check_form_valid(){
+            check=true;
+            date_debut=document.getElementById("date_picker_arrivee").value;
+            date_fin=document.getElementById("date_picker_depart").value;
+            type=document.getElementById("type").value;
+            console.log('type'+type);
+            if(date_debut==''){
+                check=false;
+                date_debut=document.getElementById("checkin").innerHTML=" Checkin Date*<strong style='color: red;font-size: 10px !important;'> (Required)</strong>";
+            }else{
+                date_debut=document.getElementById("checkin").innerHTML="Checkin Date*";
+            }
+            if(date_fin==''){
+                check=false;
+                date_depart=document.getElementById("checkout").innerHTML=" Checkout Date*<strong style='color: red;font-size: 10px !important;'> (Required)</strong>";
+            }else{
+                date_debut=document.getElementById("checkout").innerHTML="Checkout Date*";
+            }
+
+            if(type==''){
+                check=false;
+                date_depart=document.getElementById("search_type").innerHTML=" Search Type*<strong style='color: red;font-size: 10px !important;'> (Required)</strong>";
+            }else{
+                date_debut=document.getElementById("search_type").innerHTML="Search Type*";
+            }
+            return check;
+        }
+        function search(){
+            check=check_form_valid();
+            if(check){
+                date_debut=formatDate(document.getElementById("date_picker_arrivee").value);
+                date_fin=formatDate(document.getElementById("date_picker_depart").value);
+                type=document.getElementById("type").value;
+                region=document.getElementById("destination").value;
+                switch (type) {
+                    case 'Hotel':
+                        if(region=="")
+                            region="null";
+                        window.location.href = "http://127.0.0.1:8000/hotels/available/"+date_debut+"/"+date_fin+"/"+region;
+                        break;
+                    case 'House':
+                        if(region=="")
+                            region="null";
+                        window.location.href = "http://127.0.0.1:8000/houses/available/"+date_debut+"/"+date_fin+"/"+region;
+                        break;
+                    case 'Car':
+                        if(region=="")
+                            region="null";
+                        window.location.href = "http://127.0.0.1:8000/cars/available/"+date_debut+"/"+date_fin+"/"+region;
+                        break;
+                    default:
+                        if(region=="")
+                            region="null";
+                        window.location.href = "http://127.0.0.1:8000/events/available/"+date_debut+"/"+region;
+                        break;
+                }
+            }
+        }
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+    </script>
 {% endblock %}

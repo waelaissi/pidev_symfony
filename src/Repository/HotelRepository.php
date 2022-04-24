@@ -62,15 +62,54 @@ class HotelRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Hotel
+
+    /*public function findOneBySomeField($value)
     {
         return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('h.id in ( :data )')
+            ->setParameter('data',$value)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult();
         ;
+    }*/
+
+
+    public function  findByList($id_list,$region){
+        if($region!=='null'){
+            if(sizeof($id_list)==0){
+                return $this
+                    ->createQueryBuilder('h')
+                    ->Where('h.region =:region')
+                    ->setParameter('region',$region)
+                    ->getQuery()
+                    ->getResult();
+            }
+            else{
+                return $this
+                    ->createQueryBuilder('h')
+                    ->where('h.id in ( :data )')
+                    ->andWhere('h.region =:region')
+                    ->setParameter('data',$id_list)
+                    ->setParameter('region',$region)
+                    ->getQuery()
+                    ->getResult();
+            }
+        }else{
+            if(sizeof($id_list)==0){
+                return $this
+                    ->createQueryBuilder('h')
+                    ->getQuery()
+                    ->getResult();
+            }
+            else{
+                return $this
+                    ->createQueryBuilder('h')
+                    ->where('h.id in ( :data )')
+                    ->setParameter('data',$id_list)
+                    ->getQuery()
+                    ->getResult();
+            }
+        }
+
     }
-    */
 }

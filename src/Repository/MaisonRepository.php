@@ -73,4 +73,41 @@ class MaisonRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function  findByList($id_list,$region){
+        if($region!=='null'){
+            if(sizeof($id_list)==0){
+                return $this
+                    ->createQueryBuilder('h')
+                    ->Where('h.region = :region')
+                    ->setParameter('region',$region)
+                    ->getQuery()
+                    ->getResult();
+            }else{
+                return $this
+                    ->createQueryBuilder('h')
+                    ->where('h.id not in ( :data )')
+                    ->andWhere('h.region = :region')
+                    ->setParameter('data',$id_list)
+                    ->setParameter('region',$region)
+                    ->getQuery()
+                    ->getResult();
+            }
+        }
+        else{
+            if(sizeof($id_list)==0){
+                return $this
+                    ->createQueryBuilder('h')
+                    ->getQuery()
+                    ->getResult();
+            }else{
+                return $this
+                    ->createQueryBuilder('h')
+                    ->where('h.id not in ( :data )')
+                    ->setParameter('data',$id_list)
+                    ->getQuery()
+                    ->getResult();
+            }
+        }
+
+    }
 }

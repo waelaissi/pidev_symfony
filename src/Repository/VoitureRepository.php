@@ -73,4 +73,43 @@ class VoitureRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function  findByList($id_list,$region){
+        if($region!=='null'){
+            if(sizeof($id_list)==0){
+                return $this
+                    ->createQueryBuilder('c')
+                    ->Where('u.adresse = :region')
+                    ->join('c.idUser','u')
+                    ->setParameter('region',$region)
+                    ->getQuery()
+                    ->getResult();
+            }else{
+                return $this
+                    ->createQueryBuilder('c')
+                    ->where('c.id not in ( :data )')
+                    ->andWhere('u.adresse = :region')
+                    ->join('c.idUser','u')
+                    ->setParameter('data',$id_list)
+                    ->setParameter('region',$region)
+                    ->getQuery()
+                    ->getResult();
+            }
+        }else{
+            if(sizeof($id_list)==0){
+                return $this
+                    ->createQueryBuilder('c')
+                    ->getQuery()
+                    ->getResult();
+            }else{
+                return $this
+                    ->createQueryBuilder('c')
+                    ->where('c.id NOT IN ( :data )')
+                    ->setParameter('data',$id_list)
+                    ->getQuery()
+                    ->getResult();
+            }
+        }
+
+
+    }
 }

@@ -11,7 +11,7 @@
             <div class="inner-baner-container" style="background-image: url('../../public/assets/images/inner-banner.jpg');">
                 <div class="container">
                     <div class="inner-banner-content">
-                        <h1 class="inner-title">Room Details</h1>
+                        <h1 class="inner-title">house Details</h1>
                     </div>
                 </div>
             </div>
@@ -24,14 +24,14 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="single-tour-inner">
-                            <h2>MOVENPIC RESORT <br> DELUXE DOUBLE ROOM</h2>
+                            <h2>MOVENPIC RESORT <br> DELUXE DOUBLE house</h2>
                             <figure class="feature-image">
                                 <img src="{{asset('assets/images/romm_zoom.jpg')}}" alt="">
                                 <div class="package-meta text-center">
                                     <ul>
                                         <li>
                                             <i class="far fa-clock"></i>
-                                             <span id="days">6 days / 5 night</span>
+                                            <span id="days">6 days / 5 night</span>
                                         </li>
                                         <li>
                                             <i class="fas fa-user-friends"></i>
@@ -260,7 +260,7 @@
                         <div class="sidebar">
                             <div class="package-price">
                                 <h5 class="price">
-                                    <span>{{ format_to_currency(room.prix)}}</span> / per night
+                                    <span>{{ format_to_currency(house.prix)}}</span> / per night
                                 </h5>
                                 <div class="start-wrap">
                                     <div class="rating-start" title="Rated 5 out of 5">
@@ -291,7 +291,6 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-12">
-
                                             <div class="form-group">
                                                 <label> Checkin date </label>
                                                 <input id="date_picker_arrivee" type="date" name="date_arrivee"  placeholder="Checkin Date" value="{{ date_arrive }}" disabled/>
@@ -311,7 +310,7 @@
 
                                                 <span id="total_value" style="font-weight:bold; margin-left: 10px"
                                                       data-arrive="{{ date_arrive }}" data-depart="{{ date_depart }}"
-                                                      data-prix="{{ room.prix }}"> </span>
+                                                      data-prix="{{ house.prix }}"> </span>
                                             </div>
 
 
@@ -321,7 +320,7 @@
 
                                         <div class="col-sm-12">
                                             <div class="form-group submit-btn">
-                                                <input type="button" onclick="redirect_to_checkout({{ user.id }},{{ room.id }},)" name="submit"  value="Boook Now">
+                                                <input type="button" onclick="redirect_to_checkout({{ user.id }},{{ house.id }},)" name="submit"  value="Boook Now">
                                             </div>
                                         </div>
                                     </div>
@@ -382,16 +381,6 @@
     </main>
 
     <script>
-        $(document).ready(function () {
-            $("#date_picker_arrivee").datepicker({
-                minDate: 0
-            });
-        });
-        $(document).ready(function () {
-            $("#date_picker_depart").datepicker({
-                minDate: 0
-            });
-        });
         total_html=document.getElementById("total_value");
         days_html=document.getElementById("days");
         date_arrive_string=total_html.dataset.arrive;
@@ -412,8 +401,8 @@
         days_html.innerText=days+" days"
         console.log('date_arrive '+currency_total);
 
-        function redirect_to_checkout(id_user,id_room){
-            window.location.href = "http://127.0.0.1:8000/transaction/hotel/"+id_room+"/"+id_user+"/"+total+"/"+date_arrive_string+"/"+date_depart_string;
+        function redirect_to_checkout(id_user,id_house){
+            window.location.href = "http://127.0.0.1:8000/transaction/house/"+id_house+"/"+id_user+"/"+total+"/"+date_arrive_string+"/"+date_depart_string;
         }
 
 

@@ -2,13 +2,22 @@
 {% extends "base.html.twig" %}
 
 {% block header %}
-     {% include "partials/navbar1.html.twig" %}
- {% endblock %}
+    {% include "partials/navbar1.html.twig" %}
+{% endblock %}
 
 {% block body %}
+<main id="content" class="site-main">
+    <section id="search_form" class="inner-banner-wrap">
+        <div class="inner-baner-container" style="background-image: url('../../public/assets/images/inner-banner.jpg');">
+            <div class="container">
+                <div class="inner-banner-content">
+                    <h1 class="inner-title">My reservations</h1>
+                </div>
+            </div>
+        </div>
+        <div class="inner-shape"></div>
+    </section>
     <div class="container">
-
-
         <div class="db-info-wrap db-booking">
             <div class="dashboard-box table-opp-color-box" style="margin-bottom: 10em">
                 <h2>Recent Booking</h2>
@@ -76,7 +85,7 @@
                                 {% endif %}
                             </td>
                         </tr>
-                            <div class="modal" id="myModal" tabindex="-1" role="dialog">
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -140,7 +149,7 @@
                                                     </div>
                                                     <div class="row" style=" display:flex;align-items: center; margin: .2em 0 ">
                                                         <h6 style="font-weight: bold">Night Price : </h6>
-                                                        <h6 style="margin-left: 5px">{{ format_to_currency(reservation.idChambre.prix|default("")) }}</h6>
+                                                        <h6 style="margin-left: 5px">{{ format_to_currency(reservation.idChambre.prix|default(0)) }}</h6>
                                                     </div>
                                                 </div>
                                             </div>

@@ -11,7 +11,7 @@
             <div class="inner-baner-container" style="background-image: url('../../public/assets/images/inner-banner.jpg');">
                 <div class="container">
                     <div class="inner-banner-content">
-                        <h1 class="inner-title">Hotels</h1>
+                        <h1 class="inner-title">Events</h1>
                     </div>
                 </div>
             </div>
@@ -56,16 +56,8 @@
                     <div class="input-group width-col-3">
                         <label id="checkin"> Checkin Date* </label>
                         <i class="far fa-calendar"></i>
-                        <input id="date_picker_arrivee"  type="text" name="s" placeholder="MM / DD / YY" autocomplete="off" readonly="readonly" onchange="changeMinDate()">
+                        <input id="date_picker_arrivee"  type="text" name="s" placeholder="MM / DD / YY" autocomplete="off" readonly="readonly">
                         <div class="invalid-feedback" id='required_date_arrivee'>
-                            Please select a valid state.
-                        </div>
-                    </div>
-                    <div class="input-group width-col-3">
-                        <label id="checkout"> Checkout Date* </label>
-                        <i class="far fa-calendar"></i>
-                        <input id="date_picker_depart" type="text" name="s" placeholder="MM / DD / YY" autocomplete="off" readonly="readonly" required>
-                        <div class="invalid-feedback">
                             Please select a valid state.
                         </div>
                     </div>
@@ -76,70 +68,98 @@
                 </div>
             </div>
         </div>
-
-        <section class="destination-section">
+        <section class="destination-section ">
             <div class="container">
                 <div class="section-heading text-center">
                     <div class="row">
                         <div class="col-lg-8 offset-lg-2">
-                            <h5>Hotels</h5>
-                            <h2>TOP NOTCH HOTELS</h2>
+                            <h5>events</h5>
+                            <h2>Best events To  Participate</h2>
                             <div class="title-icon-divider"><i class="fas fa-suitcase-rolling"></i></div>
                         </div>
                     </div>
                 </div>
-                <div class="destination-inner destination-four-column">
-                    <div class="row">
-                        {% for hotel in hotels %}
-                            <div class="col-lg-3 col-sm-6">
-                                <div class="desti-item text-center">
-                                    <figure class="desti-image">
+                <div class="package-section">
+                    <div class="container">
+                        <div class="package-inner">
+                            <div class="row">
 
-                                        <img src="{{ asset('assets/images/hyatt.jpg') }}" alt="">
-                                        <div class="rating-start" title="Rated 5 out of 4">
-                                            <span style="width: 53%"></span>
-                                        </div>
-                                    </figure>
-                                    <div class="desti-content">
-                                        <h3>
-                                            <a href="#">{{ hotel.libelle }}</a>
-                                        </h3>
-                                        {% if date_arrive=="" %}
-                                            <div class="meta-cat">
-                                                <a  class="sabri" onclick="fill_form()">CHECK ROOMS</a>
+                                {% for event in events %}
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="package-wrap">
+                                            <figure class="feature-image">
+                                                <a href="#">
+                                                    <img src="{{asset('assets/images/car.jpg')}}" alt="">
+                                                </a>
+                                            </figure>
+                                            <div class="package-price">
+                                                <h6>
+                                                    <span>{{ event.date|date("m/d/Y")}} </span>
+                                                </h6>
                                             </div>
-                                        {% else %}
-                                                <div class="meta-cat">
-                                                    <a href="{{ path('app_rooms_available',{'id_hotel':hotel.id,'date_debut':date_arrive,'date_fin':date_depart}) }}">CHECK ROOMS</a>
+
+                                            <div class="package-content-wrap">
+                                                <div class="package-meta text-center">
+                                                    <ul>
+                                                        <li>
+                                                            <i class="far fa-clock"></i>
+                                                            {{ event.duree }} h
+                                                        </li>
+                                                        <li>
+                                                            <i class="fas fa-user-friends"></i>
+                                                            Ticket: {{ event.disponibiliter }}
+                                                        </li>
+                                                        <li>
+                                                            <i class="fas fa-map-marker-alt"></i>
+                                                            {{ event.emplacement}}
+                                                        </li>
+                                                    </ul>
                                                 </div>
-                                        {% endif %}
+                                                <div class="package-content">
+                                                    <h3>
+                                                        <a href="#">{{ event.libelle }} </a>
+                                                    </h3>
+                                                    <div class="review-area">
+                                                        <span class="review-text">(25 reviews)</span>
+                                                        <div class="rating-start" title="Rated 5 out of 5">
+                                                            <span style="width: 60%"></span>
+                                                        </div>
+                                                    </div>
+                                                    <p>{{ event.description }}</p>
 
+                                                        {% if event.disponibiliter==0 %}
+                                                            <a  class="button-text width-6" style="color: darkred; text-align: center;display: flex;justify-content: center;"> Indisponible</a>
+                                                            {% else %}
+                                                            <div class="btn-wrap">
+                                                                {% if date_arrive=="" %}
+                                                                    <a  onclick="fill_form()" class="button-text width-6"> Book Now <i class="fas fa-arrow-right"></i></a>
+                                                                {% else %}
+                                                                    <a href={{ path('app_event_details',{'id_event':event.id,'id_user':36,'date_arrive':date_arrive}) }} class="button-text-width-6"> Book Now <i class="fas fa-arrow-right"></i></a>
+                                                                {% endif %}
+                                                            </div>
+                                                        {% endif %}
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                {% endfor %}
                             </div>
-                        {% endfor %}
-
-
-                    </div>
-                    <div class="btn-wrap text-center">
-                        <a href="#" class="button-primary">MORE HOTELS</a>
+                        </div>
                     </div>
                 </div>
+                <div class="btn-wrap text-center">
+                    <a href="#" class="button-primary">MORE eventS</a>
+                </div>
+            </div>
             </div>
         </section>
 
         <!-- subscribe html end -->
     </main>
-
-
     <script>
         $(document).ready(function () {
             $("#date_picker_arrivee").datepicker({
-                minDate: 0
-            });
-        });
-        $(document).ready(function () {
-            $("#date_picker_depart").datepicker({
                 minDate: 0
             });
         });
@@ -147,33 +167,15 @@
         function get_arrive_date(){
             return document.getElementById("date_picker_arrivee").value;
         }
-        function get_arrive_depart(){
-            return document.getElementById("date_picker_depart").value;
-        }
-        function changeMinDate(){
-            min_date=get_arrive_date();
-            $('#date_picker_depart').datepicker('destroy');
-            $("#date_picker_depart").datepicker({
-                minDate: new Date(min_date)
-            });
-            document.getElementById("date_picker_depart").value=null;
-        }
 
         function check_form_valid(){
             check=true;
             date_debut=document.getElementById("date_picker_arrivee").value;
-            date_fin=document.getElementById("date_picker_depart").value;
             if(date_debut==''){
                 check=false;
                 date_debut=document.getElementById("checkin").innerHTML=" Checkin Date*<strong style='color: red;font-size: 10px !important;'> (Required)</strong>";
             }else{
                 date_debut=document.getElementById("checkin").innerHTML="Checkin Date*";
-            }
-            if(date_fin==''){
-                check=false;
-                date_depart=document.getElementById("checkout").innerHTML=" Checkout Date*<strong style='color: red;font-size: 10px !important;'> (Required)</strong>";
-            }else{
-                date_debut=document.getElementById("checkout").innerHTML="Checkout Date*";
             }
             return check;
         }
@@ -181,11 +183,10 @@
             check=check_form_valid();
             if(check){
                 date_debut=formatDate(document.getElementById("date_picker_arrivee").value);
-                date_fin=formatDate(document.getElementById("date_picker_depart").value);
                 region=document.getElementById("destination").value;
                 if(region=="")
                     region="null";
-                window.location.href = "http://127.0.0.1:8000/hotels/available/"+date_debut+"/"+date_fin+"/"+region;
+                window.location.href = "http://127.0.0.1:8000/events/available/"+date_debut+"/"+region;
             }
         }
         function formatDate(date) {
@@ -212,10 +213,6 @@
 
 
 {% endblock  %}
-
-
-
-
 
 
 
