@@ -160,12 +160,16 @@ class AdminController extends AbstractController
      * @return Response
      * @Route("/desactiver/{id}",name="desactiverUser")
      */
-    public function activerUser(UtilisateurRepository $repository,$id, EntityManagerInterface $entityManager)
+    public function desactiverUser(UtilisateurRepository $repository,$id, EntityManagerInterface $entityManager)
     {
         $user= $repository->find($id);
+
         $user->setEtat("desactiver");
-        $entityManager->persist($user);
-        $entityManager->flush();
+
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
         $webhook =new Webhook((array)'https://discord.com/api/webhooks/962166291127472158/0L-7NJz5tjIAO3_4D1osVu6jHoksEOoRovZro08XbYk8_fDvNJRXE3rq8g5d2RyKbykX');
         $embed = new \DiscordWebhook\Embed();
         $embed
@@ -175,6 +179,8 @@ class AdminController extends AbstractController
             ->setMessage('un utilisateur a ete banner!')
             ->addEmbed($embed)
             ->send();
+
+
         return $this->redirectToRoute('afficheall');
     }
 
@@ -185,12 +191,12 @@ class AdminController extends AbstractController
      * @return RedirectResponse
      * @Route("/activer/{id}",name="activerUser")
      */
-    public function desactiverUser(UtilisateurRepository $repository,$id, EntityManagerInterface $entityManager)
+    public function activerUser(UtilisateurRepository $repository,$id, EntityManagerInterface $entityManager)
     {
         $user= $repository->find($id);
         $user->setEtat("activer");
-        $entityManager->persist($user);
-        $entityManager->flush();
+      $repository->add($user);
+
         $webhook =new Webhook((array)'https://discord.com/api/webhooks/962166291127472158/0L-7NJz5tjIAO3_4D1osVu6jHoksEOoRovZro08XbYk8_fDvNJRXE3rq8g5d2RyKbykX');
         $embed = new \DiscordWebhook\Embed();
         $embed
@@ -200,6 +206,7 @@ class AdminController extends AbstractController
             ->setMessage('un utlisateur est activer')
             ->addEmbed($embed)
             ->send();
+
         return $this->redirectToRoute('afficheall');
     }
 
@@ -218,8 +225,6 @@ class AdminController extends AbstractController
             [['users', 'etat'],
                 ['users activer',      $user_activer],
                 ['users descativer',      $user_desactiver],
-
-
             ]
         );
         $pieChart->getOptions()->setHeight(300);
@@ -230,7 +235,6 @@ class AdminController extends AbstractController
         $pieChart->getOptions()->getTitleTextStyle()->setItalic(true);
         $pieChart->getOptions()->getTitleTextStyle()->setFontName('Arial');
         $pieChart->getOptions()->getTitleTextStyle()->setFontSize(20);
-
         $users = $this->getDoctrine()
             ->getRepository(Utilisateur::class)
             ->findAll();
@@ -252,34 +256,17 @@ class AdminController extends AbstractController
         {
             $message=$form->get('message')->getData();
             $subject=$form->get('subject')->getData();
-
-
-
-            // if every think is ok we send the mail
-            $data="this is a test variable";
             $email = (new Email())
                 ->from('chaker.ayachi@esprit.com')
                 ->to((string)$email_use)
-                //->cc('cc@example.com')
-                //->bcc('bcc@example.com')
-                //->replyTo('fabien@example.com')
-                //->priority(Email::PRIORITY_HIGH)
                 ->subject((string)$subject)
                 ->text('Sending emails is fun again!')
                 ->html("<p>$message</p>");
-
             $mailer->send($email);
             $this->addFlash('success', 'votre email a ete bien envoyer');
-
             return $this->redirectToRoute('afficheall');
-
         }
-
-
-
         return $this->render('admin/sendMail.html.twig', ['form' => $form->createView(),'user_email'=>$email_use]);
-
-        // ...
     }
 
 
