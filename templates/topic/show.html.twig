@@ -13,7 +13,7 @@
                                <i class="fa fa-user" aria-hidden="true">  {{ topic.iduser.login }}</i>
                            </span>
                         <span class="posted-on">
-                             <i class="fa fa-calendar" aria-hidden="true">  {{ topic.date ? topic.date|date('Y-m-d') : '' }}</i>
+                             <i class="fa fa-calendar" aria-hidden="true">  {{ topic.date|ago }}</i>
                            </span>
                         {% if(topic.nbsujet>1) %}
                             <span class="comments-link">
@@ -90,7 +90,7 @@
 
                                           </span>
                                             <span class="posted-on">
-                                                <i class="fa fa-calendar" aria-hidden="true">  {{ sujet.date ? sujet.date|date('Y-m-d') : '' }}</i>
+                                                <i class="fa fa-calendar" aria-hidden="true">  {{ sujet.date|ago}}</i>
                                           </span>
                                             {% if(sujet.nbcom>1) %}
                                                 <span class="comments-link">
@@ -166,7 +166,7 @@
 
                                           </span>
                                                 <span class="posted-on">
-                                                <i class="fa fa-calendar" aria-hidden="true">  {{ sujet.date ? sujet.date|date('Y-m-d') : '' }}</i>
+                                                <i class="fa fa-calendar" aria-hidden="true">  {{ sujet.date|ago}}</i>
                                              </span>
                                                 {% if(sujet.nbcom>1) %}
                                                     <span class="comments-link">

@@ -50,7 +50,7 @@ class SujetRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.idtopic = :val')
-            ->setParameter('val', $value)
+            ->setParameter('val', $value)->orderBy('s.date','desc')
             ->getQuery()
             ->getResult()
         ;

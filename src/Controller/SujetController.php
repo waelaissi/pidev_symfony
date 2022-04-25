@@ -53,7 +53,6 @@ class SujetController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $topic->setNbsujet($topic->getNbsujet()+1);
             $sujetRepository->add($sujet);
 
 
@@ -137,6 +136,8 @@ class SujetController extends AbstractController
     public function acceptersujet(Request $request, Sujet $sujet, SujetRepository $sujetRepository,Topic $topic): Response
     {
         if($topic->getAccepter()==1 &&$sujet->getAccepter()==0)
+            $topic->setNbsujet($topic->getNbsujet()+1);
+
         $sujet->setAccepter(1);
         $this->getDoctrine()->getManager()->flush();
 

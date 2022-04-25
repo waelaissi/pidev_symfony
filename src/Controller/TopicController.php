@@ -8,10 +8,12 @@ use App\Form\TopicType;
 use App\Repository\SujetRepository;
 use App\Repository\TopicRepository;
 use App\Repository\UtilisateurRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/topic")
@@ -21,10 +23,16 @@ class TopicController extends AbstractController
     /**
      * @Route("/", name="app_topic_index", methods={"GET"})
      */
-    public function index(TopicRepository $topicRepository): Response
+    public function index(TopicRepository $topicRepository,PaginatorInterface $paginator,Request $request): Response
     {
+        $topoics=$topicRepository->findAll();
+        $topoicss = $paginator->paginate(
+            $topoics,
+            $request->query->getInt('page', 1),
+            3
+        );
         return $this->render('topic/index.html.twig', [
-            'topics' => $topicRepository->findAll(),'topicssort'=>$topicRepository->findby([],['nbsujet' => 'desc'])
+            'topics' => $topoicss,'topicssort'=>$topicRepository->findby([],['nbsujet' => 'desc'])
         ]);
     }
 
@@ -123,7 +131,7 @@ class TopicController extends AbstractController
     public function indexadmin(TopicRepository $topicRepository): Response
     {
         return $this->render('topic/indexb.html.twig', [
-            'topics' => $topicRepository->findAll(),
+            'topics' => $topicRepository->findby([],['date'=>'desc']),
         ]);
     }
 
@@ -134,9 +142,7 @@ class TopicController extends AbstractController
     {
         $idtopic->setAccepter(1);
         $this->getDoctrine()->getManager()->flush();
-        return $this->render('topic/indexb.html.twig', [
-            'topics' => $topicRepository->findAll(),
-        ]);
+        return $this->redirectToRoute('app_topic_indexadmin', [], Response::HTTP_SEE_OTHER);
     }
     /**
      * @Route("/admin/hide/{idtopic}", name="app_topic_hide", methods={"GET"})
@@ -148,10 +154,35 @@ class TopicController extends AbstractController
         else{
             $idtopic->setHide(0);
         }
-        $this->getDoctrine()->getManager()->flush();
-        return $this->render('topic/indexb.html.twig', [
-            'topics' => $topicRepository->findAll(),
-        ]);
+        $this->getDoctrine()->getManager()->flush();   return $this->redirectToRoute('app_topic_indexadmin', [], Response::HTTP_SEE_OTHER);
     }
 
+    /**
+     * @Route("/user/{iduser}", name="app_topic_user", methods={"GET"})
+     */
+    public function topicbyuser(Request $request,PaginatorInterface $paginator,TopicRepository $topicRepository,int $iduser): Response
+    {
+        $topoics=$topicRepository->findBy(['iduser'=>$iduser]);
+        $topoicss = $paginator->paginate(
+            $topoics,
+            $request->query->getInt('page', 1),
+            3
+        );
+        return $this->render('topic/index.html.twig', [
+            'topics' => $topoicss,'topicssort'=>$topicRepository->findby([],['nbsujet' => 'desc'])
+        ]);
+
+    }
+    /**
+     * @Route("/searchtopic ", name="searchStudentx",methods={"GET"})
+     */
+    public function searchtopic(Request $request,NormalizerInterface $Normalizer)
+{
+$repository = $this->getDoctrine()->getRepository(Topic::class);
+$requestString=$request->get('searchValue');
+$topics = $repository->findtopicByNsc($requestString);
+$jsonContent = $Normalizer->normalize($topics, 'json',['groups'=>'topics']);
+$retour=json_encode($jsonContent);
+return new Response($retour);
+}
 }

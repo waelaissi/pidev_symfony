@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use Symfony\Component\Mime\Email;
 
 use App\Entity\Commentaire;
 use App\Entity\Dislikee;
@@ -16,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mailer\MailerInterface;
 
 /**
  * @Route("/commentaire")
@@ -39,7 +41,7 @@ class CommentaireController extends AbstractController
     /**
      * @Route("/{idtopic}/{idsujet}/new", name="app_commentaire_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager,Topic $idtopic,Sujet $idsujet): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,Topic $idtopic,Sujet $idsujet,MailerInterface $mailer): Response
     {
 
         $commentaire = new Commentaire();
@@ -57,6 +59,13 @@ class CommentaireController extends AbstractController
             $commentaire1 = new Commentaire();
             $formc = $this->createForm(CommentaireType::class, $commentaire1);
             $commentaires=$this->getDoctrine()->getRepository(Commentaire::class)->findByidsujet($idsujet->getIdsujet());
+
+            $email = (new Email())
+                ->from('firas.chkoundali@esprit.tn')
+                ->to($commentaire->getIduser()->getEmail())
+                ->subject('Mail de Notification!')
+                ->text("quelqu'un a fait un commentaire dans votre sujet ");
+            $mailer->send($email);
             return $this->render('commentaire/new.html.twig', [
                 'sujet' => $idsujet,'topic'=>$idtopic,'commentaires'=>$commentaires,  'commentaire' => $commentaire,
                 'formcom' => $formc->createView(),
@@ -153,6 +162,7 @@ class CommentaireController extends AbstractController
     else
     {
         dump($likeee);
+        $this->addFlash("error", "vous avez deja lkee ce commentaire");
     }
         return $this->redirectToRoute('app_commentaire_new', [ 'idsujet' => $idsujet->getIdsujet(),'idtopic'=>$idtopic->getIdtopic()], Response::HTTP_SEE_OTHER);
 
@@ -184,9 +194,11 @@ class CommentaireController extends AbstractController
         else
         {
             dump($dislikeee);
+            $this->addFlash("error", "vous avez deja dislkee ce commentaire");
         }
         return $this->redirectToRoute('app_commentaire_new', [ 'idsujet' => $idsujet->getIdsujet(),'idtopic'=>$idtopic->getIdtopic()], Response::HTTP_SEE_OTHER);
 
 
     }
+
 }

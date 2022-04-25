@@ -15,7 +15,7 @@
                                <i class="fa fa-user" aria-hidden="true">  {{ sujet.iduser.login }}</i>
                            </span>
                         <span class="posted-on">
-                             <i class="fa fa-calendar" aria-hidden="true">  {{ sujet.date ? sujet.date|date('Y-m-d') : '' }}</i>
+                             <i class="fa fa-calendar" aria-hidden="true">  {{ sujet.date|ago}}</i>
                            </span>
                         {% if( sujet.nbcom>1) %}
                             <span class="comments-link">
@@ -76,6 +76,11 @@
                             <div class="comment-area-inner">
                                 {% for commentaire in commentaires %}
                                     <ol>
+                                        {% for flash_message in app.session.flashBag.get('error') %}
+                                            <div class="alert alert-danger">
+                                                {{ flash_message }}
+                                            </div>
+                                        {% endfor %}
                                         <li>
                                             <figure class="comment-thumb">
                                                 <img src="{{ asset('assets/images/img20.jpg') }}" alt="">
@@ -84,7 +89,7 @@
                                                 <div class="comment-header">
                                                 <span>
                                                 <h5 class="author-name">  <i class="fa fa-user" aria-hidden="true">  {{ commentaire.iduser.login }}</i></h5>
-                                                </span> <span class="post-on">  <i class="fa fa-calendar" aria-hidden="true">  {{ commentaire.date ? commentaire.date|date('Y-m-d') : '' }}</i></span>
+                                                </span> <span class="post-on">  <i class="fa fa-calendar" aria-hidden="true">  {{ commentaire.date|ago }}</i></span>
                                                     {% if(commentaire.iduser.id==33) %}
                                                     <span class="posted-on">
 

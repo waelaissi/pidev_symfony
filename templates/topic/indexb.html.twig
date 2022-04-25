@@ -7,8 +7,8 @@
     <div class="product-outer-wrap">
 
     <h1>Liste de Topics</h1>
-
-    <table class="table">
+        <input id="myInput" type="text" class="form-control" placeholder="Search..">
+    <table class="table" >
         <thead>
         <tr>
 
@@ -24,7 +24,7 @@
 
         </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable">
         {% for topic in topics %}
             <tr>
 
@@ -66,4 +66,18 @@
     </table>
     </div>
 </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
 {% endblock %}

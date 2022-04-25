@@ -73,4 +73,13 @@ class TopicRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findtopicByNsc($nsc){
+        return $this->createQueryBuilder('t')
+            ->where('t.titretopic LIKE :nsc')
+            ->setParameter('nsc', '%'.$nsc.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
 }
