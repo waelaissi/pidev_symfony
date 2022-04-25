@@ -80,9 +80,11 @@
                               {% endif %}
                             <td>
                                 <span class="badge badge-info cursor" onclick="myFunctionDetail('{{ reservation.type }}')"><i class="far fa-list-alt"> details</i></span>
-                                {% if date_difference(date() | date("m/d/Y"),reservation.getDateDebut() | date("m/d/Y"))<0 and reservation.etat!="annulée" %}
+                                {% if date_difference(reservation.getDateDebut() | date("Y/m/d"))<-3 and reservation.etat!="annulée" and reservation.type!="evenement" %}
                                     <span class="badge badge-warning cursor" id="cancel_button" onclick="myFunction()"><i class="far fa-trash-alt"> annuler</i></span>
                                 {% endif %}
+                                <span class="badge badge-dark cursor" id="print_button" data-user="{{ reservation.idUser.id }}" data-type="{{ reservation.type }}"
+                                      data-id="{{ reservation.id }}"  formtarget="_blank" target="_blank"  onclick="print_receipt('{{ reservation.type }}','{{ reservation.id }}','{{ reservation.idUser.id }}')"><i class="far fa-print-alt"> Imprimer</i></span>
                             </td>
                         </tr>
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
@@ -497,6 +499,9 @@
             const queryString = window.location.pathname;
             const type=queryString.split("/")[3];
             window.location.href="http://127.0.0.1:8000/reservation/cancel/"+id+"/"+type+"/"+id_user;
+        }
+        function print_receipt(type,id_type,id_user){
+            window.location.href = "http://127.0.0.1:8000/print/receipt/"+type+"/"+id_type+"/"+id_user;
         }
     </script>
 

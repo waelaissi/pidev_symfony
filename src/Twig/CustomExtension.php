@@ -12,13 +12,19 @@ class CustomExtension extends AbstractExtension
         {
             return [
                 new TwigFunction('date_difference', [$this, 'date_difference']),
+                new TwigFunction('date_difference_two', [$this, 'date_difference_two']),
                 new TwigFunction('format_to_currency', [$this, 'format_to_currency']),
 
             ];
         }
     //diffrence of days
-    public function date_difference(String $date,String $date1):int{
-        return strtotime($date)- strtotime($date1);
+    public function date_difference_two(String $date,String $date1):int{
+        return round((strtotime($date)- strtotime($date1)) / (60 * 60 * 24));
+    }
+    //diffrence of days
+    public function date_difference(String $date1):int{
+        $date = date("Y/m/d");
+        return round((strtotime($date)- strtotime($date1)) / (60 * 60 * 24));
     }
     //format to a currency
      public  function format_to_currency(float $number){

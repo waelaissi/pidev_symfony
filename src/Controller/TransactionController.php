@@ -12,6 +12,7 @@ use App\Repository\TicketRepository;
 use App\Repository\TransactionRepository;
 use App\Repository\UtilisateurRepository;
 use App\Repository\VoitureRepository;
+use App\Service\Mail;
 use Doctrine\ORM\EntityManagerInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use phpDocumentor\Reflection\Types\Boolean;
@@ -20,6 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -107,6 +109,33 @@ class TransactionController extends AbstractController
         $user=$utilisateurRepository->find($id_user);
         $transaction=$transactionRepository->find($id_transaction);
         return new Response($this->create_stripe_payment($transaction,$user));
+    }
+
+    /**
+     * @Route("/refund/customer/{type}/{id_user}/{id_transaction}/{action}", name="app_stripe_refund")
+     */
+    public function refund_customer_stripe($type,$id_user,$id_transaction,$action,UtilisateurRepository $utilisateurRepository
+        ,TransactionRepository $transactionRepository,FlashyNotifier $flashy,MailerInterface $mailer,Mail $mail): Response
+    {
+        $user=$utilisateurRepository->find($id_user);
+        $transaction=$transactionRepository->find($id_transaction);
+        $result=$this->refund_customer($transaction->getPaymentintentId());
+        $mail->send_email($user->getEmail(),$mail->refund_mail_subject($type),
+            $mail->refund_mail_content($type,""),$mailer);
+        $flashy->warning('Reservation cancled successfully!');
+        if($action=='admin'){
+            switch ($type) {
+                case "hotel":
+                    return $this->redirectToRoute('app_admin_reservations_hotels');
+                case "house":
+                    return $this->redirectToRoute('app_admin_reservations_houses');
+                case "car":
+                    return $this->redirectToRoute('app_admin_reservations_cars');
+                case "event":
+                    return $this->redirectToRoute('app_admin_reservations_events');
+            }
+        }
+        return $this->redirectToRoute('app_reservation_get_client',['type'=>$type,'id_user'=>$id_user]);
     }
 
 
@@ -225,14 +254,15 @@ class TransactionController extends AbstractController
 
     //----Refund customer----//
 
-    public function refund_customer(String $paymentIntent_id,$stripe){
+    public function refund_customer(String $paymentIntent_id){
+        $stripe = new \Stripe\StripeClient(
+            'sk_test_51KW6yrADzWkQoAVyoXU2QxKdXriWn9eO6XH8SCttqQlpC7ZVzsd3DQ5zwq9LYr5wOgEJYQJ6KIZmLQXLCmBz6pqG00xeuLIrsT'
+        );
         $refund=$stripe->refunds->create([
             'payment_intent' => $paymentIntent_id,
         ]);
         return $refund;
     }
-
-
 
 
     //Functions

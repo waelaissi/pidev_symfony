@@ -20,6 +20,7 @@ use App\Repository\HotelRepository;
  */
 class ReservationRepository extends ServiceEntityRepository
 {
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Reservation::class);
@@ -291,7 +292,7 @@ class ReservationRepository extends ServiceEntityRepository
             case "hotel":
                 $total_booked=$this
                     ->createQueryBuilder('r')
-                    ->select('COUNT(r.idChambre) as nbr_reservation_hotels')
+                    ->select('COUNT(r.idChambre)')
                     ->where('r.type =:type')
                     ->setParameter('type','hotel')
                     ->getQuery()
@@ -300,7 +301,7 @@ class ReservationRepository extends ServiceEntityRepository
             case "house":
                 $total_booked=$this
                     ->createQueryBuilder('r')
-                    ->select('COUNT(r.idMaison) as nbr_reservation_houses')
+                    ->select('COUNT(r.idMaison) ')
                     ->where('r.type =:type')
                     ->setParameter('type','maison')
                     ->getQuery()
@@ -309,7 +310,7 @@ class ReservationRepository extends ServiceEntityRepository
             case "car":
                 $total_booked=$this
                     ->createQueryBuilder('r')
-                    ->select('COUNT(r.idVoiture) as nbr_reservation_cars')
+                    ->select('COUNT(r.idVoiture) ')
                     ->where('r.type =:type')
                     ->setParameter('type','voiture')
                     ->getQuery()
@@ -318,7 +319,7 @@ class ReservationRepository extends ServiceEntityRepository
             case "event":
                 $total_booked=$this
                     ->createQueryBuilder('r')
-                    ->select('COUNT(r.idEvenement) as nbr_reservation_events')
+                    ->select('COUNT(r.idTicket)')
                     ->where('r.type =:type')
                     ->setParameter('type','evenement')
                     ->getQuery()
@@ -326,6 +327,69 @@ class ReservationRepository extends ServiceEntityRepository
                 break;
             default :
                break;
+        }
+        return $total_booked;
+    }
+    public function findTodayBooked($type)
+    {
+        $em=$this->getEntityManager();
+        $date = new \DateTime();
+        $total_booked="";
+        switch ($type) {
+            case "hotel":
+                $total_booked=$this
+                    ->createQueryBuilder('r')
+                    ->select('COUNT(r.idChambre)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->setParameter('dateMin' , $date->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date->format('Y-m-d 23:59:59'))
+                    ->setParameter('type','hotel')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "house":
+                $total_booked=$this
+                    ->createQueryBuilder('r')
+                    ->select('COUNT(r.idMaison)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->setParameter('dateMin' , $date->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date->format('Y-m-d 23:59:59'))
+                    ->setParameter('type','maison')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "car":
+                $total_booked=$this
+                    ->createQueryBuilder('r')
+                    ->select('COUNT(r.idVoiture)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->setParameter('dateMin' , $date->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date->format('Y-m-d 23:59:59'))
+                    ->setParameter('type','maison')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "event":
+                $total_booked=$this
+                    ->createQueryBuilder('r')
+                    ->select('COUNT(r.idTicket)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->setParameter('dateMin' , $date->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date->format('Y-m-d 23:59:59'))
+                    ->setParameter('type','maison')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            default :
+                break;
         }
         return $total_booked;
     }
@@ -338,7 +402,7 @@ class ReservationRepository extends ServiceEntityRepository
             case "hotel":
                 $earnings=$this
                     ->createQueryBuilder('r')
-                    ->select('SUM(tr.montantPayeAvance) as gains_reservation_hotels')
+                    ->select('SUM(tr.montantPayeAvance)')
                     ->join('r.idTransaction','tr')
                     ->where('r.type =:type')
                     ->andWhere('r.etat=:etat')
@@ -350,7 +414,7 @@ class ReservationRepository extends ServiceEntityRepository
             case "house":
                 $earnings=$this
                     ->createQueryBuilder('r')
-                    ->select('SUM(tr.montantPayeAvance) as gains_reservation_houses')
+                    ->select('SUM(tr.montantPayeAvance) ')
                     ->join('r.idTransaction','tr')
                     ->where('r.type =:type')
                     ->andWhere('r.etat=:etat')
@@ -362,7 +426,7 @@ class ReservationRepository extends ServiceEntityRepository
             case "car":
                 $earnings=$this
                     ->createQueryBuilder('r')
-                    ->select('SUM(tr.montantPayeAvance) as gains_reservation_cars')
+                    ->select('SUM(tr.montantPayeAvance)')
                     ->join('r.idTransaction','tr')
                     ->where('r.type =:type')
                     ->andWhere('r.etat=:etat')
@@ -374,7 +438,7 @@ class ReservationRepository extends ServiceEntityRepository
             case "event":
                 $earnings=$this
                     ->createQueryBuilder('r')
-                    ->select('SUM(tr.montantPayeAvance) as gains_reservation_events')
+                    ->select('SUM(tr.montantPayeAvance)')
                     ->join('r.idTransaction','tr')
                     ->where('r.type =:type')
                     ->andWhere('r.etat=:etat')
@@ -388,6 +452,290 @@ class ReservationRepository extends ServiceEntityRepository
         }
         return $earnings;
     }
+    public function findCancled($type)
+    {
+        $em=$this->getEntityManager();
+        $earnings="";
+        switch ($type) {
+            case "hotel":
+                $earnings=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance) ')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('type','hotel')
+                    ->setParameter('etat','annulée')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "house":
+                $earnings=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance) ')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('type','maison')
+                    ->setParameter('etat','annulée')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "car":
+                $earnings=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance) ')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('type','voiture')
+                    ->setParameter('etat','annulée')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "event":
+                $earnings=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance) ')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('type','evenement')
+                    ->setParameter('etat','annulée')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            default :
+                break;
+        }
+        return $earnings;
+    }
+
+
+    public function findGainsYearly($type,$year)
+    {
+        $em=$this->getEntityManager();
+
+        $date_min_string=$year."-01-01";
+        $date_min= new \DateTime($date_min_string);
+        $date_max_string=$year."-12-30";
+        $date_max= new \DateTime($date_max_string);
+        $total="";
+        switch ($type) {
+            case "hotel":
+                $total=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('dateMin' , $date_min->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date_max->format('Y-m-d 23:59:59'))
+                    ->setParameter('etat','confirmée')
+                    ->setParameter('type','hotel')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "house":
+                $total=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('dateMin' , $date_min->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date_max->format('Y-m-d 23:59:59'))
+                    ->setParameter('etat','confirmée')
+                    ->setParameter('type','maison')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "car":
+                $total=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('dateMin' , $date_min->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date_max->format('Y-m-d 23:59:59'))
+                    ->setParameter('etat','confirmée')
+                    ->setParameter('type','voiture')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "event":
+                $total=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('dateMin' , $date_min->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date_max->format('Y-m-d 23:59:59'))
+                    ->setParameter('etat','confirmée')
+                    ->setParameter('type','evenement')
+                    ->getQuery()
+                    ->getResult();
+                break;
+
+        }
+        return $total;
+    }
+    public function findGainsMonthly($type,$year,$month)
+    {
+        $em=$this->getEntityManager();
+
+        $date_min_string=$year."-".$month."-01";
+        $date_min= new \DateTime($date_min_string);
+        $date_max_string=$year."-".$month."-31";
+        $date_max= new \DateTime($date_max_string);
+        $total="";
+        switch ($type) {
+            case "hotel":
+                $total=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('dateMin' , $date_min->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date_max->format('Y-m-d 23:59:59'))
+                    ->setParameter('etat','confirmée')
+                    ->setParameter('type','hotel')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "house":
+                $total=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('dateMin' , $date_min->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date_max->format('Y-m-d 23:59:59'))
+                    ->setParameter('etat','confirmée')
+                    ->setParameter('type','maison')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "car":
+                $total=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('dateMin' , $date_min->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date_max->format('Y-m-d 23:59:59'))
+                    ->setParameter('etat','confirmée')
+                    ->setParameter('type','voiture')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "event":
+                $total=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('dateMin' , $date_min->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date_max->format('Y-m-d 23:59:59'))
+                    ->setParameter('etat','confirmée')
+                    ->setParameter('type','evenement')
+                    ->getQuery()
+                    ->getResult();
+                break;
+
+        }
+        return $total;
+    }
+    public function findLossYearly($type,$year)
+    {
+        $em=$this->getEntityManager();
+
+        $date_min_string=$year."-01-01";
+        $date_min= new \DateTime($date_min_string);
+        $date_max_string=$year."-12-30";
+        $date_max= new \DateTime($date_max_string);
+        $total="";
+        switch ($type) {
+            case "hotel":
+                $total=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('dateMin' , $date_min->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date_max->format('Y-m-d 23:59:59'))
+                    ->setParameter('etat','annulée')
+                    ->setParameter('type','hotel')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "house":
+                $total=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('dateMin' , $date_min->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date_max->format('Y-m-d 23:59:59'))
+                    ->setParameter('etat','annulée')
+                    ->setParameter('type','maison')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "car":
+                $total=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('dateMin' , $date_min->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date_max->format('Y-m-d 23:59:59'))
+                    ->setParameter('etat','annulée')
+                    ->setParameter('type','voiture')
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "event":
+                $total=$this
+                    ->createQueryBuilder('r')
+                    ->select('SUM(tr.montantPayeAvance)')
+                    ->join('r.idTransaction','tr')
+                    ->where('r.type =:type')
+                    ->andWhere('tr.createdAt BETWEEN :dateMin AND :dateMax')
+                    ->andWhere('r.etat=:etat')
+                    ->setParameter('dateMin' , $date_min->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateMax' , $date_max->format('Y-m-d 23:59:59'))
+                    ->setParameter('etat','annulée')
+                    ->setParameter('type','evenement')
+                    ->getQuery()
+                    ->getResult();
+                break;
+
+        }
+        return $total;
+    }
+
+
 
 
 

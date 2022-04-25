@@ -401,7 +401,11 @@
         prix_car=parseFloat(document.getElementById("total_value").dataset.prix);
         difference = date_depart.getTime() - date_arrive.getTime();
         days = Math.ceil(difference / (1000 * 3600 * 24));
-        total=prix_car*days;
+        if(days==0){
+            total=prix_car;
+        }else{
+            total=prix_car*days;
+        }
         let dollarUSLocale = Intl.NumberFormat('en-US');
         currency_total=new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(total);
         total_html.innerText=currency_total.toString();

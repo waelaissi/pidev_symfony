@@ -16,7 +16,7 @@
                     </div>
                     <div class="dashboard-stat-content">
                         <h4>Today Booked</h4>
-                        <h5>22,520</h5>
+                        <h5>{{ today_booked[0][1] }}</h5>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     </div>
                     <div class="dashboard-stat-content">
                         <h4>Earnings</h4>
-                        <h5>16,520</h5>
+                        <h5>{{ earnings[0][1] }}</h5>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="dashboard-stat-content">
                         <h4>Total Booked</h4>
-                        <h5>18,520</h5>
+                        <h5>{{ total_booked[0][1] }}</h5>
                     </div>
                 </div>
             </div>
@@ -51,8 +51,31 @@
                     </div>
                     <div class="dashboard-stat-content">
                         <h4>Cancled</h4>
-                        <h5>19,520</h5>
+                        <h5>{{ cancled[0][1] }}</h5>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- site traffic -->
+            <div class="col-lg-4">
+                <div class="dashboard-box chart-box">
+                    <h4>Annual Gains</h4>
+                    <canvas  id="myChartAnually" data-anually="{{ anually_stats|join(',') }}" style="width:100%;max-width:700px"></canvas>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="dashboard-box chart-box">
+                    <h4>Monthly Gains</h4>
+                    <canvas id="myChartMonthly" data-monthly="{{ (monthly_stats|join(',')) }}" style="width:100%;max-width:700px"></canvas>
+                </div>
+            </div>
+
+            <div class="col-lg-4 chart-box">
+                <div class="dashboard-box">
+                    <h4>This Year Comparison</h4>
+                    <canvas id="myChartComparison" data-comparison="{{ (comparison_annually|join(',')) }}" style="width:100%;max-width:700px"></canvas>
                 </div>
             </div>
         </div>
@@ -127,11 +150,12 @@
                             {% endif %}
                             <td>
                                 <span class="badge badge-info cursor"  onclick="myFunctionDetail()"><i class="far fa-list-alt"> details</i></span>
-                                {% if date_difference(date() | date("m/d/Y"),reservation.getDateDebut() | date("m/d/Y"))<0 and reservation.etat!="annulée" %}
+                                {% if date_difference(reservation.getDateDebut() | date("Y/m/d"))<-3 and reservation.etat!="annulée" and reservation.type!="evenement" %}
                                     <span class="badge badge-warning cursor" id="cancel_button" onclick="myFunction()"><i class="far fa-trash-alt"> annuler</i></span>
                                 {% endif %}
                                 <span class="badge badge-danger cursor" id="delete_button" onclick="myFunctionDelete()"><i class="far fa-trash-alt"> Supprimer</i></span>
-
+                                <span class="badge badge-dark cursor" id="print_button" data-user="{{ reservation.idUser.id }}" data-type="{{ reservation.type }}"
+                                      data-id="{{ reservation.id }}"  formtarget="_blank" target="_blank"  onclick="print_receipt('{{ reservation.type }}','{{ reservation.id }}','{{ reservation.idUser.id }}')"><i class="far fa-print-alt"> Imprimer</i></span>
                             </td>
                         </tr>
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog"  style="margin-top: 50px">
@@ -278,6 +302,157 @@
             </div>
         </div>
     </div>
+    <script>
+        var anually_stats_chart=document.getElementById("myChartAnually");
+        data_anually=anually_stats_chart.dataset.anually;
+        console.log("anually"+data_anually);
+        data=data_anually.toString().split(',');
+        new Date().getFullYear();
+
+        var xyValues = [
+        ];
+        data.forEach(function(value) {
+
+            sub_data=value.toString().split('.');
+            xyValues.push({x:sub_data[0], y:sub_data[1]})
+        });
+
+        new Chart("myChartAnually", {
+            type: "bar",
+            data: {
+                datasets: [{
+                    label: 'Revenus',
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(153, 102, 255)',
+                        'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1,
+                    //pointRadius: 4,
+                    //pointBackgroundColor: "rgb(0,0,255)",
+                    data: xyValues
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        var monthly_stats_chart=document.getElementById("myChartMonthly");
+        data_monthly=monthly_stats_chart.dataset.monthly;
+        console.log("monthly"+data_monthly);
+        data1=data_monthly.toString().split(',');
+        var xyValues1 = [
+        ];
+        data1.forEach(function(value) {
+            sub_data1=value.toString().split('.');
+            xyValues1.push({x:sub_data1[0], y:sub_data1[1]})
+        });
+        console.log("xy values monthly"+xyValues1)
+
+        new Chart("myChartMonthly", {
+            type: "line",
+            data: {
+                datasets: [{
+                    label: 'Revenus',
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(153, 102, 255)',
+                        'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1,
+                    //pointRadius: 4,
+                    //pointBackgroundColor: "rgb(0,0,255)",
+                    data: xyValues1
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        var comparison_stats_chart=document.getElementById("myChartComparison");
+        data_comparison=comparison_stats_chart.dataset.comparison;
+        console.log("data_comparison"+data_comparison);
+        data2=data_comparison.toString().split(',');
+        var xyValues2 = [
+        ];
+        data2.forEach(function(value) {
+            sub_data2=value.toString().split('.');
+            xyValues2.push({x:sub_data2[0], y:sub_data2[1]})
+        });
+
+        new Chart("myChartComparison", {
+            type: "bar",
+            data: {
+                datasets: [{
+                    label: 'Revenus',
+                    backgroundColor: [
+
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(153, 102, 255)',
+                        'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1,
+                    //pointRadius: 4,
+                    //pointBackgroundColor: "rgb(0,0,255)",
+                    data: xyValues2
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
 
 
     <script>
@@ -295,6 +470,9 @@
         }
         function delete_reservation(id){
             window.location.href="http://127.0.0.1:8000/reservation/delete/"+id+"/car";
+        }
+        function print_receipt(type,id_type,id_user){
+            window.location.href = "http://127.0.0.1:8000/print/receipt/"+type+"/"+id_type+"/"+id_user;
         }
     </script>
 
