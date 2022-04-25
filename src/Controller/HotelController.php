@@ -4,9 +4,13 @@ namespace App\Controller;
 
 use App\Data\SearchHotelData;
 use App\Entity\Hotel;
+use App\Entity\Likee;
 use App\Form\HotelType;
 use App\Form\SearchHotelForm;
+use App\Repository\ChambreRepository;
 use App\Repository\HotelRepository;
+use App\Repository\LikeeRepository;
+use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,15 +30,25 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 class HotelController extends AbstractController
 {
     /**
-     * @Route("/", name="app_hotel_index", methods={"GET"})
+     * @Route("/", name="app_hotel_client", methods={"GET"})
      */
-    public function index(HotelRepository $hotelRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(HotelRepository $hotelRepository, Request $request, ChambreRepository $chambreRepository): Response
     {
         $data = new SearchHotelData();
         $data->page = $request->get('page', 1);
         $form = $this->createForm(SearchHotelForm::class, $data);
         $form->handleRequest($request);
         $hotels = $hotelRepository->findSearch($data);
+        $i =0;
+        foreach ($hotels as $hotel){
+            $chambres = $chambreRepository->findByHotel($hotel->getId());
+            foreach ($chambres as $chambre){
+                if ($chambre->getDisponnibiliter() == 0){
+                    unset($hotels[$i]);
+                }
+            }
+            $i++;
+        }
         return $this->render('hotel/clientHotel.html.twig', [
             'hotels' =>  $hotels,
             'form' => $form->createView(),
@@ -171,7 +185,7 @@ class HotelController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $hotelRepository->add($hotel);
             $this->addFlash('info', 'Hotel modifier avec succées !');
-            return $this->redirectToRoute('app_hotel_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_hotel', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('hotel/edit.html.twig', [
@@ -198,8 +212,42 @@ class HotelController extends AbstractController
      */
     public function adminHotel(HotelRepository $hotelRepository): Response
     {
+
         return $this->render('hotel/adminHotel.html.twig', [
             'hotels' => $hotelRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/like/{id}", name="app_hotel_like", methods={"GET"})
+     */
+    public function like(Hotel $hotel, LikeeRepository $likeRepo, HotelRepository $hotelRepo, UtilisateurRepository $ur)
+    {
+        $like = new Likee();
+        $like->setHotel($hotel);
+        //$like->setIdUser($this->getUser());
+        $like->setIdUser($ur->find(32));
+        $likeRepo->add($like);
+        return $this->redirectToRoute('app_hotel_wish');
+    }
+
+    /**
+     * @Route("/wish/list", name="app_hotel_wish", methods={"GET"})
+     */
+    public function wishList(HotelRepository $hotelRepo)
+    {
+        $wishs = array();
+        $hotels = $hotelRepo->findAll();
+        foreach ($hotels as $hotel){
+            foreach ($hotel->getLikees() as $like){
+                if($like->getIdUser()->getId()== 32){
+                    array_push($wishs, $like->getHotel());
+                }
+            }
+        }
+
+        return $this->render('hotel/wishList.html.twig', [
+            'wishs' => $wishs,
         ]);
     }
 

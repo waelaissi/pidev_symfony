@@ -45,22 +45,20 @@ class ChambreRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Chambre[] Returns an array of Chambre objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Chambre[] Returns an array of Chambre objects
+      */
+
+    public function findByHotel(int $id)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('c.idHotel = :id')
+            ->setParameter('id', $id)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Chambre

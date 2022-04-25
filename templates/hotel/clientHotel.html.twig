@@ -4,13 +4,22 @@
 
 {% block body %}
     <div class="container">
-        <div class="package-inner">
-            <div class="row">
-                {% for hotel in hotels %}
-                    <div class="col-lg-4 col-md-6">
-                        {{ include('hotel/_hotel_card.html.twig') }}
+        <div class="row">
+            <div class="col-md-3 mt-3">
+                {%  include('hotel/_filter.html.twig') with {form: form} only%}
+            </div>
+            <div class="col-md-9">
+                <div class="container">
+                    <div class="package-inner">
+                        <div class="row">
+                            {% for hotel in hotels %}
+                                <div class="col-lg-4 col-md-6">
+                                    {{ include('hotel/_hotel_card.html.twig') }}
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
-                {% endfor %}
+                </div>
             </div>
         </div>
         <div class="mt-4">
@@ -19,7 +28,7 @@
     </div>
 
     {% block javascripts %}
-
+        {{ encore_entry_script_tags('app') | replace({'src=':'defer src='}) | raw }}
 
     {% endblock %}
 

@@ -1,14 +1,9 @@
 <div class="package-wrap">
     <figure class="feature-image">
         <a href="#">
-            <img src="{{ vich_uploader_asset(hotel) }}" alt="" height="365" width="305">
+            <img src="{{ vich_uploader_asset(hotel) }}" alt="" height="305" width="365">
         </a>
     </figure>
-    <div class="package-price">
-        <h6>
-            <span>$1,900 </span> / per person
-        </h6>
-    </div>
     <div class="package-content-wrap">
         <div class="package-meta text-center">
             <ul>
@@ -22,7 +17,7 @@
                 </li>
                 <li>
                     <i class="fas fa-map-marker-alt"></i>
-                    Malaysia
+                    {{ hotel.region }}
                 </li>
             </ul>
         </div>
@@ -39,7 +34,7 @@
             <p>{{ hotel.description }}.</p>
             <div class="btn-wrap">
                 <a href="{{ path('app_hotel_show', {'id': hotel.id}) }}" class="button-text width-6">Book Now<i class="fas fa-arrow-right"></i></a>
-                <a href="#" class="button-text width-6">Wish List<i class="far fa-heart"></i></a>
+                <a href="{{ path('app_hotel_like', {'id': hotel.id}) }}" class="button-text width-6">Like<i class="far fa-heart"></i></a>
             </div>
         </div>
     </div>

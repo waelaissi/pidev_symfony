@@ -62,8 +62,6 @@ class MaisonRepository extends ServiceEntityRepository
 
     public function findSearch(SearchData $search): PaginationInterface
     {
-
-
         $query = $this->getSearchQuery($search)->getQuery();
         return $this->paginator->paginate(
             $query,
@@ -90,7 +88,7 @@ class MaisonRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('m')
-            ->select('m');
+            ->select('m')
 
         ;
 

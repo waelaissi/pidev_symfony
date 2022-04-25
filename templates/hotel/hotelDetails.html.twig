@@ -96,6 +96,10 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <div  id="map" role="tabpanel" aria-labelledby="map-tab">
+                                    <div id="map_google"  data-lat="{{ hotel.lat }}" data-lng="{{ hotel.lon }}" style= "height: 400px;" >
+                                    </div>
+                                </div>
                                 <div class="tab-pane" id="review" role="tabpanel" aria-labelledby="review-tab">
                                     <div class="summary-review">
                                         <div class="review-score">
@@ -207,15 +211,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="map" role="tabpanel" aria-labelledby="map-tab">
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-tour-gallery">
-                            <h3>location</h3>
-                            <div id="map-area" data-lat="{{ hotel.lat }}" data-lng="{{ hotel.lon }}">
-
                             </div>
                         </div>
                     </div>
@@ -332,15 +327,14 @@
                 </div>
             </div>
         </div>
-    </div>
 
 
 
     {% block javascripts %}
         <script>
             function initMap(){
-                var m = document.getElementById("map-area");
-                var lt = (parseFloat(m.dataset.lat);
+                var m = document.getElementById("map_google");
+                var lt = parseFloat(m.dataset.lat);
                 var lg = parseFloat(m.dataset.lng);
                 console.log(typeof lt , typeof lg);
                 var options = {

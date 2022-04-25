@@ -56,6 +56,7 @@ class ChambreController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $chambreRepository->add($chambre);
+            $this->addFlash('success', 'Chambre ajouter avec succées !');
             return $this->redirectToRoute('app_chambre_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -88,6 +89,7 @@ class ChambreController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $chambreRepository->add($chambre);
+            $this->addFlash('success', 'Chambre modifié avec succées !');
             return $this->redirectToRoute('app_chambre_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -104,6 +106,7 @@ class ChambreController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$chambre->getId(), $request->request->get('_token'))) {
             $chambreRepository->remove($chambre);
+            $this->addFlash('success', 'Chambre supprimé avec succées !');
         }
 
         return $this->redirectToRoute('app_chambre_index', [], Response::HTTP_SEE_OTHER);

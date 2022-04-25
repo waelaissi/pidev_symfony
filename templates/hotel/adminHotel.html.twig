@@ -8,6 +8,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="dashboard-box table-opp-color-box">
+                    {% include "partials/_flush_messages.html.twig" %}
+
                     <h3>Liste d'hotels</h3>
                 <a href="{{ path('app_hotel_new') }}">Create new</a>
                     <div class="table-responsive">

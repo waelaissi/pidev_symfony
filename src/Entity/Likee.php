@@ -41,6 +41,13 @@ class Likee
      */
     private $idCommentaire;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Hotel::class, inversedBy="likees")
+     */
+    private $hotel;
+
+
+
     public function getIdLike(): ?int
     {
         return $this->idLike;
@@ -69,6 +76,20 @@ class Likee
 
         return $this;
     }
+
+    public function getHotel(): ?Hotel
+    {
+        return $this->hotel;
+    }
+
+    public function setHotel(?Hotel $hotel): self
+    {
+        $this->hotel = $hotel;
+
+        return $this;
+    }
+
+
 
 
 }

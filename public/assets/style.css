@@ -8513,3 +8513,28 @@ product checkout css
 }
 
 /*# sourceMappingURL=style.css.map */
+
+#map {
+  height: 400px;
+  width: 100%;
+}
+
+.alert
+{
+  padding: 5px;
+  color: white;
+  text-align:center;
+  margin : 0;
+  border : none;
+  border-radius: 0;
+}
+.alert-success{
+  background-color: green;
+}
+.alert-error{
+  background-color: red;
+}
+.alert-info{
+  background-color: #0085cd;
+}
+

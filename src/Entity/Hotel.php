@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -139,6 +141,16 @@ class Hotel
      * @Assert\NotBlank(message="Il faut choisir une longitude l'hotel")
      */
     private $lon;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Likee::class, mappedBy="hotel")
+     */
+    private $likees;
+
+    public function __construct()
+    {
+        $this->likees = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -335,6 +347,36 @@ class Hotel
     public function setLon(?float $lon): self
     {
         $this->lon = $lon;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Likee>
+     */
+    public function getLikees(): Collection
+    {
+        return $this->likees;
+    }
+
+    public function addLikee(Likee $likee): self
+    {
+        if (!$this->likees->contains($likee)) {
+            $this->likees[] = $likee;
+            $likee->setHotel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikee(Likee $likee): self
+    {
+        if ($this->likees->removeElement($likee)) {
+            // set the owning side to null (unless already changed)
+            if ($likee->getHotel() === $this) {
+                $likee->setHotel(null);
+            }
+        }
 
         return $this;
     }
