@@ -20,8 +20,10 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use \DiscordWebhooks\Client;
 use \DiscordWebhook\EmbedColor;
 use DiscordWebhook\Webhook;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
+
 
 /**
  * @Route("/admin")
@@ -91,6 +93,7 @@ class AdminController extends AbstractController
             $user->setEtat("activer");
             $user->setIsVerified(true);
             $user->setRoles((array)"ROLE_AGENCIER");
+            $user->setRole("agencier");
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', 'agencier ajouter avec sucess');
@@ -195,6 +198,7 @@ class AdminController extends AbstractController
     {
         $user= $repository->find($id);
         $user->setEtat("activer");
+
       $repository->add($user);
 
         $webhook =new Webhook((array)'https://discord.com/api/webhooks/962166291127472158/0L-7NJz5tjIAO3_4D1osVu6jHoksEOoRovZro08XbYk8_fDvNJRXE3rq8g5d2RyKbykX');
@@ -269,6 +273,62 @@ class AdminController extends AbstractController
         return $this->render('admin/sendMail.html.twig', ['form' => $form->createView(),'user_email'=>$email_use]);
     }
 
+
+    /**
+     * @return Response
+     * @Route("/testsende",name="testsend")
+     */
+    public function send(UtilisateurRepository $repository)
+    {
+        $users = $repository->findAll();
+        return $this->render('admin/testSend.html.twig', ['users' => $users]
+
+        );
+    }
+
+
+
+    public function getRealEntities($users): array
+    {
+        foreach($users as $user)
+        {
+            $realEntities[$user->getIdU()] = [$user->getEmail() ];
+        }
+        return $realEntities;
+    }
+    public function searchAction(Request $request, UtilisateurRepository $repository )
+    {
+        $req_string=$request->get('searchValue');
+
+        $users=$repository->findEntitiesByString($req_string);
+
+        if(!$users)
+        {
+            $result['user']['error'] = "user introuvable";
+
+        }
+        else
+        {
+            $result['users'] = $this->getRealEntities($users);
+        }
+        return new Response(json_encode($result));
+    }
+
+
+    /**
+     * @Route("/searchproduit", name="user_search", methods={"GET","POST"})
+     * @throws ExceptionInterface
+     */
+    public function searchProduit(Request $request,NormalizerInterface $Normalizer, UtilisateurRepository $repository)
+    {
+
+        $requestString=$request->get('searchValue');
+        $user= $repository->findUtilidateurByNom($requestString);
+
+        $jsonContent = $Normalizer->normalize($user, 'json',['groups'=>'post:read']);
+        $retour=json_encode($jsonContent);
+        return new Response($retour);
+    }
 
 
 }

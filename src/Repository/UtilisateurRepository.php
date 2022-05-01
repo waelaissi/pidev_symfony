@@ -113,6 +113,18 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
     */
 
 
+    public function findEntitiesByString($value)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.title = :val')
+            ->setParameter('val', $value)
+            ->orderBy('r.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
     public function findOneBySomeField($value): ?Utilisateur
     {
         return $this->createQueryBuilder('u')

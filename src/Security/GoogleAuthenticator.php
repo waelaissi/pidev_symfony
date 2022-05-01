@@ -65,6 +65,7 @@ class GoogleAuthenticator extends SocialAuthenticator
             $user->setImage($googleUser->getAvatar());
             $user->setPrenom($googleUser->getLastName());
             $user->setEtat("activer");
+            $user->setIsVerified(1);
             $this->em->persist($user);
             $this->em->flush();
         }

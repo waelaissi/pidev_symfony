@@ -59,6 +59,7 @@ class RegistrationController extends AbstractController
             );
             $user->setEtat("activer");
             $user->setRoles((array)"ROLE_USER");
+            $user->setRole("client");
 
             $entityManager->persist($user);
             $entityManager->flush();

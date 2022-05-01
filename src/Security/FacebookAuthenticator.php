@@ -65,6 +65,7 @@ class FacebookAuthenticator extends SocialAuthenticator
             $user->setNom($facebookUser->getName());
             $user->setPrenom($facebookUser->getLastName());
             $user->setEtat("activer");
+            $user->setIsVerified(1);
             $this->em->persist($user);
             $this->em->flush();
         }

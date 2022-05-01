@@ -3,8 +3,8 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    {% include "partials/header_admin.html.twig" %}
     {% include "partials/navigation_panel_admin.html.twig" %}
+    {% include "partials/header_admin.html.twig" %}
 
 
     <div class="db-info-wrap">
@@ -20,6 +20,8 @@
                             </div>
                         {% endfor %}
                     </div>
+
+
                     <table class="table" id="tab">
                         <thead>
                         <tr>
@@ -79,10 +81,85 @@
                         {% endfor %}
                         </tbody>
                     </table>
+
+
                 </div>
+
+
             </div>
         </div>
     </div>
 
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $( document ).ready(function() {
+
+            $("#search").keyup(function(e){
+
+                var value = $(this).val();
+                if(value==="")
+                {
+                    $('table#tab').hide();
+                }
+
+                $.ajax({
+
+                    url : "{{ path('user_search') }}",
+
+                    type : 'GET',
+
+                    data: {
+                        'searchValue' : value
+                    },
+                    /*Cette fonction permet de vider le contenu du tableau pour recevoir le nouveau contenu*/
+                    success : function(retour){
+                        if(retour){
+                            console.log(retour);
+                            $('table#tab').show();
+                            $('table#tab').empty();
+                            $.each(JSON.parse(retour), function(i, obj) {
+                                $('table#tab').append(
+                                    '<thead>'+
+                                    '<tr>'+
+                                    '<th>'+"users "+'</th>'+
+                                    '<th>'+"email"+'</th>'+
+                                    '<th>'+"nom"+'</th>'+
+                                    '<th>'+"num_tel"+'</th>'+
+                                    '<th>'+"adresse"+'</th>'+
+                                    '<th>'+" etat"+'</th>'+
+                                    '<th>'+" action"+'</th>'+
+                                    '<th>'+" send email"+'</th>'+
+                                    '<th>'+'</th>'+
+                                    '</tr>'+
+                                    '</thead>'+
+                                    '<tbody>'+
+                                    '<tr>'+
+                                    '<td>'+obj.image+'</td>'+
+                                    '<td>'+obj.email+'</td>'+
+                                    '<td>'+obj.nom+'</td>'+
+                                    '<td>'+obj.NumTel+'</td>'+
+                                    '<td>'+obj.adresse+'</td>'+
+                                    '<td>'+obj.etat+'</td>'+
+                                    '<td>'+obj.action+'</td>'+
+                                    '<td>'+obj.send_email+'</td>'+
+                                    '</tr>'
+                                );
+                            });
+                        }
+                        else
+                        {
+
+                            $('table#tab').show();
+                            $('table#tab').empty();
+                            // $('table#tab').hide();
+                            //$('table#tab').append('<h4>users introuvable</h4>');
+                            $('table#tab').fadeIn('fast');
+                        }
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
 
 {% endblock %}
