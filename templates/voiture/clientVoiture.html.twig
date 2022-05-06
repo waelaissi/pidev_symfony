@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Hotels"%}
+
+{% block body %}
+    <div class="container">
+    <div class="package-inner">
+    <div class="row">
+
+    {% for voiture in voitures %}
+
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="package-wrap">
+                        <figure class="feature-image">
+                            <a href="#">
+        {% for image in voiture.images %}
+            {% if loop.index == 1 %}
+
+                                <img src="{{ asset('/upload/'~image.imgblob) }}" alt="" >
+            {% endif %}
+        {% endfor %}
+
+                            </a>
+                        </figure>
+                        <div class="package-price">
+                            <h6>
+                                <span>{{ voiture.prix }}Dt </span> / par jour
+                            </h6>
+                        </div>
+                        <div class="package-content-wrap">
+                            <div class="package-meta text-center">
+                                <ul>
+                                    <li>
+                                        <i class="far fa-clock"></i>
+                                       Marque:  {{ voiture.marque }}
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-user-friends"></i>
+                                        place: {{ voiture.capacite }}
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-car"></i>
+                                        couleur: {{ voiture.couleur }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="package-content">
+                                <h3>
+                                    {{ voiture.idCategorie.libelle }}
+                                </h3>
+                                <div class="review-area">
+                                    <span class="review-text">(25 reviews)</span>
+                                    <div class="rating-start" title="Rated 5 out of 5">
+                                        <span style="width: 60%"></span>
+                                    </div>
+                                </div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit luctus nec ullam. Ut elit tellus, luctus nec ullam elit tellpus.</p>
+                                <div class="btn-wrap">
+                                    <a href="#" class="button-text width-6">reserver<i class="fas fa-arrow-right"></i></a>
+                                    <a href="{{ path('app_voiture_like', {'id': voiture.id}) }}" class="button-text width-6">Wish List<i class="far fa-heart"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+    {% endfor %}
+    </div>
+        <div class="pagination">
+            {{ knp_pagination_render(voitures) }}
+        </div>
+    </div>
+    </div>
+    {% block javascripts %}
+
+
+    {% endblock %}
+
+{% endblock %}

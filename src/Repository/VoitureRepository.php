@@ -2,11 +2,14 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Voiture;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
  * @method Voiture|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,9 +19,21 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class VoitureRepository extends ServiceEntityRepository
 {
+
+
+    /**
+     * @var PaginationInterface
+     */
+    private $paginator;
+    /**
+     * @var FlashyNotifier
+     */
+
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Voiture::class);
+
     }
 
     /**
@@ -44,7 +59,43 @@ class VoitureRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function countNombre(){
 
+        return $this->createQueryBuilder('v')
+            ->select('count(v.id) as counts')
+            ->addSelect('v.marque')
+            ->groupBy('v.marque')
+            ->getQuery()
+            ->getResult();
+
+    }
+    public function countNombrecat(){
+
+        return $this->createQueryBuilder('v')
+            ->join('v.idCategorie','c')
+            ->select('count(v.id) as counts')
+            ->addSelect('c.libelle')
+            ->groupBy('v.idCategorie')
+            ->getQuery()
+            ->getResult();
+
+    }
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function countnbrvoiture(){
+
+        return $this->createQueryBuilder('v')
+            ->select('count(v.id) as counts')
+            ->getQuery()
+            ->getResult();
+
+    }
     // /**
     //  * @return Voiture[] Returns an array of Voiture objects
     //  */

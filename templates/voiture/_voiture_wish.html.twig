@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container">
+    <div class="package-inner">
+        <div class="row">
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="package-wrap">
+                        <figure class="feature-image">
+                            <a href="#">
+                                {% for image in wish.images %}
+                                    {% if loop.index == 1 %}
+
+                                        <img src="{{ asset('/upload/'~image.imgblob) }}" alt="" >
+                                    {% endif %}
+                                {% endfor %}
+
+                            </a>
+                        </figure>
+                        <div class="package-price">
+                            <h6>
+                                <span>{{ wish.prix }}Dt </span> / par jour
+                            </h6>
+                        </div>
+                        <div class="package-content-wrap">
+                            <div class="package-meta text-center">
+                                <ul>
+                                    <li>
+                                        <i class="far fa-clock"></i>
+                                        Marque:  {{ wish.marque }}
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-user-friends"></i>
+                                        place: {{ wish.capacite }}
+                                    </li>
+                                    <li>
+                                        <i class="fa-solid fa-car"></i>
+                                        couleur: {{ wish.couleur }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="package-content">
+                                <h3>
+                                    {{ wish.idCategorie.libelle }}
+                                </h3>
+                                <div class="review-area">
+                                    <span class="review-text">(25 reviews)</span>
+                                    <div class="rating-start" title="Rated 5 out of 5">
+                                        <span style="width: 60%"></span>
+                                    </div>
+                                </div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit luctus nec ullam. Ut elit tellus, luctus nec ullam elit tellpus.</p>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

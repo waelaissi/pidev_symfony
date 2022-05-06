@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Voitures"%}
+
+{% block body %}
+    <div class="guide-page-section">
+        <div class="container">
+            <div class="row">
+                {% for wish in wishs %}
+                    <div class="col-lg-4 col-md-6">
+                        {{ include('voiture/_voiture_wish.html.twig') }}
+                    </div>
+                {% endfor %}
+
+
+    </div>
+    </div>
+    </div>
+{% endblock %}

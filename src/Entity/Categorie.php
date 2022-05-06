@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Categorie
@@ -25,6 +26,14 @@ class Categorie
      * @var string
      *
      * @ORM\Column(name="libelle", type="string", length=30, nullable=false)
+     * @Assert\NotNull (message="donner une libelle")
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 10,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "trés long description!"
+     * )
+     * @Assert\Type(type={"alpha"})
      */
     private $libelle;
 
@@ -32,6 +41,14 @@ class Categorie
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=100, nullable=false)
+     * @Assert\NotNull (message="donner une description")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 250,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "trés long description!"
+     * )
+     *
      */
     private $description;
 
@@ -64,5 +81,8 @@ class Categorie
         return $this;
     }
 
+public function __toString(){
+        return $this->libelle;
 
+}
 }

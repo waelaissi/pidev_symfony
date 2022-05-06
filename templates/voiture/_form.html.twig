@@ -1,4 +1,61 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="row">
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                {{ form_row(form.marque) }}
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                {{ form_row(form.description) }}
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                {{ form_row(form.couleur) }}
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                {{ form_row(form.model) }}
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                {{ form_row(form.capacite) }}
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                {{ form_row(form.immat) }}
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                {{ form_row(form.id_categorie) }}
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                {{ form_row(form.prix) }}
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                {{ form_row(form.images) }}
+            </div>
+        </div>
+
+        <button class="btn btn-primary btn-block" formnovalidate>{{ button_label|default('Save') }}</button>
+    </div>
+
 {{ form_end(form) }}

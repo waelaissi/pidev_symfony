@@ -1,0 +1,81 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Voiture stat{% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+
+{% endblock stylesheet %}
+
+{% block body %}
+    <div class="db-info-wrap">
+        <div class="row">
+    <div class="col-xl-3 col-sm-6">
+
+        <div class="db-info-list">
+            <div class="dashboard-stat-icon bg-blue">
+                <i class="far fa-chart-bar"></i>
+            </div>
+            <div class="dashboard-stat-content">
+                <h4>nombre des voiture</h4>
+                {% for nbrs in nbr %}
+                <h5>{{ nbrs.counts }}</h5>
+                {% endfor%}
+            </div>
+        </div>
+    </div>
+    <h1> statistiques</h1>
+<div class="row">
+<div class="col-lg-4">
+    <div class="dashboard-box chart-box">
+        <h1> voiture par categorie</h1>
+    <canvas id="voiture" width="50" height="50"></canvas>
+    </div>
+    </div>
+    <div class="col-lg-4">
+    <div class="dashboard-box chart-box" >
+        <h1> voiture par categorie</h1>
+        <canvas id="categorie" width="400" height="400"></canvas>
+
+    </div>
+    </div>
+</div>
+</div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+
+
+    let voitures = document.querySelector("#voiture")
+    let voitGraph = new Chart(voitures, {
+        type: "bar",
+        data: {
+
+        labels: {{  marques|raw }},
+        datasets: [{
+            label: "nombre des voiture",
+            data: {{  countMarques|raw }},
+            backgroundColor:  'rgb(255,182,193)'
+        }]
+       }
+    })
+    let categorie = document.querySelector("#categorie")
+    let catGraph = new Chart(categorie, {
+        type: "line",
+        data: {
+            labels: {{  libelle|raw }},
+            datasets: [{
+                label: "nombre des voiture",
+                data: {{  countcate|raw }},
+                backgroundColor:  'rgb(65,105,225)'
+            }]
+        }
+    })
+</script>
+{% endblock javascripts %}
+

@@ -31,7 +31,7 @@ class Images
     /**
      * @var \Voiture
      *
-     * @ORM\ManyToOne(targetEntity="Voiture")
+     * @ORM\ManyToOne(targetEntity="Voiture",inversedBy="images")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_voiture", referencedColumnName="id")
      * })

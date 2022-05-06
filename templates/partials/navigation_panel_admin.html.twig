@@ -1,0 +1,48 @@
+<div class="dashboard-navigation">
+    <!-- Responsive Navigation Trigger -->
+    <div id="dashboard-Navigation" class="slick-nav"></div>
+    <div id="navigation" class="navigation-container">
+        <ul>
+            <li class="active-menu"><a href="dashboard.html"><i class="far fa-chart-bar"></i> Dashboard</a></li>
+            <li><a><i class="fas fa-user"></i>Users</a>
+                <ul>
+                    <li>
+                        <a href="user.html">User</a>
+                    </li>
+                    <li>
+                        <a href="user-edit.html">User edit</a>
+                    </li>
+                    <li>
+                        <a href="#">New user</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a><i class="fas fa-hotel"></i></i>Voiture</a>
+                <ul>
+                    <li><a href="{{ path('app_voiture_index') }}">Liste</a></li>
+                    <li><a href="{{ path('app_voiture_new') }}">Ajouter</a></li>
+
+                </ul>
+            </li>
+            <li>
+                <a><i class="fas fa-hotel"></i></i>Categorie</a>
+                <ul>
+                    <li><a href="{{ path('app_categorie_index') }}">Liste</a></li>
+                    <li><a href="{{ path('app_categorie_new') }}">Ajouter</a></li>
+
+                </ul>
+            </li>
+            <li>
+                <a><i class="fas fa-hotel"></i></i>Statistique</a>
+                <ul>
+                    <li><a href="{{ path('stat') }}">staistique des voitures</a></li>
+
+
+                </ul>
+            </li>
+
+        </ul>
+    </div>
+</div>

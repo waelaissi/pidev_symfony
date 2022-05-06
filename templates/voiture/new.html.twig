@@ -1,11 +1,19 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_admin.html.twig' %}
 
 {% block title %}New Voiture{% endblock %}
 
 {% block body %}
-    <h1>Create new Voiture</h1>
+    <div class="db-info-wrap">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="dashboard-box">
 
-    {{ include('voiture/_form.html.twig') }}
+                    <h1>Ajouter Voiture</h1>
+                    {{ include('voiture/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('app_voiture_index') }}">back to list</a>
+    <a href="{{ path('app_voiture_index') }}">retour</a>
 {% endblock %}

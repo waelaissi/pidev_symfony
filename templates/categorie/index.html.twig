@@ -1,0 +1,46 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Categorie index{% endblock %}
+
+{% block body %}
+<div class="db-info-wrap">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="dashboard-box table-opp-color-box">
+    <h1>Liste des categories</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>Libelle</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for categorie in categories %}
+            <tr>
+
+                <td>{{ categorie.libelle }}</td>
+                <td>{{ categorie.description }}</td>
+                <td>
+                    <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}">show</a>
+                    <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_categorie_new') }}">Create new</a>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+{% endblock %}

@@ -40,6 +40,11 @@ class Likee
      * })
      */
     private $idCommentaire;
+    /**
+     * @ORM\ManyToOne(targetEntity=Voiture::class, inversedBy="likees")
+     */
+    private $voiture;
+
 
     public function getIdLike(): ?int
     {
@@ -68,6 +73,18 @@ class Likee
         $this->idCommentaire = $idCommentaire;
 
         return $this;
+    }
+
+
+    public function getVoiture()
+    {
+        return $this->voiture;
+    }
+
+
+    public function setVoiture($voiture): void
+    {
+        $this->voiture = $voiture;
     }
 
 

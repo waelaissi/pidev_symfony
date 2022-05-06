@@ -1,0 +1,17 @@
+{{ form_start(form) }}
+<div class="row">
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            {{ form_row(form.libelle) }}
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            {{ form_row(form.description) }}
+        </div>
+    </div>
+    <button class="btn btn-primary btn-block"formnovalidate>{{ button_label|default('ajouter') }}</button>
+</div>
+{{ form_end(form) }}
