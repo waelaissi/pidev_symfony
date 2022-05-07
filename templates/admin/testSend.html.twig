@@ -1,0 +1,127 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %} test send mail {% endblock %}
+
+{% block body %}
+
+
+
+
+
+
+    <style>
+        .movie-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-gap: 10px;
+            text-align: center;
+        }
+        .boxes {
+            background: #e6f7ff;
+            color: black;
+        }
+        .boxes p {
+            padding: 7px;
+            margin: 2px 0;
+            color: black;
+        }
+        .form-control {
+            width: 200px;
+        }
+        .store img {
+            max-width: 100%;
+            height: auto;
+            width: 100%;
+        }
+    </style>
+    <section>
+        <div class="search-question">
+            <select class="form-control">
+                {% set selected = '' %}
+                <option value="email" {{ selected }}>email</option>
+                <option value="nom">nom </option>
+            </select>
+            <form>
+                <input type="text" placeholder="users a chercher" id="rechercheBar">
+            </form>
+        </div>
+        <div id="search">
+
+            <div class="movie-grid store">
+                {% for users in users %}
+                    <div class="boxes">
+                        <a href="{{ path('testsend', {'id': users.id}) }}">
+                            <img src="/Front/images/resources/story-card3.jpg" alt="">
+                            <p>{{ users.email }}</p>
+                            <p>{{ users.nom }} nom</p>
+                        </a>
+                    </div>
+                {% else %}
+                    <div>
+                        <p colspan="7">no records found</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+        </script>
+        <script>
+            $( document ).ready(function() {
+                $("#rechercheBar").keyup(function(e){
+
+                    var value = $(this).val();
+
+                    $.ajax({
+
+                        url : "{{ path('searchProduct') }}",
+
+                        type : 'GET',
+
+                        data: {
+                            'searchValue' : value
+                        },
+                        /*Cette fonction permet de vider le contenu du tableau pour recevoir le nouveau contenu*/
+                        success : function(retour){
+
+                            if(retour){
+                                $('div#search').empty();
+                                $.each(JSON.parse(retour), function(i, obj) {
+                                    //console.log($retour);
+                                    $('#t div#all').hide();
+                                    $('div#search').append('<div class="movie-grid store">'+
+                                        '<div class="boxes">'+
+                                        '<p>'+ obj.title +'</p>'+
+                                        '<img src="/uploads/imagestore/'+ obj.image +'" alt="">'+
+                                        '<p>'+ obj.description +'</p>'+
+                                        '<p>'+ obj.price +'</p>'+
+                                        '<a href="/store/'+ obj.id +'/buy">Buy'+
+                                        '</a>/'+
+                                        '<a href="/store/'+ obj.id +'">Show</a>'+
+                                        '</div>'+
+                                        '<div>'+
+                                        '<p colspan="7">no records found</p>'+
+                                        '</div>'+
+                                        '</div>');
+                                });
+                            }
+                            else
+                            {
+                                $('#t div#all').show();
+                                $('div#search').empty();
+                                $('div#search').fadeIn('fast');
+                            }
+                        },
+                    });
+                    return false;
+                });
+            });
+        </script>
+    </section>
+
+
+
+
+
+
+
+{% endblock %}

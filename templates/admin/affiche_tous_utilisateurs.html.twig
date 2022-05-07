@@ -1,0 +1,165 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% include "partials/navigation_panel_admin.html.twig" %}
+    {% include "partials/header_admin.html.twig" %}
+
+
+    <div class="db-info-wrap">
+        <div class="col-lg-36">
+            <div class="dashboard-box table-opp-color-box">
+                <h4>List des Utilisateurs</h4>
+                <p>Airtport Hotels The Right Way To Start A Short Break Holiday</p>
+                <div class="table-responsive">
+                    <div class="message-flash">
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+                    <table class="table" id="tab">
+                        <thead>
+                        <tr>
+                            <th>user</th>
+                            <th>email</th>
+                            <th>nom</th>
+                            <th>num_tel</th>
+                            <th>adresse</th>
+                            <th>etat</th>
+                            <th>action</th>
+                            <th>send email</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for users in users %}
+                            <tr>
+                                <td>
+                                    <span class="list-img"><img src="{{ asset('images/' ~ users.image) }}"
+                                                                alt=""> </span>
+                                </td>
+                                <td>{{ users.email }}</td>
+                                <td>{{ users.nom }}</td>
+                                <td>{{ users.NumTel }}</td>
+                                <td>{{ users.adresse }}</td>
+                                <td>
+                                    {% if users.etat == "activer" %}
+                                        <span class="badge badge-success">{{ users.etat }} </span>
+                                    {% else %}
+                                        <span class="badge badge-danger">{{ users.etat }} </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if users.etat == "activer" %}
+                                        <button type="button" class="btn btn-danger"
+                                                name="desactiverUser"><a
+                                                    href="{{ path('desactiverUser',{'id':users.id}) }}">
+                                                <span class="badge badge-danger">desactiver</span></a>
+                                        </button>
+                                    {% else %}
+                                        <button type="button" class="btn btn-warning"><a
+                                                    href="{{ path('activerUser',{'id':users.id}) }}">
+                                                <span class="badge badge-warning">activer</span></a>
+                                        </button>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-info"><a
+                                                href="{{ path('sendMailToUser',{'email_use':users.email}) }}">
+                                            <span class="badge badge-info">send</span></a>
+                                    </button>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td> aucun utilisateur trouveé</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $( document ).ready(function() {
+
+            $("#search").keyup(function(e){
+
+                var value = $(this).val();
+                if(value==="")
+                {
+                    $('table#tab').hide();
+                }
+
+                $.ajax({
+
+                    url : "{{ path('user_search') }}",
+
+                    type : 'GET',
+
+                    data: {
+                        'searchValue' : value
+                    },
+                    /*Cette fonction permet de vider le contenu du tableau pour recevoir le nouveau contenu*/
+                    success : function(retour){
+                        if(retour){
+                            console.log(retour);
+                            $('table#tab').show();
+                            $('table#tab').empty();
+                            $.each(JSON.parse(retour), function(i, obj) {
+                                $('table#tab').append(
+                                    '<thead>'+
+                                    '<tr>'+
+                                    '<th>'+"users "+'</th>'+
+                                    '<th>'+"email"+'</th>'+
+                                    '<th>'+"nom"+'</th>'+
+                                    '<th>'+"num_tel"+'</th>'+
+                                    '<th>'+"adresse"+'</th>'+
+                                    '<th>'+" etat"+'</th>'+
+                                    '<th>'+" action"+'</th>'+
+                                    '<th>'+" send email"+'</th>'+
+                                    '<th>'+'</th>'+
+                                    '</tr>'+
+                                    '</thead>'+
+                                    '<tbody>'+
+                                    '<tr>'+
+                                    '<td>'+obj.image+'</td>'+
+                                    '<td>'+obj.email+'</td>'+
+                                    '<td>'+obj.nom+'</td>'+
+                                    '<td>'+obj.NumTel+'</td>'+
+                                    '<td>'+obj.adresse+'</td>'+
+                                    '<td>'+obj.etat+'</td>'+
+                                    '<td>'+obj.action+'</td>'+
+                                    '<td>'+obj.send_email+'</td>'+
+                                    '</tr>'
+                                );
+                            });
+                        }
+                        else
+                        {
+
+                            $('table#tab').show();
+                            $('table#tab').empty();
+                            // $('table#tab').hide();
+                            //$('table#tab').append('<h4>users introuvable</h4>');
+                            $('table#tab').fadeIn('fast');
+                        }
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
+
+{% endblock %}

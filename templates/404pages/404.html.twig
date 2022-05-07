@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}error!{% endblock %}
+
+{% block body %}
+
+
+<main id="content" class="site-main">
+    <div class="no-content-section 404-page" style="background-image: url(/assets/images/404-img.jpg);">
+        <div class="container">
+            <div class="no-content-wrap">
+                <span>404</span>
+                <h1>Oops! That page can't be found</h1>
+                <h4>It looks like nothing was found at this location. Your Account has been banned</h4>
+                <div class="search-form-wrap">
+                    <form class="search-form">
+                        <input type="text" name="search" placeholder="Search...">
+                        <button class="search-btn"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="overlay"></div>
+    </div>
+</main>
+
+
+{% endblock %}

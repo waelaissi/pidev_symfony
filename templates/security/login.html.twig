@@ -1,0 +1,395 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    <style>
+        .login_wrap {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .login_register_wrap {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -ms-flex-align: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .login_footer {
+            margin-bottom: 20px;
+            margin-top: 5px;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .login_footer a {
+            color: #687188;
+        }
+
+        .different_login {
+            text-align: center;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .different_login span {
+            background-color: #fff;
+            padding: 0 15px;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        .different_login::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            right: 0;
+            border-top: 1px solid #ddd;
+            -moz-transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+
+        .btn-login li {
+            margin: 0px 5px 0;
+            display: inline-block;
+        }
+
+        .btn-login li a {
+            border-radius: 5px;
+            padding: 10px 20px;
+            color: #fff;
+            display: block;
+        }
+
+        .btn-login li a i {
+            margin-right: 10px;
+            font-size: 18px;
+            margin-left: 0;
+        }
+
+        .btn-facebook {
+            background: #3b5998;
+            border-color: #3b5998;
+        }
+
+        .btn-facebook:hover {
+            color: #fff;
+            background: #344e86;
+            border-color: #344e86;
+        }
+
+        .btn-google {
+            background: #d85040;
+            border-color: #d85040;
+        }
+
+        .btn-google:hover {
+            color: #fff;
+            background: #d33d2b;
+            border-color: #d33d2b;
+        }
+
+        .cs_wrap {
+            min-height: 100vh;
+            position: relative;
+            padding: 30px 0;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+
+        .countdown_time {
+            display: table;
+            width: 100%;
+        }
+
+        .countdown_time .countdown_box {
+            float: left;
+            width: 25%;
+            font-family: 'Roboto';
+            padding: 0 15px;
+        }
+
+        .countdown-wrap {
+            display: inline-block;
+            text-align: center;
+        }
+
+        .countdown_time .cd_text {
+            display: block;
+        }
+
+        .countdown_box .countdown {
+            color: #292b2c;
+            font-size: 40px;
+        }
+
+        .countdown_white .countdown_box .countdown, .countdown_white .countdown_box .cd_text {
+            color: #fff;
+        }
+
+        .countdown_style1 .countdown_box {
+            position: relative;
+            text-align: center;
+        }
+
+        .countdown_style1 .countdown_box::before {
+            content: ":";
+            font-size: 40px;
+            font-weight: bold;
+            color: #000;
+            position: absolute;
+            right: -6px;
+        }
+
+        .countdown_style1.countdown_white .countdown_box::before {
+            color: #fff;
+        }
+
+        .countdown_style1 .countdown_box:last-child:before {
+            content: normal;
+        }
+
+        .cs_logo {
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        .cs_title {
+            line-height: 44px;
+            margin-bottom: 20px;
+        }
+
+        .cs_content .countdown_time,
+        .cs_content .newsletter_form {
+            margin-bottom: 30px;
+        }
+
+        .countdown_style2,
+        .countdown_style3 {
+            margin-left: -15px;
+            margin-right: -15px;
+            width: auto;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .countdown_style2 .countdown_box .countdown-wrap {
+            text-align: center;
+            border: 1px solid #ddd;
+            width: 100%;
+            padding: 10px;
+        }
+
+        .countdown_style3 .countdown-wrap {
+            width: 100%;
+            background-color: #fff;
+            padding: 15px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.03);
+        }
+
+        .countdown_time.countdown_style4 {
+            margin: 0 -2px;
+            width: auto;
+            display: block;
+        }
+
+        .countdown_time.countdown_style4 .countdown_box {
+            padding: 0 2px;
+        }
+
+        .countdown_style4 .countdown_box .countdown-wrap {
+            text-align: center;
+            background-color: #f2f2f2;
+            width: 100%;
+            padding: 10px;
+        }
+
+
+    </style>
+
+<div id="page" class="full-page">
+    <div class="login-page" style="background-image: url(/assetsadmin/images/bg.jpg);">
+        <div class="login-from-wrap">
+            <form class="login-from" method="post">
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.username }}, <a
+                                href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+
+                <div class="message-flash">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                </div>
+                <h1 class="site-title">
+                    <a href="{{ path('app_hello') }}">
+                        <img src="/assetsadmin/images/logo.png" alt="">
+                    </a>
+                </h1>
+                <div class="form-group">
+                    <label for="first_name1">Email</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
+                           class="form-control" autocomplete="email" required autofocus></div>
+                <div class="form-group">
+                    <label for="last_name">Password</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control"
+                           autocomplete="current-password" required></div>
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+
+                <div class="form-group">
+                    <button style="background-color: #80bdff" type="submit" class="btn btn-fill-out btn-block"
+                            name="login">Log in
+                    </button>
+                    </button>
+                </div>
+                <a href="{{ path('app_forgot_password_request') }}" class="for-pass">Forgot Password?</a>
+
+                <div class="different_login">
+                    <span> or</span>
+                </div>
+                <ul class="btn-login list_none text-center">
+                    <li><a href="{{ path('connect_facebook_start') }}" class="btn btn-facebook"><i class="ion-social-facebook"></i>Facebook</a></li>
+                    <li><a href="{{ path('connect_google') }}" class="btn btn-google"><i
+                                    class="ion-social-googleplus"></i>Google</a></li>
+                </ul>
+
+
+            </form>
+
+            <div class="form-note text-center">Don't Have an Account? <a href="{{ path('app_register') }}">Sign up
+                    now</a></div>
+
+        </div>
+
+    </div>
+
+
+    {% endblock %}
+
+{#
+<form method="post">
+{% if error %}
+   <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+{% if app.user %}
+   <div class="mb-3">
+       You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+   </div>
+{% endif %}
+
+<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+<label for="inputEmail">Email</label>
+<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+<label for="inputPassword">Password</label>
+<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+<input type="hidden" name="_csrf_token"
+      value="{{ csrf_token('authenticate') }}"
+>
+
+
+   Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+   See https://symfony.com/doc/current/security/remember_me.html
+
+   <div class="checkbox mb-3">
+       <label>
+           <input type="checkbox" name="_remember_me"> Remember me
+       </label>
+   </div>
+
+
+<button class="btn btn-lg btn-primary" type="submit">
+   Sign in
+</button>
+</form>
+
+
+
+
+   <div class="login_register_wrap section">
+       <div class="container">
+           <div class="row justify-content-center">
+               <div class="col-xl-6 col-md-10">
+                   <div class="login_wrap">
+                       <div class="padding_eight_all bg-white">
+                           <div class="heading_s1">
+                               <h3>Login</h3>
+                           </div>
+                           <form method="post">
+                               {% if app.user %}
+                                   <div class="mb-3">
+                                       You are logged in as {{ app.user.username }}, <a
+                                               href="{{ path('app_logout') }}">Logout</a>
+                                   </div>
+                               {% endif %}
+                               <div class="message-flash">
+                                   {% if error %}
+                                       <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                   {% endif %}
+                               </div>
+                               <div class="form-group">
+                                   <label for="inputEmail">Email</label>
+                                   <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
+                                          class="form-control" autocomplete="email" required autofocus>
+                               </div>
+                               <div class="form-group">
+                                   <label for="inputPassword">Password</label>
+                                   <input type="password" name="password" id="inputPassword" class="form-control"
+                                          autocomplete="current-password" required>
+                               </div>
+                               <input type="hidden" name="_csrf_token"
+                                      value="{{ csrf_token('authenticate') }}"
+                               >
+                               <div class="login_footer form-group">
+                                   <div class="chek-form">
+                                       <div class="custome-checkbox">
+                                           <input class="form-check-input" type="checkbox" name="checkbox"
+                                                  id="exampleCheckbox1" value="">
+                                           <label class="form-check-label"
+                                                  for="exampleCheckbox1"><span>Remember me</span></label>
+                                       </div>
+                                   </div>
+                                   <a href="{{ path('app_forgot_password_request') }}">Forgot password?</a>
+                               </div>
+                               <div class="form-group">
+                                   <button type="submit" class="btn btn-fill-out btn-block" name="login">Log in
+                                   </button>
+                               </div>
+                           </form>
+                           <div class="different_login">
+                               <span> or</span>
+                           </div>
+                           <ul class="btn-login list_none text-center">
+                               <li><a href="#" class="btn btn-facebook"><i class="ion-social-facebook"></i>Facebook</a>
+                               </li>
+                               <li><a href="#" class="btn btn-google"><i class="ion-social-googleplus"></i>Google</a>
+                               </li>
+                           </ul>
+                           <div class="form-note text-center">Don't Have an Account? <a href="{{ path('app_register') }}">Sign up
+                                   now</a></div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+#}

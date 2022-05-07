@@ -1,0 +1,94 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% include "partials/header_hotelier.html.twig" %}
+    {% include "partials/navigation_panel_hotelier.html.twig" %}
+
+
+
+
+
+    <div class="db-info-wrap">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="dashboard-box user-form-wrap">
+                    <h4>User Edit Details</h4>
+                    <form class="form-horizontal" method="post">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Nom</label>
+                                    <input name="firstname" value="{{ app.user.nom }}" class="form-control" type="text" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Prenom</label>
+                                    <input name="lastname" value="{{ app.user.prenom }}" class="form-control" type="text" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Cin</label>
+                                    <input name="cin" value="{{ app.user.cin }}" class="form-control" readonly >
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input name="phone" id="input-phone" value="{{ app.user.NumTel }}" class="form-control" placeholder="" type="text" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <h4>Contact Details</h4>
+                            </div>
+
+
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Address</label>
+
+                                    <input name="Address" value="{{ app.user.adresse }}" class="form-control" type="text" readonly>
+
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <h4> Profile Photo</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="upload-input">
+                                    <div class="form-group">
+                                        <span class="list-img"><img style="  border: 1px solid #ddd;border-radius: 4px;padding: 5px;width: 150px;" src="{{ asset('images/' ~ app.user.image) }}" alt=""> </span>
+
+                                        <span class="upload-btn">Upload a image</span>
+                                        <input type="file" name="myfile" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <h4>Describe Your hotel </h4>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Please Tell Us About Your hotel</label>
+                                    <textarea readonly  placeholder="{{ app.user.description }}" class="form-control" id="message" name="message"  required=""></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="btn btn-primary" href="{{ path('hotelierUpdate',{'id':app.user.id}) }}">Modifier Profile</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
