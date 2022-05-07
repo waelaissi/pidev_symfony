@@ -1,0 +1,39 @@
+{{ form_start(form,{'attr':{'novalidate':'novalidate'  }}) }}
+
+<div class="widget-bg booking-form-wrap">
+    <h4 class="bg-title">Topic</h4>
+    <form class="booking-form">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    {{ form_label(form.titretopic,'Titre Topic :') }}
+                    {{ form_widget(form.titretopic) }}
+                    <div style="color:  red">  {{ form_errors(form.titretopic) }}</div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    {{ form_label(form.description,'Description Topic :') }}
+                    {{ form_widget(form.description) }}
+                  <div style="color:  red"> {{ form_errors(form.description) }}</div>
+            </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    {{ form_label(form.imageFile,'image Topic :') }}
+                    {{ form_widget(form.imageFile) }}
+                    <div style="color:  red">     {{ form_errors(form.imageFile) }}</div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="form-group submit-btn">
+                        <button class="button-primary">{{ button_label|default('Ajouter Topic') }}</button>
+                </div>
+            </div>
+        </div>
+    </form>{{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+
+

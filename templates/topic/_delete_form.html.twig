@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_topic_deletead', {'idtopic': topic.idtopic}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ topic.idtopic) }}">
+    <button style="margin-left: 10px"class="btn btn-danger" ><i class="fa fa-trash"></i></button>
+</form>

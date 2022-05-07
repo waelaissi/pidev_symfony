@@ -1,0 +1,67 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Sujet{% endblock %}
+
+{% block body %}
+
+<div class="db-info-wrap">
+    <div class="product-outer-wrap">
+    <h1>Sujet</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Titresujet</th>
+            <td>{{ sujet.titresujet }}</td>
+        </tr>
+        <tr>
+            <th>Contenu</th>
+            <td>{{ sujet.contenu }}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{ sujet.date ? sujet.date|date('Y-m-d') : '' }}</td>
+        </tr>
+
+        <tr>
+            <th>Nombre de commentaire :</th>
+            <td>{{ sujet.nbcom }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+        <h1>Liste Des Commentaires</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+
+                <th bgcolor="#fff8dc">Contenu</th>
+                <th bgcolor="#fff8dc"> Date   </th>
+                <th bgcolor="#fff8dc">Nblike</th>
+                <th bgcolor="#fff8dc">Nbdislike</th>
+                <th bgcolor="#fff8dc">actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for commentaire in commentaires %}
+                <tr>
+
+                    <td>{{ commentaire.contenu }}</td>
+                    <td>  {{ commentaire.date ? commentaire.date|date('Y-m-d') : '' }}   </td>
+                    <td>{{ commentaire.nblike }}</td>
+                    <td>{{ commentaire.nbdislike }}</td>
+                    <td>
+                        {{ include('commentaire/_delete_form.html.twig',{'idcom': commentaire.idcom,'idsujet':sujet.idsujet}) }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,199 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sujet{% endblock %}
+
+{% block body %}
+    <section class="inner-banner-wrap">
+        <div class="inner-baner-container" >
+            <div class="container">
+                <div class="inner-banner-content">
+                    <h1 class="inner-title">{{ topic.titretopic }}</h1>
+                    <div class="entry-meta">
+                           <span class="byline">
+                               <i class="fa fa-user" aria-hidden="true">  {{ topic.iduser.login }}</i>
+                           </span>
+                        <span class="posted-on">
+                             <i class="fa fa-calendar" aria-hidden="true">  {{ topic.date|ago }}</i>
+                           </span>
+                        {% if(topic.nbsujet>1) %}
+                            <span class="comments-link">
+                                                <i class="fa fa-comments" aria-hidden="true">  {{ topic.nbsujet }} Sujets</i>
+                                             <label href="#"></label>
+                                          </span>
+                        {% elseif(topic.nbsujet<2) %}
+                            <span class="comments-link">
+                                                <i class="fa fa-comment" aria-hidden="true">  {{ topic.nbsujet }} Sujet</i>
+                                             <label href="#"></label>
+                                          </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="inner-shape"></div>
+
+
+
+    </section>
+
+
+
+
+<div class="single-post-section">
+    <div class="single-post-inner">
+        <div class="container">
+
+            <div class="row">
+
+
+                <div class="col-lg-8 primary right-sidebar">
+                    <!-- single blog post html start -->
+
+                    <figure class="feature-image justify-content-center">
+                        <img src="{{ vich_uploader_asset(topic) }}" alt="">
+                    </figure>
+
+                    <article class="single-content-wrap">
+
+                        <blockquote>
+<p>{{ topic.description }}</p>
+                        </blockquote>
+                    </article>
+
+                </div></div>
+
+        </div>
+
+    <div class="archive-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 primary">
+                    <!-- blog post item html start -->
+                    <div class="grid row">
+                        {% for sujet in sujets %}
+                            {% if sujet.accepter==1 %}
+                            <div class="grid-item col-md-6">
+                                <article class="post">
+                                    <figure class="feature-image">
+                                        <a href="#">
+                                            <img src="{{ vich_uploader_asset(sujet) }}" alt="">
+                                        </a>
+                                    </figure>
+                                    <div class="entry-content">
+                                        <h3>
+                                            <a href="{{ path('app_commentaire_new', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet}) }}">  {{ sujet.titresujet }}</a>
+                                        </h3>
+                                        <div class="entry-meta">
+                                          <span class="byline">
+                                              <i class="fa fa-user" aria-hidden="true">  {{ sujet.iduser.login }}</i>
+
+                                          </span>
+                                            <span class="posted-on">
+                                                <i class="fa fa-calendar" aria-hidden="true">  {{ sujet.date|ago}}</i>
+                                          </span>
+                                            {% if(sujet.nbcom>1) %}
+                                                <span class="comments-link">
+                                                <i class="fa fa-comments" aria-hidden="true">  {{ sujet.nbcom }} </i>
+                                             <label href="#"></label>
+                                          </span>
+                                            {% elseif(sujet.nbcom<2) %}
+                                                <span class="comments-link">
+                                                <i class="fa fa-comment" aria-hidden="true">  {{ sujet.nbcom }} </i>
+                                             <label href="#"></label>
+                                          </span>
+                                            {% endif %}
+                                            {% if(sujet.iduser.id==33) %}
+                                            <span class="posted-on">
+
+                                         <a class="fa fa-edit text-success"  href="{{ path('app_sujet_edit', {'idsujet': sujet.idsujet,'user': 33}) }}" ></a>
+                                            </span>
+                                        {% elseif(sujet.iduser.id!=33)  %}
+                                            <span class="posted-on">
+
+
+                                         <a class="fa fa-edit "  href="{{ path('app_sujet_edit', {'idsujet': sujet.idsujet,'user': 33}) }}" style="pointer-events: none"></a>
+
+                                                {% endif %}
+                                             </span>
+                                            {% if(sujet.iduser.id==33) %}
+                                            <a class="fa fa-trash text-danger"  href="{{ path('app_sujet_deletef', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet}) }}" onclick="return confirm('Etes vous sûr de supprimer ce sujet?');"></a>
+                                            {% elseif(sujet.iduser.id!=33)  %}
+                                            <span class="posted-on">
+
+
+                  <a class="fa fa-trash"  method="post" href="{{ path('app_sujet_deletef', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet}) }}" style="pointer-events: none"></a>
+
+                                                {% endif %}
+                                             </span>
+                                        </div>
+
+                                        <p>{{ sujet.contenu }}</p>
+                                        <a href="{{ path('app_commentaire_new', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet}) }}" class="button-text">CONTINUE READING..</a>
+                                    </div>
+                                </article>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+
+
+
+                </div>
+                <div class="col-lg-4 secondary">
+                    <div class="sidebar">
+
+                        <aside class="widget widget_latest_post widget-post-thumb">
+                            <div class="widget-title" style="background-color: #F56960"> <a style="color: white"  href="{{ path('app_sujet_new',{'idtopic': topic.idtopic}) }}">Ajouter Sujet</a></div>
+
+                    <h3 class="widget-title">Populaire Sujet</h3>
+
+                            <ul>
+                                {% for sujet in sujetssort %}
+                                    {% if sujet.accepter==1 %}
+                                    <li>
+                                        <figure class="post-thumb">
+                                            <a href="#"><img src="{{ vich_uploader_asset(sujet) }}" alt=""></a>
+                                        </figure>
+                                        <div class="post-content">
+                                            <h5>
+                                                <a href="{{ path('app_topic_show', {'idtopic': topic.idtopic}) }}">  {{ sujet.titresujet }}</a>
+                                            </h5>
+                                            <div class="entry-meta">
+                                                 <span class="byline">
+                                              <i class="fa fa-user" aria-hidden="true">  {{ sujet.iduser.login }}</i>
+
+                                          </span>
+                                                <span class="posted-on">
+                                                <i class="fa fa-calendar" aria-hidden="true">  {{ sujet.date|ago}}</i>
+                                             </span>
+                                                {% if(sujet.nbcom>1) %}
+                                                    <span class="comments-link">
+                                                <i class="fa fa-comments" aria-hidden="true">  {{ sujet.nbcom }} Commentaires</i>
+                                             <label href="#"></label>
+                                          </span>
+                                                {% elseif(sujet.nbcom<2) %}
+                                                    <span class="comments-link">
+                                                <i class="fa fa-comment" aria-hidden="true">  {{ sujet.nbcom }} Commentaire</i>
+                                             <label href="#"></label>
+                                          </span>
+                                                {% endif %}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </aside>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+{% endblock %}

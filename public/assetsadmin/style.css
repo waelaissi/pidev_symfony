@@ -1,4 +1,5 @@
 @charset "UTF-8";
+<<<<<<< HEAD
 /*------------------------------------------------------------------
 * Project:        Travele
 * Author:         Bosa Themes
@@ -31,6 +32,40 @@
 	    */
 /* -----------------------------------
   Normalize css
+=======
+/*------------------------------------------------------------------
+* Project:        Travele
+* Author:         Bosa Themes
+* URL:            https://themeforest.net/user/bosathemes
+------------------------------------------------------------------- */
+/* ------------------------------------------------------------------- */
+/* Table of Contents
+	----------------------------------------------------------------------
+	01. Import Section ...................... Imported variables.
+	02. Layout Components ................... Generic layout elements.
+		# Button
+		# Forms
+		# Pagination
+		# Dashboard navigation
+		# Dashboard header
+		# Dashboard footer
+
+	04. Dashboard ........................... Front Page
+	    # Dashboard content
+	    # Dashboard table
+	    
+
+	05. Dashboard ........................... Pages
+	    # Dashboard user edit
+	    # Dashboard booking and enquiry
+	    # Dashboard tour packages form
+	    # Dashboard packages list
+	    # Dashboard login register
+	    # Dashboard wishlist and package
+	    */
+/* -----------------------------------
+  Normalize css
+>>>>>>> origin/gestion_forum
   ------------------------------------- */
 html {
   line-height: 1.15;
@@ -211,8 +246,13 @@ template {
   display: none;
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
   typography css
+=======
+/* -----------------------------------
+  typography css
+>>>>>>> origin/gestion_forum
   ------------------------------------- */
 body {
   font-size: 15px;
@@ -351,8 +391,13 @@ img {
   vertical-align: top;
 }
 
+<<<<<<< HEAD
 /*--------------------------------------------------------------
 # Heading
+=======
+/*--------------------------------------------------------------
+# Heading
+>>>>>>> origin/gestion_forum
 --------------------------------------------------------------*/
 h1, h2, h3, h4, h5, h6 {
   color: #101F46;
@@ -420,8 +465,13 @@ h6 {
     font-size: 12px;
   }
 }
+<<<<<<< HEAD
 /*--------------------------------------------------------------
 # Lists
+=======
+/*--------------------------------------------------------------
+# Lists
+>>>>>>> origin/gestion_forum
 --------------------------------------------------------------*/
 ul,
 ol {
@@ -450,8 +500,13 @@ dd {
   margin: 0 1.5em 1.5em;
 }
 
+<<<<<<< HEAD
 /*--------------------------------------------------------------
 # Links
+=======
+/*--------------------------------------------------------------
+# Links
+>>>>>>> origin/gestion_forum
 --------------------------------------------------------------*/
 a {
   color: #0085BA;
@@ -492,8 +547,13 @@ a:visited {
   color: #ffffff;
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
   button css
+=======
+/* -----------------------------------
+  button css
+>>>>>>> origin/gestion_forum
   ------------------------------------- */
 .outline-primary,
 .outline-round, .button-primary,
@@ -621,8 +681,13 @@ input[type=submit]:focus {
   margin-left: 8px;
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
   form css
+=======
+/* -----------------------------------
+  form css
+>>>>>>> origin/gestion_forum
   ------------------------------------- */
 form {
   position: relative;
@@ -946,8 +1011,13 @@ input:checked ~ .custom-input-field:before {
   border-color: #2C75BA;
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
   pagination css
+=======
+/* -----------------------------------
+  pagination css
+>>>>>>> origin/gestion_forum
   ------------------------------------- */
 .pagination-wrap .pagination {
   margin: 0;
@@ -969,8 +1039,13 @@ input:checked ~ .custom-input-field:before {
   flex-wrap: wrap;
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
 /*Dashboard navigation
+=======
+/* -----------------------------------
+/*Dashboard navigation
+>>>>>>> origin/gestion_forum
 ------------------------------------- */
 .dashboard-navigation {
   background-color: #292929;
@@ -1090,8 +1165,13 @@ input:checked ~ .custom-input-field:before {
   margin-bottom: 3px;
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
 /*Dashboard header
+=======
+/* -----------------------------------
+/*Dashboard header
+>>>>>>> origin/gestion_forum
 ------------------------------------- */
 .dashboard-header:before, .dashboard-header:after {
   content: "";
@@ -1170,8 +1250,13 @@ input:checked ~ .custom-input-field:before {
   float: right;
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
 /*Dashboard Footer
+=======
+/* -----------------------------------
+/*Dashboard Footer
+>>>>>>> origin/gestion_forum
 ------------------------------------- */
 #dashboard .copyrights {
   padding: 25px 0;
@@ -1187,8 +1272,13 @@ input:checked ~ .custom-input-field:before {
   }
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
 /*Dashboard content
+=======
+/* -----------------------------------
+/*Dashboard content
+>>>>>>> origin/gestion_forum
 ------------------------------------- */
 .search-field {
   float: left;
@@ -1457,8 +1547,13 @@ input:checked ~ .custom-input-field:before {
   margin-bottom: 0;
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
 /*Dashboard table
+=======
+/* -----------------------------------
+/*Dashboard table
+>>>>>>> origin/gestion_forum
 ------------------------------------- */
 .dashboard-box {
   background-color: #ffffff;
@@ -1515,8 +1610,13 @@ input:checked ~ .custom-input-field:before {
   border: none;
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
 /*Dashboard activities
+=======
+/* -----------------------------------
+/*Dashboard activities
+>>>>>>> origin/gestion_forum
 ------------------------------------- */
 .dashboard-box h4 {
   font-weight: 700;
@@ -1632,8 +1732,13 @@ input:checked ~ .custom-input-field:before {
 }
 
 /* ---dashboard content css end--- */
+<<<<<<< HEAD
 /* -----------------------------------
   User edit css
+=======
+/* -----------------------------------
+  User edit css
+>>>>>>> origin/gestion_forum
   ------------------------------------- */
 .user-form-wrap .form-horizontal h4 {
   margin-top: 30px;
@@ -1652,8 +1757,13 @@ input:checked ~ .custom-input-field:before {
   border: none;
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
   booking and enquiry css
+=======
+/* -----------------------------------
+  booking and enquiry css
+>>>>>>> origin/gestion_forum
   ------------------------------------- */
 .db-booking .table .list-enq-name {
   margin-left: 8px;
@@ -1664,8 +1774,13 @@ input:checked ~ .custom-input-field:before {
   vertical-align: middle;
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
 Tour packages added css
+=======
+/* -----------------------------------
+Tour packages added css
+>>>>>>> origin/gestion_forum
 ------------------------------------- */
 .custom-field-wrap h4 {
   text-transform: capitalize;
@@ -1761,8 +1876,13 @@ Tour packages added css
   display: block;
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
   package css
+=======
+/* -----------------------------------
+  package css
+>>>>>>> origin/gestion_forum
   ------------------------------------- */
 .db-package-wrap .package-name {
   font-family: "Raleway", sans-serif;
@@ -1877,8 +1997,13 @@ Tour packages added css
   }
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
 login form css
+=======
+/* -----------------------------------
+login form css
+>>>>>>> origin/gestion_forum
 ------------------------------------- */
 .login-page {
   background-size: cover;
@@ -1943,8 +2068,13 @@ login form css
   }
 }
 
+<<<<<<< HEAD
 /* -----------------------------------
   wishlist and package css
+=======
+/* -----------------------------------
+  wishlist and package css
+>>>>>>> origin/gestion_forum
 ------------------------------------- */
 .offer {
   left: 10px;

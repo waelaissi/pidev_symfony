@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commentaires{% endblock %}
+
+{% block body %}
+
+
+    <section class="inner-banner-wrap">
+        <div class="inner-baner-container" >
+            <div class="container">
+                <div class="inner-banner-content">
+                    <h1 class="inner-title">{{ sujet.titresujet }}</h1>
+                    <div class="entry-meta">
+                           <span class="byline">
+                               <i class="fa fa-user" aria-hidden="true">  {{ sujet.iduser.login }}</i>
+                           </span>
+                        <span class="posted-on">
+                             <i class="fa fa-calendar" aria-hidden="true">  {{ sujet.date|ago }}</i>
+                           </span>
+                        {% if( sujet.nbcom>1) %}
+                            <span class="comments-link">
+                                                <i class="fa fa-comments" aria-hidden="true">  {{ sujet.nbcom }} Commentaires</i>
+                                             <label href="#"></label>
+                                          </span>
+                        {% elseif( sujet.nbcom<2) %}
+                            <span class="comments-link">
+                                                <i class="fa fa-comment" aria-hidden="true">  {{ sujet.nbcom}} Commentaire</i>
+                                             <label href="#"></label>
+                                          </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="inner-shape"></div>
+
+
+    </section>
+
+
+    <div class="single-post-section">
+        <div class="single-post-inner">
+            <div class="container">
+
+                <div class="row">
+
+
+                    <div class="col-lg-8 primary right-sidebar">
+                        <!-- single blog post html start -->
+                        <figure class="feature-image">
+                            <img src="{{ vich_uploader_asset(sujet) }}" alt="">
+                        </figure>
+                        <article class="single-content-wrap">
+
+                            <blockquote>
+                                <p>{{ sujet.contenu }}</p>
+                            </blockquote>
+                        </article>
+                        <div class="author-wrap">
+                            <div class="author-thumb">
+                                <img src="{{ asset('assets/images/user-img.png') }}" alt="">
+                            </div>
+                            <div class="author-content">
+                                <h3 class="author-name">{{ sujet.iduser.login }}</h3>
+                                <p>{{ sujet.iduser.description }}</p>
+                                <a href="{{ path('app_topic_user',{'iduser': sujet.iduser.id}) }}" class="button-text">VIEW ALL POSTS > </a>
+                            </div>
+                        </div>
+                        <!-- post comment html -->
+                        <div class="comment-area">
+                            {% if ( sujet.nbcom >1) %}
+                                <h2 class="comment-title">{{ sujet.nbcom }} commentaires</h2>
+                            {% elseif (sujet.nbcom<2) %}
+                                <h2 class="comment-title">{{ sujet.nbcom }} commentaire</h2>
+                            {% endif %}
+                            <div class="comment-area-inner">
+                                {% for commentaire in commentaires %}
+                                    <ol>
+                                        {% for flash_message in app.session.flashBag.get('error') %}
+                                            <div class="alert alert-danger">
+                                                {{ flash_message }}
+                                            </div>
+                                        {% endfor %}
+                                        <li>
+                                            <figure class="comment-thumb">
+                                                <img src="{{ asset('assets/images/img20.jpg') }}" alt="">
+                                            </figure>
+                                            <div class="comment-content">
+                                                <div class="comment-header">
+                                                <span>
+                                                <h5 class="author-name">  <i class="fa fa-user" aria-hidden="true">  {{ commentaire.iduser.login }}</i></h5>
+                                                </span> <span class="post-on">  <i class="fa fa-calendar" aria-hidden="true">  {{ commentaire.date|ago }}</i></span>
+                                                    {% if(commentaire.iduser.id==33) %}
+                                                    <span class="posted-on">
+
+                                         <a class="fa fa-edit text-success"  href="{{ path('app_commentaire_edit',{'idtopic': topic.idtopic,'idsujet':sujet.idsujet,'idcom':commentaire.idcom}) }}" ></a>
+                                            </span>
+                                                {% elseif(commentaire.iduser.id!=33)  %}
+                                                    <span class="posted-on">
+
+
+                                         <a class="fa fa-edit "  href="{{ path('app_commentaire_edit',{'idtopic': topic.idtopic,'idsujet':sujet.idsujet,'idcom':commentaire.idcom}) }}" style="pointer-events: none"></a>
+
+                                                {% endif %}
+                                             </span>
+                                                    {% if(commentaire.iduser.id==33) %}
+                                                    <span class="posted-on">
+                                                <a class="fa fa-trash text-danger"  href="{{ path('app_commentaire_deletef', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet,'idcom':commentaire.idcom}) }}" onclick="return confirm('Etes vous sûr de supprimer ce commentaire?');"></a>
+                                                </span>
+                                                    {% elseif(commentaire.iduser.id!=33)  %}
+                                                    <span class="posted-on">
+
+
+                  <a class="fa fa-trash"  method="post" href="{{ path('app_commentaire_deletef', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet,'idcom':commentaire.idcom}) }}" style="pointer-events: none"></a>
+
+                                                {% endif %}
+                                             </span>
+                                                </div>
+                                                <p>{{  commentaire.contenu}}</p>
+                                                <a href="{{ path('app_commentaire_like', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet,'idcom':commentaire.idcom}) }}">
+                                                <i style="color: #0062cc" class="fa fa-thumbs-up close-icon" aria-hidden="true"></i></a>
+                                                <a href="{{ path('app_commentaire_dislike', {'idtopic': topic.idtopic,'idsujet':sujet.idsujet,'idcom':commentaire.idcom}) }}">({{ commentaire.nblike }})
+                                                    <i style="color: orangered" class="fa fa-thumbs-down" aria-hidden="true"></i>
+                                                </a>({{ commentaire.nbdislike }})
+                                            </div>
+                                        </li>
+
+                                    </ol>
+
+                                {% endfor %}
+                            </div>
+
+                        </div>
+
+                        <div class="comment-form-wrap">
+
+                            <h2 class="comment-title">Leave a Comment</h2>
+                            {{ form_start(formcom,{'attr':{'novalidate':'novalidate'  }}) }}
+                            <form class="comment-form"> {{ form_label(formcom.contenu,'Commentaire :') }}
+
+                                <p class="full-width">
+
+                                    {{ form_widget(formcom.contenu) }}
+                                <div style="color:  red">  {{ form_errors(formcom.contenu) }}</div>
+                                </p>
+
+                                <p class="full-width">
+                                    <button class="button-primary">{{ button_label|default('Ajouter commentaire') }}</button>
+                                </p>
+                                {{ form_rest(formcom) }}
+                            </form>
+
+                        </div>
+
+                        {{ form_end(formcom) }}
+                    </div></div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}

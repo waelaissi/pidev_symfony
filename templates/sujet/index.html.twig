@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sujet index{% endblock %}
+
+{% block body %}
+    <h1>Sujet index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idsujet</th>
+                <th>Titre du sujet</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Accepter</th>
+                <th>Nombre Commentaires</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sujet in sujets %}
+            <tr>
+                <td>{{ sujet.idsujet }}</td>
+                <td>{{ sujet.titresujet }}</td>
+                <td>{{ sujet.contenu }}</td>
+                <td>{{ sujet.date ? sujet.date|date('Y-m-d') : '' }}</td>
+
+                <td>{{ sujet.accepter }}</td>
+                <td>{{ sujet.nbcom }}</td>
+                <td>
+                    <a href="{{ path('app_sujet_show', {'idsujet': sujet.idsujet}) }}">show</a>
+                    <a href="{{ path('app_sujet_edit', {'idsujet': sujet.idsujet}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

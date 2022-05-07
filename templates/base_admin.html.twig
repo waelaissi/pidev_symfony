@@ -5,6 +5,7 @@
     <title>{% block title %}chaker pidev!{% endblock %}</title><meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- favicon -->
+    <link rel="icon" type="image/png" href="..//assetsadmin/images/favicon.png">
     <link rel="icon" type="image/png" href="../assetsadmin/images/favicon.png">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/assetsadmin/css/bootstrap.min.css" media="all">
@@ -28,6 +29,10 @@
     #}
 
 
+{% include "partials/header_admin.html.twig" %}
+{% block navbar %}
+{% include "partials/navigation_panel_admin.html.twig" %}
+{% endblock %}
 {% block body %}
 
 
@@ -37,6 +42,7 @@
 
 {% block javascripts %}
     {#{{ encore_entry_script_tags('app') }}#}
+
 {% endblock %}
 <!-- *Scripts* -->
 <script src="/assetsadmin/js/jquery-3.2.1.min.js"></script>
@@ -47,5 +53,6 @@
 <script src="/assetsadmin/js/counterup.min.js"></script>
 <script src="/assetsadmin/js/jquery.slicknav.js"></script>
 <script src="/assetsadmin/js/dashboard-custom.js"></script>
+{% endblock %}
 </body>
 </html>

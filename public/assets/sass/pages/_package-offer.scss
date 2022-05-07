@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .package-offer-wrap {
 	.special-section {
 		padding-bottom: 155px;
@@ -7,4 +8,15 @@
 			padding-bottom: 130px;
 		}
 	}
+=======
+.package-offer-wrap {
+	.special-section {
+		padding-bottom: 155px;
+	}
+	@include bp(smx) {
+		.special-section {
+			padding-bottom: 130px;
+		}
+	}
+>>>>>>> origin/gestion_forum
 }
