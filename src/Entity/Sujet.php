@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 /**
  * Sujet
  *
@@ -21,6 +23,7 @@ class Sujet
      * @ORM\Column(name="idsujet", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("sujets")
      */
     private $idsujet;
 
@@ -35,6 +38,7 @@ class Sujet
      * )
      * @Assert\Type(type={"alpha"})
      * @ORM\Column(name="titresujet", type="string", length=255, nullable=false)
+     * @Groups("sujets")
      */
     private $titresujet;
 
@@ -49,6 +53,7 @@ class Sujet
      * )
      * @Assert\Type(type={"alpha"})
      * @ORM\Column(name="contenu", type="text", length=65535, nullable=false)
+     * @Groups("sujets")
      */
     private $contenu;
 
@@ -56,12 +61,13 @@ class Sujet
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date", nullable=false)
+     * @Groups("sujets")
      */
     private $date;
 
     /**
      * @var int
-     *
+     * @Groups("sujets")
      * @ORM\Column(name="accepter", type="integer", nullable=false)
      */
     private $accepter = '0';
@@ -70,6 +76,7 @@ class Sujet
      * @var int
      *
      * @ORM\Column(name="nbcom", type="integer", nullable=false)
+     * @Groups("sujets")
      */
     private $nbcom = '0';
 

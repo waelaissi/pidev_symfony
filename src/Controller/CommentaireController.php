@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Controller;
+use App\Repository\SujetRepository;
+use App\Repository\TopicRepository;
+use App\Repository\UtilisateurRepository;
+use PhpParser\Comment;
 use Symfony\Component\Mime\Email;
 
 use App\Entity\Commentaire;
@@ -18,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/commentaire")
@@ -200,5 +205,72 @@ class CommentaireController extends AbstractController
 
 
     }
+    //mobileeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+
+    /**
+     * @Route("/mobile/listecommentairessujet/{idsujet}", name="mobile_liste_commentaires")
+     */
+    public function liste_commentairessujet(Request $request,NormalizerInterface $Normalizer,$idsujet)
+    {
+        $repository = $this->getDoctrine()->getRepository(Commentaire::class);
+        $commentaires = $repository->findByidsujet($idsujet);
+        $jsonContent = $Normalizer->normalize($commentaires, 'json',['groups'=>'commentaires']);
+        return new Response(json_encode($jsonContent));
+    }
+    /**
+     * @Route("/mobile/commentairebyid/{idcom}", name="mobile_commentairebyid")
+     */
+    public function commentairebyid(Request $request,NormalizerInterface $Normalizer,$idcom)
+    {
+        $repository = $this->getDoctrine()->getRepository(Commentaire::class);
+        $commentaire= $repository->find($idcom);
+        $jsonContent = $Normalizer->normalize($commentaire, 'json',['groups'=>'commentaires']);
+        return new Response(json_encode($jsonContent));
+    }
+
+    /**
+     * @Route("/mobile/delete/{id}", name="mobile_delete_commentaire")
+     */
+    public function deletecommentaire(Request $request,$id,NormalizerInterface $Normalizer)
+    {
+        $repository = $this->getDoctrine()->getRepository(Commentaire::class);
+        $commentaire = $repository->find($id);
+        $em= $this->getDoctrine()->getManager();
+        $em->remove($commentaire);
+        $em->flush();
+        return new Response("commentaire supprimer avec succes");
+    }
+
+    /**
+     * @Route("/mobile/modifier/{id}", name="mobile_modifier_commentaire")
+     */
+    public function modifiercommentaire(Request $request,$id,NormalizerInterface $Normalizer)
+    {
+        $em= $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(Commentaire::class);
+        $commentaire = $repository->find($id);
+        $commentaire->setContenu($request->get('description'));
+        $em->flush();
+        return new Response("commentaire modifier avec succes");
+    }
+    /**
+     * @Route("/mobile/ajouter", name="mobile_ajouter_commentaire")
+     */
+    public function ajoutercommentaire(Request $request,NormalizerInterface $Normalizer,UtilisateurRepository $userRepository,SujetRepository  $sujetRepository)
+    {
+        $em= $this->getDoctrine()->getManager();
+        $commentaire=new Commentaire();
+        $commentaire->setContenu($request->get('description'));
+        $user=$userRepository->find($request->get('iduser'));
+        $sujet=$sujetRepository->find($request->get('idsujet'));
+        $commentaire->setDate(new \DateTime('now'));
+        $commentaire->setIduser($user);
+        $commentaire->setIdsujet($sujet);
+        $em->persist($commentaire);
+        $em->flush();
+        return new Response("commentaire ajouter avec succes");
+    }
+
+
 
 }

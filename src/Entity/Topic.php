@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Vangrg\ProfanityBundle\Validator\Constraints as ProfanityAssert;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * Topic
  *
@@ -23,10 +23,12 @@ class Topic
      * @ORM\Column(name="idtopic", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("topics")
      */
     private $idtopic;
 
     /**
+     * @Groups("topics")
      * @var string|null
      *  @ProfanityAssert\ProfanityCheck
      * @Assert\NotBlank
@@ -41,6 +43,7 @@ class Topic
     private $titretopic;
 
     /**
+     *  @Groups("topics")
      *  @ProfanityAssert\ProfanityCheck
      * @var string|null
      * @Assert\NotBlank
@@ -55,6 +58,7 @@ class Topic
     private $description;
 
     /**
+     *  @Groups("topics")
      * @var \DateTime|null
      *
      * @ORM\Column(name="date", type="date", nullable=true)
@@ -62,6 +66,7 @@ class Topic
     private $date;
 
     /**
+     *  @Groups("topics")
      * @var bool
      *
      * @ORM\Column(name="accepter", type="boolean", nullable=false)
@@ -69,6 +74,7 @@ class Topic
     private $accepter = '0';
 
     /**
+     *  @Groups("topics")
      * @var int
      *
      * @ORM\Column(name="nbsujet", type="integer", nullable=false)
@@ -76,6 +82,7 @@ class Topic
     private $nbsujet = '0';
 
     /**
+     *  @Groups("topics")
      * @var int
      *
      * @ORM\Column(name="hide", type="integer", nullable=false)
@@ -83,6 +90,7 @@ class Topic
     private $hide = '0';
 
     /**
+
      * @return File|null
      */
     public function getImageFile(): ?File
@@ -106,6 +114,7 @@ class Topic
      */
     private $imageFile;
     /**
+     * @Groups("topics")
      * @var string|null
      * @ORM\Column(name="imageName", type="string", length=255, nullable=true)
      */

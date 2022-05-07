@@ -29,7 +29,7 @@ class TopicController extends AbstractController
         $topoicss = $paginator->paginate(
             $topoics,
             $request->query->getInt('page', 1),
-            3
+            4
         );
         return $this->render('topic/index.html.twig', [
             'topics' => $topoicss,'topicssort'=>$topicRepository->findby([],['nbsujet' => 'desc'])
@@ -166,7 +166,7 @@ class TopicController extends AbstractController
         $topoicss = $paginator->paginate(
             $topoics,
             $request->query->getInt('page', 1),
-            3
+            4
         );
         return $this->render('topic/index.html.twig', [
             'topics' => $topoicss,'topicssort'=>$topicRepository->findby([],['nbsujet' => 'desc'])
@@ -185,4 +185,78 @@ $jsonContent = $Normalizer->normalize($topics, 'json',['groups'=>'topics']);
 $retour=json_encode($jsonContent);
 return new Response($retour);
 }
+
+
+
+
+
+//mobilleeeee
+
+
+    /**
+     * @Route("/mobile/listetopics", name="mobile_liste_topic")
+     */
+    public function liste_topics(Request $request,NormalizerInterface $Normalizer)
+    {
+        $repository = $this->getDoctrine()->getRepository(Topic::class);
+        $topics = $repository->findby([],['idtopic' => 'desc']);
+        $jsonContent = $Normalizer->normalize($topics, 'json',['groups'=>'topics']);
+        return new Response(json_encode($jsonContent));
+    }
+
+    /**
+     * @Route("/mobile/topicbyid/{id}", name="mobile_topicbyid")
+     */
+    public function topicbyid(Request $request,$id,NormalizerInterface $Normalizer)
+    {
+        $repository = $this->getDoctrine()->getRepository(Topic::class);
+        $topic = $repository->find($id);
+        $jsonContent = $Normalizer->normalize($topic, 'json',['groups'=>'topics']);
+        return new Response(json_encode($jsonContent));
+    }
+    /**
+     * @Route("/mobile/delete/{id}", name="mobile_delete_topic")
+     */
+    public function deletetopic(Request $request,$id,NormalizerInterface $Normalizer)
+    {
+        $repository = $this->getDoctrine()->getRepository(Topic::class);
+        $topic = $repository->find($id);
+        $em= $this->getDoctrine()->getManager();
+        $em->remove($topic);
+        $em->flush();
+        return new Response("topic supprimer avec succes");
+    }
+    /**
+     * @Route("/mobile/modifier/{id}", name="mobile_modifier_topic")
+     */
+    public function modifiertopic(Request $request,$id,NormalizerInterface $Normalizer)
+    {
+        $em= $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(Topic::class);
+        $topic = $repository->find($id);
+        $topic->setDescription($request->get('description'));
+        $topic->setTitretopic($request->get('titre'));
+        $em->flush();
+        return new Response("topic modifier avec succes");
+    }
+    /**
+     * @Route("/mobile/ajouter", name="mobile_ajouter_topic")
+     */
+    public function ajoutertopic(Request $request,NormalizerInterface $Normalizer,UtilisateurRepository $userRepository)
+    {
+        $em= $this->getDoctrine()->getManager();
+        $topic=new Topic();
+        $topic->setDescription($request->get('description'));
+        $topic->setTitretopic($request->get('titre'));
+        $topic->setImagename("téléchargement 1200");
+        $user=$userRepository->find($request->get('iduser'));
+        $topic->setDate(new \DateTime('now'));
+        $topic->setIduser($user);
+        $em->persist($topic);
+        $em->flush();
+        return new Response("topic ajouter avec succes");
+    }
+
+
+
 }

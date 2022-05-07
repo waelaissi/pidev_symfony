@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vangrg\ProfanityBundle\Validator\Constraints as ProfanityAssert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Commentaire
@@ -19,12 +21,14 @@ class Commentaire
      * @ORM\Column(name="idcom", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("commentaires")
      */
     private $idcom;
 
     /**
      * @var string
      * @Assert\NotBlank
+     *  @ProfanityAssert\ProfanityCheck
      * @Assert\Length(
      *      min = 15,
      *      max = 255,
@@ -32,26 +36,27 @@ class Commentaire
      *      maxMessage = "Le commentaire ne peut pas dépasser {{ limit }} caractères"
      * )
      * @ORM\Column(name="contenu", type="text", length=65535, nullable=false)
+     *  @Groups("commentaires")
      */
     private $contenu;
 
     /**
      * @var \DateTime
-     *
+     *@Groups("commentaires")
      * @ORM\Column(name="date", type="date", nullable=false)
      */
     private $date;
 
     /**
      * @var int
-     *
+     * @Groups("commentaires")
      * @ORM\Column(name="nblike", type="integer", nullable=false)
      */
     private $nblike = '0';
 
     /**
      * @var int
-     *
+     *@Groups("commentaires")
      * @ORM\Column(name="nbdislike", type="integer", nullable=false)
      */
     private $nbdislike = '0';
@@ -60,6 +65,7 @@ class Commentaire
      * @var \Sujet
      *
      * @ORM\ManyToOne(targetEntity="Sujet")
+     *
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idsujet", referencedColumnName="idsujet")
      * })

@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Utilisateur;
 use App\Entity\Topic;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+
 /**
  * @Route("/sujet")
  */
@@ -143,4 +145,76 @@ class SujetController extends AbstractController
 
         return $this->redirectToRoute('app_sujet_indexb', ['idtopic'=> $topic->getIdtopic()], Response::HTTP_SEE_OTHER);
     }
+
+
+    // mobileeeeeeeeeeeeeeeeeeeeeeeeee
+
+    /**
+     * @Route("/mobile/ajouter", name="mobile_ajouter_sujet")
+     */
+    public function ajoutersujet(Request $request,NormalizerInterface $Normalizer,UtilisateurRepository $userRepository,TopicRepository $topicRepository)
+    {
+        $em= $this->getDoctrine()->getManager();
+        $sujet=new Sujet();
+        $sujet->setTitresujet($request->get('titre'));
+        $sujet->setContenu($request->get('description'));
+        $user=$userRepository->find($request->get('iduser'));
+        $sujet->setImagename("téléchargement 1200");
+
+        $topic=$topicRepository->find($request->get('idtopic'));
+        $sujet->setDate(new \DateTime('now'));
+        $sujet->setIduser($user);
+        $sujet->setIdtopic($topic);
+        $em->persist($sujet);
+        $em->flush();
+        return new Response("sujet ajouter avec succes");
+    }
+
+    /**
+     * @Route("/mobile/listesujetstopic/{idtopic}", name="mobile_liste_sujets")
+     */
+    public function liste_sujetstopic(Request $request,NormalizerInterface $Normalizer,$idtopic)
+    {
+        $repository = $this->getDoctrine()->getRepository(Sujet::class);
+        $sujets = $repository->findByidtopic($idtopic);
+        $jsonContent = $Normalizer->normalize($sujets, 'json',['groups'=>'sujets']);
+        return new Response(json_encode($jsonContent));
+    }
+    /**
+     * @Route("/mobile/sujetbyid/{idsujet}", name="mobile_sujetbyid")
+     */
+    public function sujetbyid(Request $request,NormalizerInterface $Normalizer,$idsujet)
+    {
+        $repository = $this->getDoctrine()->getRepository(Sujet::class);
+        $sujet= $repository->find($idsujet);
+        $jsonContent = $Normalizer->normalize($sujet, 'json',['groups'=>'sujets']);
+        return new Response(json_encode($jsonContent));
+    }
+    /**
+     * @Route("/mobile/delete/{id}", name="mobile_delete_sujet")
+     */
+    public function deletesujet(Request $request,$id,NormalizerInterface $Normalizer)
+    {
+        $repository = $this->getDoctrine()->getRepository(Sujet::class);
+        $sujet = $repository->find($id);
+        $em= $this->getDoctrine()->getManager();
+        $em->remove($sujet);
+        $em->flush();
+        return new Response("sujet supprimer avec succes");
+    }
+    /**
+     * @Route("/mobile/modifier/{id}", name="mobile_modifier_sujet")
+     */
+    public function modifiersujet(Request $request,$id,NormalizerInterface $Normalizer)
+    {
+        $em= $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(Sujet::class);
+        $sujet = $repository->find($id);
+        $sujet->setContenu($request->get('description'));
+        $sujet->setTitresujet($request->get('titre'));
+        $em->flush();
+        return new Response("sujet modifier avec succes");
+    }
+
+
 }
